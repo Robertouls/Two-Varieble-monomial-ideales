@@ -1,0 +1,712 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{strategy}[theorem]{Strategy}
+
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\kk}{k}
+\newcommand{\pp}{\mathfrak{m}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Lie}{\operatorname{Lie}}
+\newcommand{\Der}{\operatorname{Der}}
+\newcommand{\LND}{\operatorname{LND}}
+\newcommand{\Jac}{\operatorname{Jac}}
+\newcommand{\GJac}{G^{\mathrm{Jac}}}
+\newcommand{\divop}{\operatorname{div}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\Ga}{\mathbb{G}_a}
+\newcommand{\Gm}{\mathbb{G}_m}
+
+\title{The Jacobian Conjecture in Dimension Two:\\
+A Research Program via Monomial Algebras,\\
+Demazure Roots, and the Inverse Limit}
+\author{Research Notes}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We outline a research program toward proving the Jacobian Conjecture in dimension two,
+the last remaining open case after Alp\"oge's July 2026 counterexample in dimension three.
+Our approach leverages the structural theory of automorphism groups of zero-dimensional
+monomial algebras $A_d = \kk[x,y]/\pp^d$ developed by D\'iaz--Dubouloz--Petitjean and
+D\'iaz--Lucchini Arteche--Manzano-Flores, particularly the characterization of the
+constant-Jacobian subgroup $\GJac(A_d)$ via Demazure roots and the new proof of Anick's
+approximation theorem. We propose that the inverse limit structure
+$\kk[x,y] \hookrightarrow \varprojlim A_d = \kk[[x,y]]$, combined with the
+Jung--van der Kulk theorem and Rentschler's classification of locally nilpotent
+derivations in dimension two, may provide the missing bridge from $\pp$-adic approximation
+to polynomial invertibility.
+\end{abstract}
+
+\tableofcontents
+
+%% ====================================================================
+\section{The Current Landscape (Post-2026)}
+%% ====================================================================
+
+\subsection{The Jacobian Conjecture}
+
+\begin{conjecture}[Keller, 1939]
+Let $\kk$ be a field of characteristic zero and $F = (F_1,\ldots,F_n): \kk^n \to \kk^n$
+a polynomial map with $\det J(F) \in \kk^{\times}$ (a nonzero constant). Then $F$ is a
+polynomial automorphism, i.e., $F$ has a polynomial inverse.
+\end{conjecture}
+
+\subsection{The 2026 Breakthrough: Dimension $\geq 3$ is False}
+
+In July 2026, L.~Alp\"oge announced an explicit counterexample in dimension three:
+a polynomial map $F: \CC^3 \to \CC^3$ with $\det J(F) \equiv -2$ that is not injective
+(the generic fiber has 3 points). The construction uses a \emph{tangent sweep} mechanism:
+one sweeps the tangent lines of a plane curve---a map that projective duality forces to be
+many-to-one---then conjugates by monomial maps to cancel the Jacobian factor.
+
+Gallagher \cite{Gallagher2026} subsequently gave a uniform one-variable construction
+producing counterexamples of every geometric degree $d \geq 3$ in every dimension $n \geq 3$.
+
+\begin{theorem}[Alp\"oge 2026, Gallagher 2026]
+The Jacobian Conjecture is false in every dimension $n \geq 3$.
+\end{theorem}
+
+\subsection{Why Dimension Two Survives}
+
+The tangent sweep mechanism is intrinsically three-dimensional: it requires an ``extra
+dimension'' to sweep tangent lines of a \emph{plane} curve. In dimension two, several
+structural rigidity results prevent the same construction:
+
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{Jung--van der Kulk theorem:} Every polynomial automorphism of $\kk[x,y]$ is
+tame, i.e., a composition of affine and triangular (elementary) automorphisms. The
+automorphism group $\Aut_\kk(\kk[x,y])$ is the amalgamated free product of the affine and
+triangular subgroups. In dimension $\geq 3$, wild automorphisms exist
+(Shestakov--Umirbaev).
+
+\item \textbf{Abhyankar--Moh--Suzuki theorem:} Every embedding $\CC \hookrightarrow \CC^2$
+is rectifiable, i.e., equivalent to the standard embedding $t \mapsto (t,0)$ under a
+polynomial automorphism. This forces strong constraints on the geometry at infinity of
+Keller maps.
+
+\item \textbf{Rentschler's theorem:} Every locally nilpotent derivation of $\kk[x,y]$ is
+conjugate to $u(x)\partial_y$ for some $u \in \kk[x]$. This completely classifies
+$\Ga$-actions on $\CC^2$.
+
+\item \textbf{Properness obstruction:} A Keller map is \'etale, so failure of bijectivity
+requires failure of properness. In dimension two, the behavior at infinity is controlled
+by finitely many ``dicritical'' divisors in the resolution of the rational map
+$\mathbb{P}^2 \dashrightarrow \mathbb{P}^2$, and the constant Jacobian condition
+severely constrains these.
+\end{enumerate}
+
+\subsection{Known Partial Results in Dimension Two}
+
+\begin{itemize}
+\item \textbf{Moh (1983):} The conjecture holds for $\max(\deg P, \deg Q) \leq 100$.
+\item \textbf{Nguyen (2019):} Extended to degree $\leq 104$ using Newton polygon techniques.
+\item \textbf{Newton polygon constraints:} For a hypothetical counterexample $(P,Q)$,
+  $\gcd(\deg P, \deg Q) \geq 16$ and $\gcd(\deg P, \deg Q) \neq 2p$ for any prime $p$.
+\item \textbf{Lee--Li (2022--2024):} Series of papers using Magnus' formula to study
+  inner polynomials and the location of vertices of Newton polygons.
+\item \textbf{Anick's theorem:} For any $F$ with $\det J(F) \in \kk^\times$ and any $d$,
+  there exists a tame automorphism $\varphi_d$ with $F \equiv \varphi_d \pmod{\pp^d}$.
+\end{itemize}
+
+%% ====================================================================
+\section{Tools from Monomial Algebra Automorphisms}
+%% ====================================================================
+
+We now describe the key results from D\'iaz et al.\ that form the foundation of our
+approach.
+
+\subsection{Setting}
+
+Let $\kk$ be a field of characteristic zero, $n \geq 1$, and $I \subset \kk[x_1,\ldots,x_n]$
+a monomial ideal with $\kk[x]/I$ finite-dimensional (zero-dimensional). The main family of
+interest is $A_d = \kk[x_1,\ldots,x_n]/\pp^d$ where $\pp = (x_1,\ldots,x_n)$.
+
+\subsection{Demazure Roots}
+
+\begin{definition}
+A \emph{Demazure root} of $I$ is a vector $\alpha \in \ZZ^n$ such that there exists a
+homogeneous locally nilpotent derivation $\partial_{\alpha,p}$ of $\kk[x]/I$ of the form
+\[
+  \partial_{\alpha,p}(x_j) = p_j \cdot x^{\alpha + e_j}
+\]
+where $p = (p_1,\ldots,p_n) \in \kk^n$ satisfies certain compatibility conditions with $I$.
+\end{definition}
+
+The set of Demazure roots $R(I)$ decomposes as:
+\[
+  R(I) = R_{\mathrm{inn}}(I) \sqcup R_{\mathrm{out}}(I)
+\]
+where:
+\begin{itemize}
+\item \textbf{Inner roots} $\alpha \in R_{\mathrm{inn}}(I)$: all coordinates of $\alpha + e_j$
+  are $\geq 0$, and $x^{\alpha+e_j} \in \kk[x]/I \setminus \{0\}$ for exactly one $j$.
+\item \textbf{Outer roots} $\alpha \in R_{\mathrm{out}}(I)$: $\alpha = -e_j + \beta$ where
+  $\beta \in \NN^n$ with $\beta_j = 0$, and $\partial_{\alpha,e_j^*}(x_j) = x^\beta$,
+  $\partial_{\alpha,e_j^*}(x_i) = 0$ for $i \neq j$.
+\end{itemize}
+
+\subsection{Root Subgroups and the Automorphism Group}
+
+Each root $\alpha$ gives a one-parameter (root) subgroup:
+\[
+  U_{\alpha,p} = \{\exp(t \cdot \partial_{\alpha,p}) : t \in \kk\} \cong \Ga.
+\]
+
+\begin{theorem}[D\'iaz--Dubouloz--Petitjean; D\'iaz--Lucchini Arteche--Manzano-Flores]
+The identity component $\Aut_\kk(\kk[x]/I)^0$ is generated by the maximal torus $T$ and
+all root subgroups $U_\alpha$, $\alpha \in R(I)$.
+\end{theorem}
+
+\subsection{The Constant-Jacobian Subgroup}\label{sec:GJac}
+
+\begin{proposition}[Proposition 5.4 of Paper 3]
+For $A_d = \kk[x_1,\ldots,x_n]/\pp^d$, the subgroup
+\[
+  \GJac(A_d) := \{\varphi \in \Aut_\kk(A_d) : \det J(\varphi) \in \kk^\times\}
+\]
+equals the subgroup generated by $T$ and the outer root subgroups $\{U_\alpha : \alpha \in
+R_{\mathrm{out}}(\pp^d)\}$.
+
+Its Lie algebra is
+\[
+  \Lie(\GJac(A_d)) = \mathfrak{h} = \bigoplus_{\alpha \in R_{\mathrm{out}}(\pp^d)}
+    \mathfrak{g}_\alpha \oplus \{\text{divergence-free elements of } \mathfrak{t}
+    \oplus \bigoplus_{\alpha \in R_{\mathrm{inn}}(\pp^d)} \mathfrak{g}_\alpha\}.
+\]
+\end{proposition}
+
+The key insight: \textbf{the outer root subgroups have divergence zero}, while inner roots
+contribute to the Jacobian determinant. The constant-Jacobian condition selects precisely the
+outer-root-generated subgroup (plus the torus).
+
+\subsection{Anick's Approximation Theorem (New Proof)}
+
+\begin{theorem}[Theorem 5.6 of Paper 3; originally Anick]
+Let $F: \kk^n \to \kk^n$ be a polynomial map with $\det J(F) \in \kk^\times$. For every
+$d \geq 1$, there exists a tame automorphism $\varphi_d \in \Aut_\kk(\kk[x_1,\ldots,x_n])$
+such that $F \equiv \varphi_d \pmod{\pp^d}$.
+
+Equivalently, tame automorphisms are dense in
+$\{F \in \End_\kk(\kk[x]) : \det J(F) \in \kk^\times\}$ for the $\pp$-adic topology.
+\end{theorem}
+
+The new proof uses the structure of $\GJac(A_d)$: since $\GJac(A_d) = \langle T, U_\alpha :
+\alpha \text{ outer}\rangle$, and outer root subgroups lift to elementary automorphisms of
+$\kk[x]$, the approximation is achieved by products of tame automorphisms.
+
+%% ====================================================================
+\section{Proposed Proof Strategies}
+%% ====================================================================
+
+We propose four interconnected strategies, each exploiting a different aspect of the
+dimension-two structure.
+
+\subsection{Strategy A: Inverse Limit Stabilization}
+
+\begin{strategy}[From $\pp$-adic approximation to polynomial identity]
+Consider the inverse system
+\[
+  A_1 \leftarrow A_2 \leftarrow A_3 \leftarrow \cdots, \qquad
+  \varprojlim A_d = \kk[[x,y]].
+\]
+A polynomial Keller map $F: \kk[x,y] \to \kk[x,y]$ induces compatible endomorphisms
+$F_d: A_d \to A_d$ for each $d$. By Anick's theorem, there exist tame automorphisms
+$\varphi_d \in \Aut_\kk(A_d)$ with $F_d = \varphi_d$ in $A_d$.
+
+Since $\GJac(A_d) = \langle T, \{U_\alpha : \alpha \in R_{\mathrm{out}}(\pp^d)\}\rangle$,
+each $\varphi_d$ admits a factorization
+\[
+  \varphi_d = t_d \cdot \prod_{i=1}^{N_d} u_{\alpha_i, t_i}
+\]
+where $t_d \in T$ and $u_{\alpha_i,t_i} = \exp(t_i \cdot \partial_{\alpha_i})$ with
+$\alpha_i$ outer.
+
+\textbf{Key Question:} In dimension $n = 2$, can the factorization lengths $N_d$ be bounded
+uniformly? If so, the factorizations stabilize in the inverse limit, yielding a tame
+automorphism $\varphi$ with $F = \varphi$ (hence $F$ is an automorphism).
+\end{strategy}
+
+\begin{remark}
+In dimension 2, the outer roots of $\pp^d$ are:
+\begin{align*}
+  R_1(\pp^d) &= \{-e_1 + j \cdot e_2 : 0 \leq j \leq d-1\} &
+  &\text{(roots acting on $x_1$)}\\
+  R_2(\pp^d) &= \{-e_2 + i \cdot e_1 : 0 \leq i \leq d-1\} &
+  &\text{(roots acting on $x_2$)}
+\end{align*}
+so the outer root subgroups correspond to elementary automorphisms
+$x \mapsto x + a y^j$ and $y \mapsto y + b x^i$ with bounded degrees.
+By Jung--van der Kulk, these generate all of $\Aut_\kk(\kk[x,y])$, so the compatibility
+with the tame structure is exact.
+\end{remark}
+
+\begin{lemma}[Degree control in dimension 2]
+If $F = (P,Q)$ with $\deg P = m$, $\deg Q = n$, then the approximating automorphism
+$\varphi_d$ can be chosen with $\deg \varphi_d \leq C(m,n)$ independent of $d$, for
+$d \gg 0$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+In dimension 2, every element of $\GJac(A_d)$ that agrees with $F$ modulo $\pp^d$ and has
+the same leading form must, by the amalgamated product structure of $\Aut_\kk(\kk[x,y])$,
+be expressible with elementary automorphisms whose degrees are bounded by
+$\max(m,n)$. The key is that the highest-degree terms of $F$ determine the ``type'' of
+factorization in the Jung--van der Kulk decomposition, and increasing $d$ only refines
+lower-order terms. \emph{(This requires careful proof.)}
+\end{proof}
+
+\subsection{Strategy B: Divergence-Free Derivations and the Lie Algebra}
+
+\begin{strategy}[From the Lie algebra of $\GJac$ to formal invertibility]
+The Lie algebra $\mathfrak{h} = \Lie(\GJac(A_d))$ consists of derivations $D$ of $A_d$ with
+$\divop(D) = 0$ (from outer roots) plus divergence-free combinations of inner root
+derivations and torus elements.
+
+In the polynomial ring $\kk[x,y]$, a polynomial vector field $V = (V_1, V_2)$ with
+$\divop(V) = \partial V_1/\partial x + \partial V_2/\partial y = 0$ is \emph{Hamiltonian}:
+there exists $H \in \kk[x,y]$ with $V_1 = \partial H/\partial y$,
+$V_2 = -\partial H/\partial x$, and the flow of $V$ preserves the symplectic form
+$dx \wedge dy$.
+
+\textbf{Key Observation:} If $F = (P,Q)$ satisfies $\det J(F) = c$, then the vector field
+$V = F - \mathrm{id}$ satisfies $\divop(V) = P_x + Q_y - 2$ plus higher-order corrections.
+The condition $P_x Q_y - P_y Q_x = c$ links the Jacobian condition to the symplectic
+structure.
+
+\textbf{Proposed approach:} Show that the constant-Jacobian condition forces the formal flow
+generated by the ``logarithm'' of $F$ (if it exists) to be divergence-free, hence
+Hamiltonian, and therefore volume-preserving. Combined with polynomial growth at infinity,
+this should force bijectivity.
+\end{strategy}
+
+\subsection{Strategy C: Properness via Root Subgroup Structure}
+
+\begin{strategy}[Non-properness contradicts outer-root structure]
+A polynomial map $F: \CC^2 \to \CC^2$ fails to be proper if and only if there exists a
+sequence $z_k \to \infty$ in $\CC^2$ with $F(z_k)$ bounded. The non-proper value set
+$S_F = \{w \in \CC^2 : F^{-1}(w) \text{ is not compact}\}$ is either empty or a
+finite union of polynomial curves.
+
+For a Keller map, $S_F \neq \emptyset$ iff $F$ is not an automorphism.
+
+\textbf{Proposed approach:} Use the factorization $\varphi_d = \prod u_{\alpha_i,t_i}$
+from Strategy A. Each factor $u_{\alpha_i,t_i}$ is an elementary automorphism, hence proper.
+Show that the ``limit'' of proper maps must be proper, using:
+\begin{enumerate}
+  \item Uniform properness estimates on compositions of elementary automorphisms in dim 2.
+  \item The fact that $F$ agrees with $\varphi_d$ to arbitrary order, so $S_F$ and
+    $S_{\varphi_d}$ have the same ``germs at infinity.''
+  \item The structure of dicritical divisors in the minimal resolution of the rational map
+    $\PP^2 \dashrightarrow \PP^2$ induced by $F$: show that the constant Jacobian forces all
+    exceptional divisors to be non-dicritical.
+\end{enumerate}
+\end{strategy}
+
+\subsection{Strategy D: The Newton Polygon Approach Refined by Root Data}
+
+\begin{strategy}[Combining Newton polygons with Demazure root constraints]
+Let $F = (P,Q)$ be a Keller map with $\det J(F) = 1$. The Newton polygons $N(P)$ and $N(Q)$
+carry information about the ``shape'' of a potential counterexample.
+
+Known constraints:
+\begin{itemize}
+  \item $\gcd(\deg P, \deg Q) \geq 16$ (Lee--Li).
+  \item The northeastern vertex of each ``inner polynomial'' lies in a specific region
+    (Lee--Li, Part IV, 2024).
+  \item The faces of $N(P)$ and $N(Q)$ must satisfy compatibility conditions with the
+    Jacobian relation.
+\end{itemize}
+
+\textbf{New input from root theory:} The outer roots of $\pp^d$ in dimension 2 are
+$\{-e_1 + je_2\}_{j \geq 0}$ and $\{-e_2 + ie_1\}_{i \geq 0}$. The corresponding
+elementary automorphisms are $x \mapsto x + a_j y^j$ and $y \mapsto y + b_i x^i$.
+
+A Keller map's leading term must be compatible with these root directions. Specifically,
+if $P = x + $ (higher terms), $Q = y + $ (higher terms), and $\det J(F) = 1$, then the
+\emph{leading edge} of the Newton polygon of $P - x$ along the direction of each outer root
+$\alpha$ determines the ``depth'' to which $F$ can be approximated by the root subgroup
+$U_\alpha$.
+
+\textbf{Proposed approach:} Develop a ``root-polygon compatibility criterion'' that
+shows every face of the Newton polygon of a Keller pair must be traversable by a
+sequence of outer root actions, forcing the polynomial map to decompose as a finite product
+of elementary automorphisms.
+\end{strategy}
+
+%% ====================================================================
+\section{Key Lemmas and Reductions}
+%% ====================================================================
+
+\subsection{Formal Inverse Always Exists}
+
+\begin{proposition}
+If $F: \kk[x,y] \to \kk[x,y]$ satisfies $\det J(F) \in \kk^\times$, then $F$ has a
+formal power series inverse $G \in \kk[[x,y]]^2$, i.e., $F \circ G = G \circ F = \mathrm{id}$
+in $\kk[[x,y]]$.
+\end{proposition}
+
+\begin{proof}
+By the formal inverse function theorem. The Jacobian condition ensures the linear part of $F$
+is invertible, and one constructs $G$ order by order. This is the content of
+$F_d \in \Aut_\kk(A_d)$ for all $d$, which is guaranteed by Anick's theorem (since tame
+automorphisms lift, and their images in $A_d$ are automorphisms).
+\end{proof}
+
+The Jacobian Conjecture in dimension 2 is thus equivalent to:
+
+\begin{conjecture}[Polynomial Inverse Conjecture, dim 2]
+If $F \in \kk[x,y]^2$ with $\det J(F) \in \kk^\times$, then the formal inverse
+$G \in \kk[[x,y]]^2$ is polynomial.
+\end{conjecture}
+
+\subsection{Degree Bound Conjecture}
+
+\begin{conjecture}[Key reduction]
+There exists a function $B: \NN^2 \to \NN$ such that for any Keller map $F = (P,Q)$ with
+$\deg P = m$, $\deg Q = n$, if $F$ is an automorphism, then $\deg F^{-1} \leq B(m,n)$.
+
+Moreover, $B(m,n) = mn - m - n + 1$ (the Gabber--Bass--Connell--Wright bound from the
+degree-reduction approach).
+\end{conjecture}
+
+\begin{remark}
+The Bass--Connell--Wright / Gabber bound $\deg F^{-1} \leq (\deg F)^{n-1}$ is known to hold
+for automorphisms. The conjecture says this bound holds for Keller maps \emph{a priori}
+(i.e., if the inverse exists, its degree is bounded). Combined with the formal inverse
+theorem, this would prove the Jacobian Conjecture: the formal inverse, being a power series
+with polynomial growth bounded by $B(m,n)$, must be polynomial.
+\end{remark}
+
+\subsection{The Stabilization Criterion}
+
+\begin{lemma}[Inverse limit criterion]\label{lem:invlim}
+Let $F \in \kk[x,y]^2$ with $\det J(F) = 1$, $F(0) = 0$, and $J(F)(0) = I_2$. Suppose
+that for all $d \geq 1$, $F_d := F \bmod \pp^d$ lies in $\GJac(A_d)$, and that there exist
+automorphisms $\varphi_d \in \Aut_\kk(\kk[x,y])$ with:
+\begin{enumerate}
+  \item $\varphi_d \equiv F \pmod{\pp^d}$,
+  \item $\deg \varphi_d \leq D$ for some constant $D$ independent of $d$.
+\end{enumerate}
+Then $F = \varphi_d$ for all $d \geq D + 1$, and $F$ is a polynomial automorphism.
+\end{lemma}
+
+\begin{proof}
+If $\deg \varphi_d \leq D$ and $F \equiv \varphi_d \pmod{\pp^d}$ with $d > D$, then every
+monomial of degree $\leq D$ in $\varphi_d$ agrees with the corresponding monomial of $F$.
+Since $\varphi_d$ has no monomials of degree $> D$, we get $F = \varphi_d + R$ where $R$
+has only terms of degree $> D$ but $R \equiv 0 \pmod{\pp^d}$ with $d > D$, so $R$ has no
+terms of degree $\leq d-1 > D$. Since $F$ is polynomial, $R = 0$ for $d$ large enough.
+\end{proof}
+
+This reduces the Jacobian Conjecture to proving the \textbf{uniform degree bound} in
+condition (2).
+
+%% ====================================================================
+\section{The Dimension-Two Structure in Detail}
+%% ====================================================================
+
+\subsection{Jung--van der Kulk and Root Subgroups}
+
+In dimension $n = 2$, the outer roots of $\pp^d$ are precisely:
+\begin{align*}
+R_1(\pp^d) &= \{(-1, j) : 0 \leq j \leq d-1\}, \\
+R_2(\pp^d) &= \{(i, -1) : 0 \leq i \leq d-1\}.
+\end{align*}
+
+The corresponding elementary automorphisms are:
+\begin{itemize}
+\item For $\alpha = (-1, j) \in R_1(\pp^d)$: $\quad (x,y) \mapsto (x + t \cdot y^j, y)$
+  (triangular, ``type 1'')
+\item For $\alpha = (i, -1) \in R_2(\pp^d)$: $\quad (x,y) \mapsto (x, y + t \cdot x^i)$
+  (triangular, ``type 2'')
+\end{itemize}
+
+By Jung--van der Kulk, $\Aut_\kk(\kk[x,y])$ is generated by affine automorphisms and
+these triangular automorphisms. More precisely:
+\[
+  \Aut_\kk(\kk[x,y]) = \mathrm{Aff}_2(\kk) *_{\mathrm{Aff}_2 \cap \mathrm{Tri}_2}
+    \mathrm{Tri}_2(\kk)
+\]
+the amalgamated free product.
+
+\subsection{Key Structural Observation: No Inner Roots in Dimension Two}
+
+\begin{proposition}[Absence of inner roots]
+For $A_d = \kk[x,y]/\pp^d$ (two variables), the set of inner Demazure roots is empty:
+$R_{\mathrm{inn}}(\pp^d) = \emptyset$.
+\end{proposition}
+
+\begin{proof}
+An inner root $\alpha = (\alpha_1, \alpha_2)$ requires that $\alpha + e_j \geq 0$ and
+$|\alpha + e_j| < d$ for exactly one index $j \in \{1,2\}$.
+
+Suppose $j = 1$ works but $j = 2$ fails. Then:
+\begin{itemize}
+\item $\alpha_1 + 1 \geq 0$, $\alpha_2 \geq 0$, $(\alpha_1 + 1) + \alpha_2 < d$;
+\item either $\alpha_1 < 0$ (impossible since $\alpha_1 \geq -1$ and the root is not outer)
+  or $\alpha_1 + (\alpha_2 + 1) \geq d$.
+\end{itemize}
+The second condition gives $\alpha_1 + \alpha_2 \geq d - 1$, but the first gives
+$\alpha_1 + \alpha_2 < d - 1$, a contradiction. The case $j = 2$ is symmetric.
+\end{proof}
+
+\begin{corollary}\label{cor:gjac-tame}
+In dimension two, $\GJac(A_d) = \langle T, \{U_\alpha : \alpha \in R_{\mathrm{out}}(\pp^d)\}\rangle$
+is generated \emph{solely} by the torus and outer root subgroups. Since outer roots correspond
+exactly to elementary (triangular) automorphisms, and by Jung--van der Kulk all polynomial
+automorphisms of $\kk[x,y]$ are tame (compositions of affine and elementary), we have:
+\[
+  \GJac(A_d) = \pi_d(\mathrm{Tame}_\kk(\kk[x,y])) = \pi_d(\Aut_\kk(\kk[x,y]))
+\]
+where $\pi_d: \kk[x,y] \twoheadrightarrow A_d$ is the projection.
+\end{corollary}
+
+This is a striking feature specific to dimension two: \emph{the entire constant-Jacobian
+group at each truncation level is the image of the polynomial automorphism group.}
+In dimension $n \geq 3$, inner roots exist and contribute non-tame elements to
+$\GJac(A_d)$, which is part of what allows the tangent sweep counterexample.
+
+\subsection{Connecting the Structures}
+
+The crucial bridge: the outer root subgroups $U_\alpha$ for $\alpha \in R_{\mathrm{out}}(\pp^d)$
+are \emph{exactly the images} of elementary polynomial automorphisms in $\Aut_\kk(A_d)$.
+This means:
+
+\begin{proposition}
+The following diagram commutes:
+\[
+\begin{array}{ccc}
+\Aut_\kk(\kk[x,y]) & \xrightarrow{\pi_d} & \Aut_\kk(A_d) \\
+\cup & & \cup \\
+\mathrm{Tame}_\kk(\kk[x,y]) & \xrightarrow{\pi_d} & \GJac(A_d)
+\end{array}
+\]
+where $\pi_d$ is the natural projection modulo $\pp^d$, and $\pi_d$ maps tame automorphisms
+\emph{onto} $\GJac(A_d)$.
+\end{proposition}
+
+\subsection{The Formal vs.\ Polynomial Gap}
+
+The $\pp$-adic completion of this picture gives:
+\[
+\begin{array}{ccc}
+\Aut_\kk(\kk[x,y]) & \hookrightarrow & \Aut_{\mathrm{cont}}(\kk[[x,y]]) \\
+\cap & & \| \\
+\{F : \det J(F) \in \kk^\times\} & \hookrightarrow & \varprojlim \GJac(A_d)
+\end{array}
+\]
+
+The Jacobian Conjecture (dim 2) asks: is the left inclusion an equality?
+
+The right column is always an equality (by the formal inverse function theorem). So the
+question reduces to:
+
+\begin{question}
+Does every element of $\varprojlim \GJac(A_d)$ that is \emph{polynomial} (i.e., lies in
+$\kk[x,y]^2$) automatically lie in $\Aut_\kk(\kk[x,y])$?
+\end{question}
+
+\subsection{Degree Filtration and the Root Decomposition}\label{sec:degree-filt}
+
+The polynomial degree induces a filtration on $\GJac(A_d)$. For $\varphi \in \GJac(A_d)$,
+define $\deg \varphi$ as the minimal degree of a polynomial automorphism lifting $\varphi$.
+
+A factorization $\varphi = u_1 \cdots u_N$ with $u_i \in U_{\alpha_i}$ can be
+\emph{reduced} using the amalgamated product structure. The length and degrees of the
+reduced factorization are controlled by the leading terms.
+
+\begin{proposition}[Length-degree bound in dimension 2]
+If $\varphi \in \GJac(A_d)$ lifts to a polynomial automorphism of degree $\leq D$, then
+$\varphi$ admits a factorization $\varphi = t \cdot u_1 \cdots u_N$ with $t \in T$,
+$u_i \in U_{\alpha_i}$ (outer roots), $N \leq 2D$, and $\deg u_i \leq D$ for each $i$.
+\end{proposition}
+
+%% ====================================================================
+\section{Computational Verification}
+%% ====================================================================
+
+We describe a computational program to:
+\begin{enumerate}
+\item Verify Anick's approximation explicitly for low-degree Keller maps.
+\item Compute the factorization of $F_d \in \GJac(A_d)$ into root subgroup elements.
+\item Test the stabilization conjecture: check that factorization lengths stabilize as
+  $d$ increases.
+\item Compute Newton polygons and verify the root-polygon compatibility.
+\end{enumerate}
+
+See the accompanying Python script \texttt{jacobian\_computations.py}.
+
+%% ====================================================================
+\section{The Main Theorem to Prove}
+%% ====================================================================
+
+Combining the ingredients above, the Jacobian Conjecture in dimension 2 reduces to:
+
+\begin{theorem}[Target Theorem]\label{thm:target}
+Let $F = (P, Q) \in \kk[x,y]^2$ with $F(0) = 0$, $J(F)(0) = I_2$, and
+$\det J(F) = 1$. Then there exists $D \in \NN$ and a tame automorphism
+$\varphi \in \Aut_\kk(\kk[x,y])$ with $\deg \varphi \leq D$ and $F = \varphi$.
+\end{theorem}
+
+\begin{proof}[Proof strategy]
+By Anick's theorem (Theorem~5.6 of Paper 3), for each $d$, there exists
+$\varphi_d \in \Aut_\kk(\kk[x,y])$ (tame) with $F \equiv \varphi_d \pmod{\pp^d}$.
+
+By Corollary~\ref{cor:gjac-tame}, $F_d := F \bmod \pp^d$ lies in $\GJac(A_d)$,
+which in dimension 2 equals $\pi_d(\Aut_\kk(\kk[x,y]))$.
+
+\medskip
+\textbf{Step 1.} Show that $\deg \varphi_d$ is bounded independently of $d$.
+
+This is the crux. The argument should use:
+\begin{enumerate}[label=(\alph*)]
+\item The Jung--van der Kulk decomposition: $\varphi_d = \ell_1 \circ \tau_1 \circ
+  \ell_2 \circ \tau_2 \circ \cdots$ where $\ell_i$ are affine and $\tau_i$ are triangular.
+\item The leading form of $F$ determines the leading form of $\varphi_d$ for $d \gg 0$.
+\item In the reduced decomposition, the degrees of the factors are determined by the
+  Newton polygon of $F$, and increasing $d$ only changes lower-order coefficients.
+\end{enumerate}
+
+\textbf{Step 2.} Apply Lemma~\ref{lem:invlim}: once $\deg \varphi_d \leq D$ and
+$d > D$, we get $F = \varphi_d$, so $F$ is a polynomial automorphism.
+
+\medskip
+\textbf{What remains:} Step 1 requires showing that the ``peeling'' algorithm used in
+Anick's proof (removing the highest-degree terms via outer root actions) terminates with
+a degree bound depending only on $\deg F$, not on the truncation level $d$.
+
+A key tool is the \emph{degree of the inverse}: for a tame automorphism $\varphi$ of
+$\kk[x,y]$ with $\det J(\varphi) = 1$, the Gabber bound gives
+$\deg \varphi^{-1} \leq (\deg \varphi)$. In dimension 2, the sharper bound
+$\deg \varphi^{-1} \leq \deg \varphi$ holds (since the inverse of a composition of
+elementary automorphisms has degrees controlled by the same elementary factors in
+reverse order).
+\end{proof}
+
+%% ====================================================================
+\section{Concrete Research Questions}
+%% ====================================================================
+
+\begin{enumerate}
+\item \textbf{Uniform degree bound:} For a Keller map $F = (P,Q)$ of degree $m$ in
+  dimension 2, prove that the Anick approximants $\varphi_d$ can be chosen with
+  $\deg \varphi_d \leq m^2$ (or better, $\leq m$).
+
+\item \textbf{Root factorization stabilization:} Show that the number of root subgroup
+  factors needed to express $F_d$ in $\GJac(A_d)$ is bounded by $2\deg F$, independent of $d$.
+
+\item \textbf{Leading-term compatibility:} Given the Newton polygon of a Keller pair $(P,Q)$,
+  determine whether the leading-form system is always solvable via a product of outer root
+  actions.
+
+\item \textbf{Divergence-free flow:} Show that a polynomial Keller map in dimension 2 is the
+  time-1 map of a polynomial Hamiltonian flow (up to affine correction).
+
+\item \textbf{Properness from root structure:} Prove that a polynomial map expressible as an
+  inverse limit of outer root products is necessarily proper.
+
+\item \textbf{Connection to the counterexample:} Analyze why the tangent sweep
+  mechanism produces \emph{inner} (not just outer) root actions in dimension 3, and why
+  the two-dimensional root structure prevents this.
+\end{enumerate}
+
+%% ====================================================================
+\section{Appendix: Summary of Notation}
+%% ====================================================================
+
+\begin{center}
+\begin{tabular}{ll}
+\hline
+$A_d$ & $\kk[x_1,\ldots,x_n]/\pp^d$ \\
+$\pp$ & maximal ideal $(x_1,\ldots,x_n)$ \\
+$R(I)$ & Demazure roots of the monomial ideal $I$ \\
+$R_{\mathrm{out}}, R_{\mathrm{inn}}$ & outer and inner roots \\
+$U_\alpha$ & root subgroup $\cong \Ga$ \\
+$\GJac(A_d)$ & $\{\varphi \in \Aut(A_d) : \det J(\varphi) \in \kk^\times\}$ \\
+$T$ & maximal torus $\cong \Gm^n$ \\
+$\divop$ & divergence operator \\
+$J(F)$ & Jacobian matrix of $F$ \\
+$N(P)$ & Newton polygon of $P$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{Alpoge2026}
+L.~Alp\"oge, \emph{A counterexample to the Jacobian conjecture in dimension three},
+preprint, July 2026.
+
+\bibitem{Gallagher2026}
+S.~Gao (following Gallagher), \emph{Counterexamples to the Jacobian conjecture in
+dimensions greater than two}, arXiv:2608.00222, 2026.
+
+\bibitem{DiazDP}
+R.~D\'iaz, A.~Dubouloz, C.~Petitjean, \emph{Two variable monomial algebras with linear
+automorphism groups}, preprint.
+
+\bibitem{DiazDL}
+R.~D\'iaz, A.~Dubouloz, A.~Liendo, \emph{Topologically integrable derivations and additive
+group actions on affine ind-schemes}, preprint.
+
+\bibitem{DiazLM}
+R.~D\'iaz, G.~Lucchini Arteche, G.~Manzano-Flores, \emph{The structure of automorphism
+groups of zero-dimensional monomial algebras}, preprint.
+
+\bibitem{Anick}
+D.~Anick, \emph{Limits of tame automorphisms of $k[x_1,\ldots,x_n]$}, J.~Algebra
+\textbf{82} (1983), 459--468.
+
+\bibitem{JungVdK}
+H.~Jung, \emph{\"Uber ganze birationale Transformationen der Ebene}, J.~Reine Angew.\ Math.\
+\textbf{184} (1942), 161--174.
+
+\bibitem{AbhyankarMoh}
+S.~Abhyankar, T.T.~Moh, \emph{Embeddings of the line in the plane}, J.~Reine Angew.\ Math.\
+\textbf{276} (1975), 148--166.
+
+\bibitem{Rentschler}
+R.~Rentschler, \emph{Op\'erations du groupe additif sur le plan affine}, C.R.\ Acad.\ Sci.\
+Paris S\'er.\ A \textbf{267} (1968), 384--387.
+
+\bibitem{Moh}
+T.T.~Moh, \emph{On the Jacobian conjecture and the configurations of roots}, J.~Reine
+Angew.\ Math.\ \textbf{340} (1983), 140--212.
+
+\bibitem{Nguyen}
+T.~Nguyen, \emph{Some classes satisfying the 2-dimensional Jacobian conjecture and a proof
+of the complex conjecture until degree 104}, arXiv:1902.05923, 2019.
+
+\bibitem{LeeLi}
+K.~Lee, L.~Li, \emph{On the two-dimensional Jacobian conjecture: Magnus' formula
+revisited, IV}, arXiv:2408.01279, 2024.
+
+\bibitem{BCW}
+H.~Bass, E.~Connell, D.~Wright, \emph{The Jacobian conjecture: reduction of degree and
+formal expansion of the inverse}, Bull.\ Amer.\ Math.\ Soc.\ (N.S.) \textbf{7} (1982),
+287--330.
+
+\bibitem{Tao2026}
+T.~Tao, \emph{A digestion of the Jacobian conjecture counterexample}, blog post, July 2026.
+\end{thebibliography}
+
+\end{document}
