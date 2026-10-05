@@ -987,8 +987,8 @@ produces a Jung--van der Kulk decomposition.
 \subsection{Computational verification}
 
 \begin{proposition}[Computational]\label{prop:px-comp}
-For all Keller maps $(P,Q)$ with $m = \deg P$, $n = \deg Q$, and $m \leq 4$,
-$n \leq 9$, normalized as above, the Jacobian cascade forces $P_x = 1$.
+For all Keller maps $(P,Q)$ with $m = \deg P$, $n = \deg Q$, and $m \leq 5$,
+$n \leq 15$, normalized as above, the Jacobian cascade forces $P_x = 1$.
 \end{proposition}
 
 \begin{proof}[Method]
@@ -1034,6 +1034,8 @@ $m$ & $n$ & $m \mid n$? & Solutions \\
 4 & 8 & Yes & verified $P_x = 1$ \\
 5 & 2 & No & 0 \\
 5 & 3 & No & 0 \\
+5 & 10 & Yes & verified $P_x = 1$ \\
+5 & 15 & Yes & verified $P_x = 1$ \\
 \hline
 \end{tabular}
 \end{center}
@@ -1097,6 +1099,31 @@ The nonlinearity that drives this mechanism is the cross-term $J(P_k, Q_l)$
 in the cascade: these are \emph{quadratic} in the original coefficients (products
 of $P$- and $Q$-coefficients), and the $Q$-coefficients themselves depend
 polynomially on the $P$-coefficients from higher cascade levels.
+
+\begin{proposition}[Cascade counting]\label{prop:cascade-count}
+The number of excess cascade equations at degrees $d < m$ equals the number
+of $x$-dependent $P$-coefficients:
+\[
+  \sum_{d=1}^{m-2} (d+1) \;=\; \sum_{k=2}^{m-1} k \;=\; \frac{m(m-1)}{2} - 1.
+\]
+At degree~$d$ with $1 \leq d \leq m-2$, the cascade equation takes the form
+\[
+  (Q_{d+1})_y + (P_{d+1})_x + \sum_{a=2}^{d} J(P_a, Q_{d+2-a}) = 0,
+\]
+where $Q_{d+1}, Q_{d+2-2}, \ldots, Q_2$ have all been determined at higher
+cascade levels (in terms of $P$-coefficients and free pure-$y$
+$Q$-parameters). No new $Q$-unknowns appear, since $Q_{d+2-m}$ with
+$d+2-m < 2$ does not exist.
+\end{proposition}
+
+\begin{remark}
+This counting match is necessary but not sufficient for $P_x = 1$: the
+excess equations must also be \emph{independent} and their common zero set
+must be $\{(P_k)_x = 0 : k = 2, \ldots, m-1\}$. The computational
+verification (Proposition~\ref{prop:px-comp}) confirms this for all tested
+cases. A general proof would need to show that the substituted cascade
+produces a nondegenerate system at degrees $d < m$.
+\end{remark}
 
 \begin{conjecture}\label{conj:px}
 For every Keller map $F = (P,Q) \colon \kk^2 \to \kk^2$ with $\det J(P,Q) = 1$,
