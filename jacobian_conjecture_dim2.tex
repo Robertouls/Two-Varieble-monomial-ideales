@@ -814,13 +814,22 @@ then $\deg P / \deg Q$ is an integer, and the leading form of $P$ is a power of 
 form of $Q$ (by the Jacobian condition), allowing the peeling.
 \end{proof}
 
-\begin{remark}
-The Abhyankar--Moh degree condition is known to hold for polynomial automorphisms of
-$\kk[x,y]$. The question is whether it holds for Keller maps that are \emph{not a priori}
-known to be automorphisms. If the answer is yes, the theorem above proves JC$_2$.
+\begin{remark}[Status of degree divisibility]
+The degree divisibility is known for polynomial automorphisms of $\kk[x,y]$ (by
+Jung--van der Kulk). Whether it holds for Keller maps not \emph{a priori} known to
+be automorphisms is an \textbf{open question} whose resolution would settle JC$_2$.
 
-The degree condition $\gcd(\deg P, \deg Q) \geq 16$ (Lee--Li) is evidence that the
-degrees are highly constrained, but does not by itself imply divisibility.
+The subleading term analysis (expand $\det J(P,Q) = c$ degree by degree after WLOG
+normalizing $L = y$) shows that the Jacobian condition imposes algebraic relations
+on the sub-leading coefficients but does \emph{not} immediately force $P$ and $Q$
+to be univariate in $y$ (which would give the desired contradiction when $\deg P$
+and $\deg Q$ are not in a divisibility relation). Explicit computation for
+$(\deg P, \deg Q) = (5,3)$ shows that the $xy^3$ coefficient of $P_4$ and the $xy$
+coefficient of $Q_2$ survive with the relation $a_0 = \frac{5}{3}b_0$.
+
+Known degree constraints include $\gcd(\deg P, \deg Q) \geq 16$ (Lee--Li) and
+$\gcd(\deg P, \deg Q) \neq 2p$ for any prime $p$, but these do not establish
+divisibility.
 \end{remark}
 
 %% ====================================================================
