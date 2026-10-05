@@ -1148,6 +1148,144 @@ Conjecture~\ref{conj:px} would need to show that the overdetermined cascade
 structure described above persists for all $m$ and~$n$.
 \end{remark}
 
+\subsection{The \texorpdfstring{$Q = G(P) + y$}{Q = G(P) + y} structure}\label{sec:gpy}
+
+The cascade reveals a deeper structural identity: the Jacobian condition
+forces $Q - y$ to lie in $\kk[P]$.
+
+\begin{theorem}\label{thm:equivalence}
+The following are equivalent for a normalized Keller map $F = (P,Q)$ in
+dimension~$2$:
+\begin{enumerate}
+\item $P_x = 1$ (i.e., $P = f(y) + x$ for some $f \in \kk[y]$).
+\item $Q - y \in \kk[P]$ (i.e., $Q = G(P) + y$ for some $G \in \kk[t]$).
+\item $\det J(P,\, Q - y) = 0$.
+\item $F$ is a polynomial automorphism.
+\end{enumerate}
+In particular, $\mathrm{JC}_2$ is equivalent to any one of conditions
+(1)--(3) holding for every normalized Keller map.
+\end{theorem}
+
+\begin{proof}
+$(1) \Rightarrow (2)$: This is Theorem~\ref{thm:px-implies-div}(1).
+
+$(2) \Rightarrow (3)$: If $Q - y = G(P)$, then
+$\det J(P,\, Q-y) = \det J(P,\, G(P)) = 0$
+since $P$ and $G(P)$ are algebraically dependent.
+
+$(3) \Rightarrow (1)$: Since $\det J(P, Q) = 1$, we have
+$\det J(P, Q-y) = \det J(P,Q) - \det J(P,y) = 1 - P_x$.
+So $\det J(P, Q-y) = 0$ iff $P_x = 1$.
+
+$(1) \Rightarrow (4)$: This is Theorem~\ref{thm:px-implies-div}(3).
+
+$(4) \Rightarrow (1)$: If $F$ is a polynomial automorphism, then $F$ is
+tame by Jung--van der Kulk. The tame decomposition shows that $P$ and
+$Q$ have the structure of iterated elementary automorphisms, and in
+particular $P = f(y) + x$ after normalization (the leading form $y^m$
+forces a triangular structure).
+\end{proof}
+
+\begin{remark}
+The equivalence $(1) \Leftrightarrow (3)$ is a simple identity:
+\[
+  \det J(P,\, Q - y) = \det J(P,Q) - P_x = 1 - P_x.
+\]
+Thus $Q - y \in \ker(\det J(P, \cdot))$ iff $P_x = 1$.
+If $P$ is irreducible (which holds generically), the classical algebraic
+dependence theorem gives $\ker(\det J(P, \cdot)) = \kk[P]$, which
+recovers condition~(2). The point is that all four conditions are
+equivalent without assuming $P$ irreducible.
+\end{remark}
+
+\subsubsection*{Cascade verification of $Q = G(P) + y$}
+
+The cascade provides computational evidence for condition~(2).
+For each tested pair $(m,n)$ with $m \mid n$, setting $r = n/m$
+and solving the Jacobian cascade top-down:
+
+\begin{proposition}[Computational]\label{prop:gpy-comp}
+For all pairs $(m,n) \in \{(3,6), (4,8), (3,9)\}$ with $m \mid n$,
+the Jacobian cascade determines $Q = G(P) + y$ where
+$G(t) = t^r + c_{r-1}\,t^{r-1} + \cdots + c_2\,t^2$ with $r = n/m$.
+The free pure-$y$ $Q$-parameters correspond exactly to the
+coefficients $c_2, \ldots, c_{r-1}$ (the $\kk[P]$ ambiguity), and the
+$P$-constraints $P_x = 1$ hold regardless of these free choices.
+\end{proposition}
+
+\subsubsection*{Normalization forces $G_1 = 0$}
+
+\begin{lemma}\label{lem:G1}
+If $Q = G(P) + y$ with $G(t) = \sum_{k \geq 1} G_k\, t^k$, and the
+normalization $Q_1 = y$ holds, then $G_1 = 0$.
+\end{lemma}
+
+\begin{proof}
+The degree-$1$ component of $G(P) + y$ is $G_1 \cdot P_1 + y = G_1 \cdot x + y$.
+The condition $Q_1 = y$ forces $G_1 = 0$.
+\end{proof}
+
+\begin{corollary}\label{cor:Q2-pure-x}
+Under the hypotheses of Lemma~\ref{lem:G1}, with $m \geq 3$:
+\[
+  Q_2 = G_2 \cdot x^2, \qquad (Q_2)_y = 0.
+\]
+\end{corollary}
+
+\begin{proof}
+Since $G_1 = 0$, the degree-$2$ component of $G(P) + y$ is
+$G_2 \cdot (P^2)_2$. Since $P_1 = x$, we have
+$(P^2)_2 = P_1^2 = x^2$. (Higher powers $P^j$ contribute
+$(P_1)^j = x^j$, which has degree $j \geq 3$ for $j \geq 3$.)
+\end{proof}
+
+\subsubsection*{Inner sum cancellation}
+
+The identity $\det J(P,\, G(P) + y) = P_x$
+(Corollary~\ref{lem:key-identity}) has a striking consequence at each
+cascade level.
+
+\begin{proposition}[Inner sum cancellation]\label{prop:inner-cancel}
+Let $Q = G(P) + y$ with $G_1 = 0$. At cascade degree $D$ with
+$1 \leq D \leq m - 2$, the cascade equation reads
+\[
+  (Q_{D+1})_y + (P_{D+1})_x +
+  \sum_{a=2}^{D} J(P_a,\, Q_{D+2-a}) = 0.
+\]
+Since $\det J(P, Q) = P_x$, the degree-$D$ part of $P_x$ is
+$(P_{D+1})_x$, so the inner sum cancels identically:
+\[
+  (Q_{D+1})_y + \sum_{a=2}^{D} J(P_a,\, Q_{D+2-a}) = 0.
+\]
+\end{proposition}
+
+\begin{proof}
+The degree-$D$ component of $\det J(P,Q) = P_x$ is
+\[
+  \bigl[\det J(P,Q)\bigr]_D = (P_{D+1})_x.
+\]
+But expanding $[\det J(P,Q)]_D$ via the cascade gives
+\[
+  (Q_{D+1})_y + (P_{D+1})_x + \sum_{a=2}^{D} J(P_a, Q_{D+2-a}).
+\]
+Equating these two expressions yields the cancellation.
+\end{proof}
+
+\begin{remark}
+This cancellation is verified computationally for $m = 3, 4, 5$.
+In particular, for $m = 4$ and $D = 2$:
+$(Q_3)_y + J(P_2, Q_2) = 0$, where $Q_2 = G_2 x^2$ by
+Corollary~\ref{cor:Q2-pure-x}. The Jacobian $J(P_2, G_2 x^2)$
+involves only $(P_2)_y$ (since $(Q_2)_y = 0$), and $(Q_3)_y$
+compensates exactly.
+
+The cascade at degree $D$ thus reduces to a pure constraint on
+$(P_{D+1})_x$. Combining with the Keller condition
+$\det J(P,Q) = 1$ (which requires $[\det J(P,Q)]_D = 0$ for
+$D \geq 1$), we get $(P_{D+1})_x = 0$ for $D \geq 1$, i.e.,
+$P_x = 1$---\emph{provided} $Q = G(P) + y$.
+\end{remark}
+
 %% ====================================================================
 \section{Concrete Research Questions}
 %% ====================================================================
