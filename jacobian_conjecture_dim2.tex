@@ -1160,10 +1160,16 @@ dimension~$2$:
 \item $P_x = 1$ (i.e., $P = f(y) + x$ for some $f \in \kk[y]$).
 \item $Q - y \in \kk[P]$ (i.e., $Q = G(P) + y$ for some $G \in \kk[t]$).
 \item $\det J(P,\, Q - y) = 0$.
-\item $F$ is a polynomial automorphism.
 \end{enumerate}
-In particular, $\mathrm{JC}_2$ is equivalent to any one of conditions
-(1)--(3) holding for every normalized Keller map.
+Moreover, each of \textup{(1)--(3)} implies:
+\begin{enumerate}
+\item[\textup{(4)}] $F$ is a polynomial automorphism.
+\end{enumerate}
+The converse \textup{(4)}$\Rightarrow$\textup{(1)} holds for
+$\deg P \leq 3$ \textup{(Moh~\cite{Moh})} but \textbf{fails} for
+$\deg P = 4$: there exist normalized Keller pairs that are polynomial
+automorphisms with $P_x \neq 1$
+\textup{(Proposition~\ref{prop:px-neq-1-auto})}.
 \end{theorem}
 
 \begin{proof}
@@ -1178,12 +1184,6 @@ $\det J(P, Q-y) = \det J(P,Q) - \det J(P,y) = 1 - P_x$.
 So $\det J(P, Q-y) = 0$ iff $P_x = 1$.
 
 $(1) \Rightarrow (4)$: This is Theorem~\ref{thm:px-implies-div}(3).
-
-$(4) \Rightarrow (1)$: If $F$ is a polynomial automorphism, then $F$ is
-tame by Jung--van der Kulk. The tame decomposition shows that $P$ and
-$Q$ have the structure of iterated elementary automorphisms, and in
-particular $P = f(y) + x$ after normalization (the leading form $y^m$
-forces a triangular structure).
 \end{proof}
 
 \begin{remark}
@@ -1195,8 +1195,24 @@ Thus $Q - y \in \ker(\det J(P, \cdot))$ iff $P_x = 1$.
 If $P_x = 1$ then $P$ is irreducible (Proposition~\ref{prop:P-irred}(b)),
 and the Stein--Nagata--Nowicki theorem gives
 $\ker(\det J(P, \cdot)) = \kk[P]$, recovering condition~(2).
-The equivalence of all four conditions does not require a separate
-irreducibility hypothesis: it is a consequence of $P_x = 1$ itself.
+\end{remark}
+
+\begin{remark}\label{rem:4-not-imply-1}
+One might expect $(4) \Rightarrow (1)$ to hold via Jung--van der
+Kulk: every automorphism of~$\kk[x,y]$ is tame, so $P$ should
+decompose into a product of elementary automorphisms forcing
+$P = f(y) + x$ after normalization. This argument is \textbf{incorrect}
+for $m \geq 4$. The normalization conditions $P_m = y^m$, $P_1 = x$
+fix the leading and linear forms of~$P$, but a tame automorphism
+composed of triangular maps need not have its first component
+linear in~$x$ after such normalization.
+
+A concrete counterexample with $m = 4$ is given in
+Section~\ref{sec:auto-px-neq-1}: for $p_{2,0} = 2$, $p_{3,0} = 1$,
+$\Delta = 4p_{2,0} - p_{3,0}^2 = 7$, the normalized Keller pair
+$(P,Q)$ has $P_x = \tfrac{32}{49}x + \tfrac{8}{7}y^2 + \tfrac{4}{7}y + 1
+\neq 1$ yet is a polynomial automorphism whose inverse is computed
+explicitly (Proposition~\ref{prop:px-neq-1-auto}).
 \end{remark}
 
 \subsubsection*{Cascade verification of $Q = G(P) + y$}
@@ -1343,7 +1359,11 @@ The normalization conditions $P_m = y^m$, $P_1 = x$, $P_0 = 0$ alone
 do \emph{not} force irreducibility: $P = (y^2+x)(y^2+x+1)$ satisfies
 all three but is reducible (and decomposable via $h(t) = t^2 + t$,
 $g = y^2 + x$, hence excluded from Keller pairs by~\textup{(a)}).
-The hypothesis $P_x = 1$ is essential.
+
+For the $P_x = 1$ branch, irreducibility follows from~\textup{(b)}.
+For $m \geq 4$, there also exist Keller pairs with $P_x \neq 1$
+where $P$ is indecomposable (hence in a Keller pair) but
+\emph{not} linear in~$x$; see Proposition~\ref{prop:decomp-dichotomy}(b).
 \end{remark}
 
 \begin{remark}
@@ -1353,18 +1373,20 @@ $\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
 Stein--Nagata--Nowicki \cite{Nagata1977,Nowicki1988}.
 In this case, $Q_{\mathrm{cas}} - y \in \kk[P]$ is equivalent to
 $\det J(P,\, Q_{\mathrm{cas}} - y) = 0$, i.e.,
-$\det J(P,\, Q_{\mathrm{cas}}) = P_x$.
+$\det J(P,\, Q_{\mathrm{cas}}) = P_x = 1$.
 More generally, the identity $\det J(P, Q_{\mathrm{cas}}) = P_x$
 (Corollary~\ref{lem:key-identity}) holds without assuming $P_x = 1$;
+for the $P_x = 1$ branch,
 $Q_{\mathrm{cas}} - y \in \kk[P]$ is verified directly by polynomial
-division in each computational instance.
+division in each computational instance. For the $P_x \neq 1$
+branches (which arise for $m \geq 4$), we have
+$Q_{\mathrm{cas}} - y \notin \kk[P]$ but the Keller pair is
+nonetheless an automorphism (Proposition~\ref{prop:px-neq-1-auto}).
 \end{remark}
 
-\begin{theorem}[Equivalence chain for JC$_2$]\label{thm:equiv-chain}
-The following are equivalent:
+\begin{theorem}[Implication chain for JC$_2$]\label{thm:equiv-chain}
+For normalized Keller pairs with $\deg P = m$ and $\deg Q = rm$:
 \begin{enumerate}
-\item[\textup{(i)}] $\mathrm{JC}_2$ holds for all Keller pairs with
-  $\deg P = m$ and $\deg Q = rm$.
 \item[\textup{(ii)}] Every cascade solution satisfies
   $Q_{\mathrm{cas}} - y \in \kk[P]$.
 \item[\textup{(iii)}] The cascade kernel satisfies
@@ -1372,7 +1394,21 @@ The following are equivalent:
   $\dim \mathcal{K} = r-2$.
 \item[\textup{(iv)}] Every Keller pair $(P,Q)$ with $P_m = y^m$
   satisfies $P_x = 1$.
+\item[\textup{(i)}] $\mathrm{JC}_2$ holds for all Keller pairs with
+  $\deg P = m$ and $\deg Q = rm$.
 \end{enumerate}
+These satisfy the implications
+\[
+  \textup{(ii)} \Longleftrightarrow \textup{(iii)}
+  \;\Longrightarrow\; \textup{(iv)}
+  \;\Longrightarrow\; \textup{(i)}.
+\]
+The reverse implications \textup{(i)}$\Rightarrow$\textup{(iv)}
+and \textup{(iv)}$\Rightarrow$\textup{(ii)} are \textbf{false} in general:
+for $m = 4$ there exist Keller pairs that are polynomial automorphisms
+(so \textup{(i)} holds) with $P_x \neq 1$ (so \textup{(iv)} fails)
+and $Q_{\mathrm{cas}} - y \notin \kk[P]$ (so \textup{(ii)} fails);
+see Proposition~\textup{\ref{prop:px-neq-1-auto}}.
 \end{theorem}
 
 \begin{proof}
@@ -1384,23 +1420,44 @@ $\alpha \in \kk^\times$ and some coordinate~$Q_0$ paired with~$P$.
 
 (iii)$\Leftrightarrow$(ii): Immediate from $Q_{\mathrm{cas}} = P^r + y + R$
 with $R \in \mathcal{K}$.
-
-(i)$\Rightarrow$(iv): By Theorem~\ref{thm:equivalence},
-$(4) \Rightarrow (1)$: every automorphism with the given normalization
-satisfies $P_x = 1$.
 \end{proof}
 
-\begin{conjecture}[Cascade structure conjecture]\label{conj:cascade-structure}
-For every cascade solution $Q_{\mathrm{cas}}$
+\begin{remark}
+The original version of this result claimed all four conditions
+equivalent, using the implication (i)$\Rightarrow$(iv) via
+Theorem~\ref{thm:equivalence}(4)$\Rightarrow$(1). That direction
+is \textbf{false} for $m \geq 4$ (Remark~\ref{rem:4-not-imply-1}).
+Consequently, (iv) is a sufficient condition for JC$_2$ (via
+(iv)$\Rightarrow$(i)) but not a necessary one. The cascade structure
+conjecture (ii) is likewise sufficient but not necessary.
+
+For $m \leq 3$, all four conditions \emph{are} equivalent,
+since (i)$\Rightarrow$(iv) holds by Moh~\cite{Moh}.
+\end{remark}
+
+\begin{conjecture}[Cascade structure conjecture---restricted form]%
+\label{conj:cascade-structure}
+For every cascade solution $Q_{\mathrm{cas}}$ with $P_x = 1$
 (Definition~\ref{def:cascade-sol}), we have
 $Q_{\mathrm{cas}} - y \in \kk[P]$,
 or equivalently,
-$\det J(P,\, Q_{\mathrm{cas}}) = P_x$
-as a polynomial identity in the $P$-coefficients and free $Q$-parameters.
+$\det J(P,\, Q_{\mathrm{cas}}) = P_x = 1$.
 \end{conjecture}
 
+\begin{remark}
+The original (unrestricted) form of this conjecture---asserting
+$Q_{\mathrm{cas}} - y \in \kk[P]$ for \emph{all} cascade solutions---is
+\textbf{false}. For $m = 4$, the $P_x \neq 1$ branch
+(Proposition~\ref{prop:px-neq-1-auto}) produces cascade solutions with
+$Q_{\mathrm{cas}} - y \notin \kk[P]$, even though the resulting Keller
+pair is a polynomial automorphism. The restricted form with the hypothesis
+$P_x = 1$ remains open and is verified computationally for all cases in
+Proposition~\ref{prop:cascade-identity-comp}.
+\end{remark}
+
 \begin{proposition}[Computational evidence]\label{prop:cascade-identity-comp}
-Conjecture~\ref{conj:cascade-structure} is verified for:
+Conjecture~\ref{conj:cascade-structure} (restricted to $P_x = 1$)
+is verified for:
 \begin{center}
 \begin{tabular}{ccccl}
 \hline
@@ -1561,46 +1618,159 @@ expanded as a polynomial in~$\varepsilon$. The coefficient of
 $\varepsilon^1$ is compared with~$P^j$ and found to be equal.
 \end{proof}
 
-\subsection{Spurious solutions and the role of primitivity}\label{sec:spurious}
+\subsection{Multiple solution branches and the role of primitivity}%
+\label{sec:spurious}
 
 When the low-degree cascade equations ($D < m$) are solved as a polynomial
 system in both the remaining $Q$-variables and the $x$-dependent
 $P$-coefficients, additional solutions with $P_x \neq 1$ can appear.
 
 \begin{proposition}\label{prop:spurious}
-For $(m,n) = (4,8)$, the system of cascade constraints at levels $D < m$
+For $m = 4$, the system of cascade constraints at levels $D < m$
 has two solution branches:
 \begin{enumerate}
 \item[\textup{(1)}] All $x$-dependent $P$-coefficients vanish
   ($P_x = 1$).
-\item[\textup{(2)}] The $x$-dependent coefficients satisfy
-  $p_{2,1} = 4p_{3,0}/(4p_{2,0} - p_{3,0}^2)$,
-  $p_{2,2} = 16/(4p_{2,0} - p_{3,0}^2)^2$,
-  $p_{3,1} = 8/(4p_{2,0} - p_{3,0}^2)$, giving $P_x \neq 1$.
+\item[\textup{(2)}] Setting $\Delta = 4p_{2,0} - p_{3,0}^2 \neq 0$,
+  the $x$-dependent coefficients satisfy
+  \begin{equation}\label{eq:branch2}
+    p_{3,1} = \frac{8}{\Delta},\quad
+    p_{2,1} = \frac{4\,p_{3,0}}{\Delta},\quad
+    p_{2,2} = \frac{16}{\Delta^2},\quad
+    p_{3,2} = p_{3,3} = 0,
+  \end{equation}
+  giving $P_x = \tfrac{32}{\Delta^2}\, x + \tfrac{8}{\Delta}\, y^2
+  + \tfrac{4\,p_{3,0}}{\Delta}\, y + 1 \neq 1$.
 \end{enumerate}
-Solution~\textup{(2)} is \emph{spurious}: it corresponds to a decomposable
-$P$. For instance, with $p_{2,0} = 1$, $p_{3,0} = 0$,
-$P = (y^2 + x)(y^2 + x + 1) = h(y^2+x)$ where $h(t) = t^2 + t$.
-By the primitivity lemma (Lemma~\textup{\ref{lem:primitive}}),
-such $P$ cannot appear in a Keller pair, since
-$h'(y^2+x) = 2y^2 + 2x + 1$ is non-constant.
+These two branches are independent of~$n$: the same Gr\"obner basis
+\textup{(}$13$~generators in the $P$-variables\textup{)} is obtained
+for $(m,n) = (4,8)$ and $(m,n) = (4,12)$
+\textup{(Section~\ref{sec:n-independence})}.
 \end{proposition}
 
-\begin{remark}
-This illustrates that the cascade constraints at $D < m$ alone do not
-force $P_x = 1$: the non-degeneracy of the cascade at $D \geq m$
-(which implicitly requires primitivity of~$P$) is also needed.
-The spurious branch arises precisely when $P$ is decomposable,
-and is thus excluded by Lemma~\ref{lem:primitive}.
+Branch~(2) has fundamentally different behavior depending on the
+pure-$y$ parameter~$p_{3,0}$:
+
+\begin{proposition}[Decomposability dichotomy]\label{prop:decomp-dichotomy}
+In Branch~\textup{(2)} of Proposition~\textup{\ref{prop:spurious}}:
+\begin{enumerate}
+\item[\textup{(a)}] If $p_{3,0} = 0$: $P$ is decomposable.
+  With $p_{2,0} = 1$, we have $\Delta = 4$ and
+  $P = (y^2 + x)(y^2 + x + 1) = h(y^2+x)$ where $h(t) = t^2 + t$.
+  By the primitivity lemma (Lemma~\textup{\ref{lem:primitive}}),
+  $h'(y^2+x) = 2y^2 + 2x + 1$ is non-constant, so
+  such $P$ cannot appear in a Keller pair. Indeed, the cascade
+  at $D \geq m$ encounters a contradiction and no Keller mate exists.
+\item[\textup{(b)}] If $p_{3,0} \neq 0$: $P$ is \textbf{indecomposable}.
+  The cascade at $D \geq m$ completes without contradiction,
+  producing a genuine Keller mate~$Q$ with $\det J(P,Q) = 1$.
+  Moreover, $(P,Q)$ is a polynomial automorphism
+  \textup{(Proposition~\ref{prop:px-neq-1-auto})}.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) When $p_{3,0} = 0$, we have $p_{2,1} = 0$, $p_{3,1} = 2$,
+$p_{2,2} = 1$ (for $p_{2,0} = 1$), and $P = y^4 + 2y^2 + 2xy^2 + x^2 + x
+= (y^2+x)^2 + (y^2+x)$. This is $h(g)$ with $g = y^2 + x$,
+$h(t) = t^2+t$, $\deg h = 2$. Lemma~\ref{lem:primitive} applies.
+
+(b) When $p_{3,0} \neq 0$ and $\Delta \neq 0$, a quadratic decomposition
+$P = h(g)$ with $\deg h = 2$, $g = y^2 + cy + dx + e$ requires
+$c = p_{3,0}/2$, $d = 4/\Delta$, and then the $y$-coefficient of~$P$
+yields $2ce + p_{3,0}\,p_{2,0} = p_{3,0}\,\Delta/8$, which gives
+$e = p_{2,0}/2 - p_{3,0}^2/16 - c^2/(2d)$; checking the remaining
+coefficients leads to $p_{3,0} \cdot \Delta = 0$, a contradiction.
+Hence $P$ is indecomposable. The Keller mate is then constructed
+by the cascade, and verified to satisfy $\det J(P,Q) = 1$.
+\end{proof}
+
+\begin{remark}\label{rem:spurious-correction}
+The decomposable sub-case (a) is excluded from Keller pairs by
+the primitivity lemma. The indecomposable sub-case (b) yields
+genuine Keller pairs that are polynomial automorphisms with $P_x \neq 1$.
+This shows that the cascade constraints at $D < m$ capture
+\emph{all} normalized Keller pairs, not only those with $P_x = 1$:
+primitivity of~$P$ is not enough to force $P_x = 1$ for $m \geq 4$.
 \end{remark}
 
-\subsection{The precise gap}\label{sec:gap}
+\subsection{Automorphisms with \texorpdfstring{$P_x \neq 1$}{Px != 1}}%
+\label{sec:auto-px-neq-1}
 
-We summarize the logical structure of the argument.
+We show that Branch~(2) of Proposition~\ref{prop:spurious},
+when $p_{3,0} \neq 0$, produces genuine polynomial automorphisms
+with $P_x \neq 1$. The key is a coordinate change that reveals
+the tame automorphism structure.
 
-\begin{theorem}[Proof reduction---precise formulation]\label{thm:precise-gap}
-The two-dimensional Jacobian Conjecture ($\mathrm{JC}_2$) is equivalent
-to the following statement:
+\begin{proposition}[Automorphisms with $P_x \neq 1$]%
+\label{prop:px-neq-1-auto}
+Let $p_{2,0}, p_{3,0} \in \kk$ with $p_{3,0} \neq 0$ and
+$\Delta = 4p_{2,0} - p_{3,0}^2 \neq 0$. Define $P$ by
+Branch~\textup{(2)} of Proposition~\textup{\ref{prop:spurious}}:
+\[
+  P = y^4 + p_{3,0}\,y^3 + p_{2,0}\,y^2
+    + \tfrac{8}{\Delta}\,x\,y^2 + \tfrac{4\,p_{3,0}}{\Delta}\,x\,y
+    + \tfrac{16}{\Delta^2}\,x^2 + x.
+\]
+Let $Q$ be the Keller mate produced by the cascade. Then:
+\begin{enumerate}
+\item[\textup{(a)}] $\det J(P,Q) = 1$,
+  \quad $P_x = \tfrac{32}{\Delta^2}\,x + \tfrac{8}{\Delta}\,y^2
+  + \tfrac{4\,p_{3,0}}{\Delta}\,y + 1 \neq 1$.
+\item[\textup{(b)}] Setting $g = y^2 + \tfrac{p_{3,0}}{2}\,y
+  + \tfrac{4}{\Delta}\,x$, we have
+  \[
+    P = g^2 + \tfrac{\Delta}{4}\,g - \tfrac{\Delta\,p_{3,0}}{8}\,y.
+  \]
+\item[\textup{(c)}] The map $(P,Q)$ is a polynomial automorphism.
+  In the coordinates $(u,y)$ where $u = g$ \textup{(}so
+  $x = \tfrac{\Delta}{4}(u - y^2 - \tfrac{p_{3,0}}{2}\,y)$\textup{)},
+  the map decomposes as a composition of triangular maps.
+\item[\textup{(d)}] $Q - y \notin \kk[P]$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+(a) is verified by symbolic computation of $\det J(P,Q)$.
+
+(b) Direct expansion: $g^2 + \tfrac{\Delta}{4}\,g - \tfrac{\Delta p_{3,0}}{8}\,y$
+matches $P$ after substituting the expressions for $p_{k,i}$
+from~\eqref{eq:branch2}.
+
+(c) For the specific instance $p_{2,0} = 2$, $p_{3,0} = 1$ ($\Delta = 7$),
+$P = u^2 + \tfrac{7}{4}\,u - \tfrac{7}{8}\,y$ in $(u,y)$ coordinates,
+and $Q = P^2 - \tfrac{8}{7}\,P + 2u$. Setting $w = q - p^2 + \tfrac{8}{7}\,p$,
+the inverse is
+\[
+  u = \tfrac{w}{2}, \quad
+  y = \tfrac{2}{7}\,w^2 + w - \tfrac{8}{7}\,p, \quad
+  x = \tfrac{7}{4}\bigl(u - y^2 - \tfrac{y}{2}\bigr),
+\]
+which is polynomial of degree~$8$. Both $F^{-1} \circ F = \mathrm{id}$
+and $F \circ F^{-1} = \mathrm{id}$ are verified symbolically.
+
+(d) We have $Q - y - P^2 + \tfrac{8}{7}\,P = 2u
+= \tfrac{8}{7}\,x + 2y^2 + y \notin \kk[P]$
+(it depends on $x$ but has degree~$1$ in~$x$, while $P$ has degree~$2$
+in~$x$).
+\end{proof}
+
+\begin{remark}
+The $(u,y)$-coordinate decomposition shows that the automorphism structure
+of the $P_x \neq 1$ branch is \emph{not} $Q = y + G(P)$ but rather
+a more complex tame decomposition involving the intermediate
+coordinate $g = y^2 + \tfrac{p_{3,0}}{2}\,y + \tfrac{4}{\Delta}\,x$.
+The Jacobian $J(g,y)$ with respect to $(x,y)$ is $4/\Delta$
+(not~$1$), so the map $(g,y)$ is an automorphism but not Keller.
+\end{remark}
+
+\subsection{The precise gap---corrected}\label{sec:gap}
+
+We summarize the logical structure of the argument in light of the
+$P_x \neq 1$ automorphisms.
+
+\begin{theorem}[Proof reduction---corrected formulation]\label{thm:precise-gap}
+Consider the statement:
 
 \medskip
 \noindent\textbf{($\star$)} \emph{For every normalized Keller pair
@@ -1609,32 +1779,80 @@ $Q_n = y^n$, $P_1 = x$, $Q_1 = y$, we have $P_x = 1$.}
 
 \medskip
 \noindent The implication $(\star) \Rightarrow \mathrm{JC}_2$ is proved
-(Theorem~\textup{\ref{thm:px-implies-div}}). The converse
-$\mathrm{JC}_2 \Rightarrow (\star)$ follows from
-Theorem~\textup{\ref{thm:equiv-chain}}.
+(Theorem~\textup{\ref{thm:px-implies-div}}).
+However, the converse $\mathrm{JC}_2 \Rightarrow (\star)$ is
+\textbf{false}: for $m = 4$, Proposition~\textup{\ref{prop:px-neq-1-auto}}
+gives normalized Keller pairs that are polynomial automorphisms with
+$P_x \neq 1$.
+
+Thus $(\star)$ is a \emph{sufficient} condition for JC$_2$
+but not a \emph{necessary} one. A proof of JC$_2$ cannot proceed
+by establishing~$(\star)$ alone---it must also account for the
+$P_x \neq 1$ branches.
 \end{theorem}
 
-\begin{remark}
-Statement~$(\star)$ can be reformulated in several equivalent ways:
+\begin{remark}\label{rem:two-routes}
+There are now two complementary routes to JC$_2$:
 \begin{enumerate}
-\item \textbf{PDE formulation.} Since $P_x = 1$ means
-  $P = f(y) + x$, the Keller condition $\det J(P,Q) = 1$ becomes
-  the first-order PDE $Q_y - f'(y)\, Q_x = 1$. The change of
-  variables $(u,v) = (P,\, y)$ transforms this to $\partial R/\partial v = 1$
-  (where $Q(x,y) = R(P,y)$), yielding $Q = y + G(P)$.
-\item \textbf{Algebraic dependence.} If $P_x = 1$, then $P$ is irreducible
-  (Proposition~\textup{\ref{prop:P-irred}(b)}) and Stein--Nagata--Nowicki
-  gives $\ker(\det J(P, \cdot)) = \kk[P]$, so $(\star)$ is equivalent to
-  $Q - y \in \kk[P]$.
-\item \textbf{Cascade kernel.} $(\star)$ is equivalent to the cascade
-  kernel $\mathcal{K}$ coinciding with $\kk[P]_{\leq n-1}$
-  (Theorem~\textup{\ref{thm:equiv-chain}}).
+\item \textbf{Branch-by-branch approach.}
+  For each~$m$, enumerate all solution branches of the $D < m$
+  cascade constraints (as done for $m = 3, 4$). For each branch,
+  either show $P_x = 1$ (and then $Q = y + G(P)$ gives automorphism),
+  or show that $P$ is decomposable (excluded by primitivity),
+  or verify directly that the Keller pair is an automorphism
+  (as for the $m = 4$ indecomposable $P_x \neq 1$ branch).
+\item \textbf{Unified approach.}
+  Find a structural argument that all Keller pairs are automorphisms,
+  without passing through $P_x = 1$.
+  The $n$-independence of the $D < m$ constraints
+  (Section~\ref{sec:n-independence}) suggests that the relevant
+  structure depends only on~$m$.
 \end{enumerate}
-Statement~$(\star)$ is verified computationally for all Keller maps with
-$m \leq 5$, $n \leq 15$ (Proposition~\textup{\ref{prop:px-comp}}),
-and the cascade structure $Q_{\mathrm{cas}} - y \in \kk[P]$ is verified
-for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\, (3,9),\, (4,12),\,
-(5,15),\, (3,12)\}$ both symbolically and numerically.
+\end{remark}
+
+\begin{remark}
+For $m = 3$, the $D < m$ constraints force $P_x = 1$ uniquely
+(the Gr\"obner basis gives a single branch), providing a
+cascade-based proof that every Keller pair with $\deg P = 3$ is
+an automorphism---consistent with Moh's theorem~\cite{Moh}.
+For $m = 4$, there are two branches, both producing automorphisms
+(one via $Q = y + G(P)$, the other via the coordinate change of
+Proposition~\ref{prop:px-neq-1-auto}).
+The structure for $m \geq 5$ is unknown.
+\end{remark}
+
+\subsection{\texorpdfstring{$n$}{n}-independence of the low-degree constraints}%
+\label{sec:n-independence}
+
+The cascade constraints at levels $D < m$ determine the $x$-dependent
+$P$-coefficients. A striking feature is that these constraints depend
+only on~$m$, not on $n = rm$.
+
+\begin{proposition}[$n$-independence]\label{prop:n-indep}
+For $m = 3$, the cascade constraints at $D < m$ yield the same
+Gr\"obner basis (two generators, in the $P$-variables) for
+$n = 6$, $n = 9$, and $n = 12$. For $m = 4$, the same Gr\"obner
+basis ($13$~generators) is obtained for $n = 8$ and $n = 12$.
+In particular, the solution branches of
+Proposition~\textup{\ref{prop:spurious}} are independent of~$n$.
+\end{proposition}
+
+\begin{proof}[Method]
+The cascade is run with generic $P$- and $Q$-coefficients. At levels
+$D \geq m$, the $Q$-coefficients are solved in terms of $P$-coefficients
+and free parameters. At levels $D < m$, the remaining constraints form
+a polynomial system in $P$-variables. A Gr\"obner basis with elimination
+order (eliminating $Q$-variables) is computed; the generators involving
+only $P$-variables are compared across different~$n$.
+\end{proof}
+
+\begin{remark}
+The $n$-independence suggests that the $D < m$ constraints capture an
+intrinsic property of $P$ that is determined by the Jacobian condition
+at leading order, independent of the degree of~$Q$. This is consistent
+with the geometric interpretation: $P$ must be a coordinate in a
+Keller pair, and this property of~$P$ does not depend on the specific
+mate~$Q$.
 \end{remark}
 
 %% ====================================================================
@@ -1642,63 +1860,61 @@ for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\, (3,9),\, (4,12),\,
 %% ====================================================================
 
 \begin{enumerate}
-\item \textbf{Primary: Prove $P_x = 1$ (statement~$(\star)$ of
-  Theorem~\ref{thm:precise-gap}):}
-  This is the sole remaining step for JC$_2$. Prove that for every
-  normalized Keller pair, $P_x = 1$. Equivalently, prove the cascade
-  structure conjecture (Conjecture~\ref{conj:cascade-structure}).
-  Verified computationally for $m \leq 5$, $n \leq 15$.
+\item \textbf{Primary: Prove all branches produce automorphisms.}
+  For each~$m$, the $D < m$ cascade constraints have finitely many
+  solution branches ($n$-independent by
+  Proposition~\ref{prop:n-indep}). For $m = 3$: one branch ($P_x = 1$),
+  confirmed automorphism. For $m = 4$: two branches, both confirmed
+  automorphisms (Propositions~\ref{prop:spurious}
+  and~\ref{prop:px-neq-1-auto}). The question is whether \emph{every}
+  branch, for every~$m$, produces an automorphism.
 
   Possible approaches:
   \begin{itemize}
-  \item \emph{Cascade induction}: show that at each cascade level
-    $D \geq m$, the linear system in $Q$-coefficients has the same
-    rank as the $\kk[P]$-system, so $\mathcal{K} = \kk[P]_{\leq n-1}$.
-  \item \emph{Locally nilpotent derivation (LND) theory}: the Keller
-    condition $\det J(P,Q) = 1$ means $\partial_P = Q_x \partial_y - Q_y \partial_x$
-    is an LND of $\kk[x,y]$ with $\partial_P(P) = 1$. Rentschler's
-    theorem classifies LNDs in dimension~$2$, but applying it to
-    $\partial_P$ appears circular without first knowing $P$ is a coordinate.
-  \item \emph{Newton polygon constraints}: use the degree-by-degree
-    structure of the cascade to bound the Newton polygon of~$P$
-    and force all $x$-dependent terms to vanish.
-  \item \emph{Iterated Jacobians}: the higher-order identities
-    $\det J(P^k, Q) = k P^{k-1}$ may impose additional constraints
-    on~$P$ that force $P_x = 1$.
+  \item \emph{Branch enumeration for $m = 5$}: compute the Gr\"obner
+    basis of the $D < m$ constraints and classify all solution branches.
+    Verify that each indecomposable branch produces a Keller mate
+    that is an automorphism.
+  \item \emph{Coordinate-change generalization}: the $m = 4$
+    automorphism structure uses $g = y^2 + \tfrac{p_{3,0}}{2}\,y
+    + \tfrac{4}{\Delta}\,x$, which satisfies
+    $P = g^2 + (\text{linear in } g, y)$. For general~$m$, look for
+    analogous coordinate changes $g$ such that $P$ has a simpler
+    form in $(g,y)$ coordinates.
+  \item \emph{Tame decomposition theory}: every automorphism of
+    $\kk[x,y]$ is tame. Study which tame decompositions are compatible
+    with the normalization $P_m = y^m$, $P_1 = x$, and show that
+    each decomposition type yields a branch of the cascade constraints.
   \end{itemize}
 
-\item \textbf{Prove Conjecture~\ref{conj:cascade-structure}
-  (cascade structure):} Prove that $Q_{\mathrm{cas}} - y \in \kk[P]$
-  for generic~$P$. By Theorem~\ref{thm:proof-reduction} this settles
-  JC$_2$. Equivalently, prove
-  $\dim \mathcal{K} = r - 2 = \dim(\kk[P]_{\leq n-1}/\kk)$
-  (Theorem~\ref{thm:cascade-kernel-dim}).
-  The conjecture is verified symbolically for
-  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$
-  and numerically for $7$~instances
-  (Proposition~\ref{prop:numerical-instances}).
+\item \textbf{Prove the restricted cascade structure conjecture
+  (Conjecture~\ref{conj:cascade-structure}):}
+  For the $P_x = 1$ branch, prove that $Q_{\mathrm{cas}} - y \in \kk[P]$.
+  This is verified for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\,
+  (3,9),\, (4,12),\, (5,15),\, (3,12)\}$.
 
-\item \textbf{Extend computational verification:} Test larger cases,
-  e.g., $(m,n) \in \{(4,16),\, (5,20),\, (6,18)\}$, for the full cascade
-  identity. Currently verified for $8$~pairs up to $m = 6$, $n = 15$.
-  The case $(5,15)$ reveals that the specific free parameter location
-  in the cascade depends on the $P$-coefficients (not always at
-  $q_{jm,0}$), though the kernel dimension $r-2$ is invariant.
+\item \textbf{Structure of $P_x \neq 1$ automorphisms:}
+  For the $m = 4$ Branch~(2), the automorphism structure involves a
+  coordinate change $g$ such that $P = g^2 + (\text{affine in } g, y)$
+  and $Q = P^2 + (\text{affine in } P, g)$. Is there a general
+  pattern for higher~$m$? Is the coordinate change $g$ always
+  constructible from the $P$-coefficients?
+
+\item \textbf{Extend computational verification:} Test $m = 5$
+  (both branch enumeration and Keller mate construction).
+  Test larger cases $(m,n) \in \{(4,16),\, (5,20),\, (6,18)\}$
+  for the cascade structure on the $P_x = 1$ branch.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
   equivalence.
 
-\item \textbf{Lee--Li Conjecture E:} Prove the Newton polygon constraints on inner
-  polynomials. This may be approachable via the root-subgroup structure of $\GJac(A_d)$.
-
-\item \textbf{Connection to dimension $\geq 3$:} Analyze how the tangent sweep
-  mechanism in dimension $\geq 3$ exploits the existence of wild automorphisms
-  (absent in dimension 2 by Jung--van der Kulk) to construct non-injective Keller maps.
-  The cascade structure $\mathcal{K} = \kk[P]$ relies on $P_x = 1$
-  (which implies irreducibility and gives $\ker(\det J(P, \cdot)) = \kk[P]$
-  via Stein--Nagata--Nowicki); in higher dimensions, the analogous
-  condition may fail.
+\item \textbf{Connection to dimension $\geq 3$:} Analyze how the
+  counterexamples of Alpoge~\cite{Alpoge2026} and
+  Gallagher~\cite{Gallagher2026} relate to the cascade structure.
+  In dimension~$2$, every branch of the cascade constraints yields
+  an automorphism; in dimension~$\geq 3$, wild automorphisms exist
+  and the analogous structure may break down.
 \end{enumerate}
 
 %% ====================================================================
