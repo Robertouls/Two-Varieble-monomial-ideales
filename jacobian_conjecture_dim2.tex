@@ -1192,10 +1192,11 @@ The equivalence $(1) \Leftrightarrow (3)$ is a simple identity:
   \det J(P,\, Q - y) = \det J(P,Q) - P_x = 1 - P_x.
 \]
 Thus $Q - y \in \ker(\det J(P, \cdot))$ iff $P_x = 1$.
-If $P$ is irreducible (which holds generically), the classical algebraic
-dependence theorem gives $\ker(\det J(P, \cdot)) = \kk[P]$, which
-recovers condition~(2). The point is that all four conditions are
-equivalent without assuming $P$ irreducible.
+If $P_x = 1$ then $P$ is irreducible (Proposition~\ref{prop:P-irred}(b)),
+and the Stein--Nagata--Nowicki theorem gives
+$\ker(\det J(P, \cdot)) = \kk[P]$, recovering condition~(2).
+The equivalence of all four conditions does not require a separate
+irreducibility hypothesis: it is a consequence of $P_x = 1$ itself.
 \end{remark}
 
 \subsubsection*{Cascade verification of $Q = G(P) + y$}
@@ -1327,32 +1328,36 @@ Therefore $\det J(P, Q) = P_x = 1$, and JC$_2$ follows from
 Theorem~\ref{thm:equivalence}.
 \end{proof}
 
-\begin{proposition}[Irreducibility of~$P$]\label{prop:P-irred}
-Let $P = y^m + P_{m-1} + \cdots + P_2 + x$ with $P_m = y^m$, $P_1 = x$,
-and $P_0 = 0$. Then $P$ is irreducible in~$\kk[x,y]$.
+\begin{proposition}[Irreducibility under $P_x = 1$]\label{prop:P-irred}
+Let $(P,Q)$ be a Keller pair.
+\begin{enumerate}
+\item[\textup{(a)}] $P$ is indecomposable
+  (Lemma~\textup{\ref{lem:primitive}}).
+\item[\textup{(b)}] If $P_x = 1$, then $P = f(y) + x$ is irreducible
+  in $\kk[x,y]$, being of degree~$1$ in~$x$ over the UFD~$\kk[y]$.
+\end{enumerate}
 \end{proposition}
 
-\begin{proof}
-Suppose $P = fg$ with $\deg f \geq 1$ and $\deg g \geq 1$.
-Since $P_0 = P(0,0) = 0$, we have $f(0,0) \cdot g(0,0) = 0$.
-Since the leading form is $P_m = y^m$, the leading forms of $f$ and $g$
-are $c_1 y^a$ and $c_2 y^b$ with $a + b = m$, $a \geq 1$, $b \geq 1$,
-and $c_1 c_2 = 1$. In particular, $f(0,0) = 0$ and $g(0,0) = 0$
-(as the leading forms have $y$ as the only variable, and $f(0,0)$,
-$g(0,0)$ are the constant terms, which must vanish since $a,b \geq 1$
-and $P_0 = 0$). Now the degree-$1$ component of $P$ satisfies
-\[
-  P_1 = (fg)_1 = f_0 \cdot g_1 + f_1 \cdot g_0 = 0 \cdot g_1 + f_1 \cdot 0 = 0,
-\]
-contradicting $P_1 = x \neq 0$.
-\end{proof}
+\begin{remark}\label{rem:irred-counterex}
+The normalization conditions $P_m = y^m$, $P_1 = x$, $P_0 = 0$ alone
+do \emph{not} force irreducibility: $P = (y^2+x)(y^2+x+1)$ satisfies
+all three but is reducible (and decomposable via $h(t) = t^2 + t$,
+$g = y^2 + x$, hence excluded from Keller pairs by~\textup{(a)}).
+The hypothesis $P_x = 1$ is essential.
+\end{remark}
 
 \begin{remark}
-Since $P$ is irreducible, $\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
-Stein--Nagata--Nowicki \cite{Nagata1977,Nowicki1988}. So
-$Q_{\mathrm{cas}} - y \in \kk[P]$ is equivalent to
+If $P_x = 1$, then $P$ is irreducible by
+Proposition~\ref{prop:P-irred}(b), so
+$\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
+Stein--Nagata--Nowicki \cite{Nagata1977,Nowicki1988}.
+In this case, $Q_{\mathrm{cas}} - y \in \kk[P]$ is equivalent to
 $\det J(P,\, Q_{\mathrm{cas}} - y) = 0$, i.e.,
 $\det J(P,\, Q_{\mathrm{cas}}) = P_x$.
+More generally, the identity $\det J(P, Q_{\mathrm{cas}}) = P_x$
+(Corollary~\ref{lem:key-identity}) holds without assuming $P_x = 1$;
+$Q_{\mathrm{cas}} - y \in \kk[P]$ is verified directly by polynomial
+division in each computational instance.
 \end{remark}
 
 \begin{theorem}[Equivalence chain for JC$_2$]\label{thm:equiv-chain}
@@ -1380,10 +1385,9 @@ $\alpha \in \kk^\times$ and some coordinate~$Q_0$ paired with~$P$.
 (iii)$\Leftrightarrow$(ii): Immediate from $Q_{\mathrm{cas}} = P^r + y + R$
 with $R \in \mathcal{K}$.
 
-(i)$\Rightarrow$(iv): If $(P,Q)$ is an automorphism, then
-$Q - y \in \kk[P,Q_0] = \kk[x,y]$ with $\det J(P, Q-y) = 0$
-forces $Q-y \in \kk[P]$ (by Proposition~\ref{prop:P-irred} and
-Stein--Nagata--Nowicki), hence $P_x = 1$.
+(i)$\Rightarrow$(iv): By Theorem~\ref{thm:equivalence},
+$(4) \Rightarrow (1)$: every automorphism with the given normalization
+satisfies $P_x = 1$.
 \end{proof}
 
 \begin{conjecture}[Cascade structure conjecture]\label{conj:cascade-structure}
@@ -1557,6 +1561,39 @@ expanded as a polynomial in~$\varepsilon$. The coefficient of
 $\varepsilon^1$ is compared with~$P^j$ and found to be equal.
 \end{proof}
 
+\subsection{Spurious solutions and the role of primitivity}\label{sec:spurious}
+
+When the low-degree cascade equations ($D < m$) are solved as a polynomial
+system in both the remaining $Q$-variables and the $x$-dependent
+$P$-coefficients, additional solutions with $P_x \neq 1$ can appear.
+
+\begin{proposition}\label{prop:spurious}
+For $(m,n) = (4,8)$, the system of cascade constraints at levels $D < m$
+has two solution branches:
+\begin{enumerate}
+\item[\textup{(1)}] All $x$-dependent $P$-coefficients vanish
+  ($P_x = 1$).
+\item[\textup{(2)}] The $x$-dependent coefficients satisfy
+  $p_{2,1} = 4p_{3,0}/(4p_{2,0} - p_{3,0}^2)$,
+  $p_{2,2} = 16/(4p_{2,0} - p_{3,0}^2)^2$,
+  $p_{3,1} = 8/(4p_{2,0} - p_{3,0}^2)$, giving $P_x \neq 1$.
+\end{enumerate}
+Solution~\textup{(2)} is \emph{spurious}: it corresponds to a decomposable
+$P$. For instance, with $p_{2,0} = 1$, $p_{3,0} = 0$,
+$P = (y^2 + x)(y^2 + x + 1) = h(y^2+x)$ where $h(t) = t^2 + t$.
+By the primitivity lemma (Lemma~\textup{\ref{lem:primitive}}),
+such $P$ cannot appear in a Keller pair, since
+$h'(y^2+x) = 2y^2 + 2x + 1$ is non-constant.
+\end{proposition}
+
+\begin{remark}
+This illustrates that the cascade constraints at $D < m$ alone do not
+force $P_x = 1$: the non-degeneracy of the cascade at $D \geq m$
+(which implicitly requires primitivity of~$P$) is also needed.
+The spurious branch arises precisely when $P$ is decomposable,
+and is thus excluded by Lemma~\ref{lem:primitive}.
+\end{remark}
+
 \subsection{The precise gap}\label{sec:gap}
 
 We summarize the logical structure of the argument.
@@ -1585,9 +1622,10 @@ Statement~$(\star)$ can be reformulated in several equivalent ways:
   the first-order PDE $Q_y - f'(y)\, Q_x = 1$. The change of
   variables $(u,v) = (P,\, y)$ transforms this to $\partial R/\partial v = 1$
   (where $Q(x,y) = R(P,y)$), yielding $Q = y + G(P)$.
-\item \textbf{Algebraic dependence.} By irreducibility of~$P$
-  (Proposition~\textup{\ref{prop:P-irred}}) and Stein--Nagata--Nowicki,
-  $(\star)$ is equivalent to $Q - y \in \kk[P]$.
+\item \textbf{Algebraic dependence.} If $P_x = 1$, then $P$ is irreducible
+  (Proposition~\textup{\ref{prop:P-irred}(b)}) and Stein--Nagata--Nowicki
+  gives $\ker(\det J(P, \cdot)) = \kk[P]$, so $(\star)$ is equivalent to
+  $Q - y \in \kk[P]$.
 \item \textbf{Cascade kernel.} $(\star)$ is equivalent to the cascade
   kernel $\mathcal{K}$ coinciding with $\kk[P]_{\leq n-1}$
   (Theorem~\textup{\ref{thm:equiv-chain}}).
@@ -1657,9 +1695,10 @@ for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\, (3,9),\, (4,12),\,
 \item \textbf{Connection to dimension $\geq 3$:} Analyze how the tangent sweep
   mechanism in dimension $\geq 3$ exploits the existence of wild automorphisms
   (absent in dimension 2 by Jung--van der Kulk) to construct non-injective Keller maps.
-  The cascade structure $\mathcal{K} = \kk[P]$ relies on irreducibility of~$P$
-  (which holds in dimension~$2$ but may fail in higher dimensions) and on the
-  Stein--Nagata--Nowicki theorem (dimension~$2$ only).
+  The cascade structure $\mathcal{K} = \kk[P]$ relies on $P_x = 1$
+  (which implies irreducibility and gives $\ker(\det J(P, \cdot)) = \kk[P]$
+  via Stein--Nagata--Nowicki); in higher dimensions, the analogous
+  condition may fail.
 \end{enumerate}
 
 %% ====================================================================
