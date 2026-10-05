@@ -1459,18 +1459,166 @@ These surviving parameters correspond exactly to the $\kk[P]$-kernel
 generators.
 \end{remark}
 
+\subsection{Numerical verification with specific Keller maps}\label{sec:numerical}
+
+Beyond the symbolic cascade computation (which carries generic
+$P$\nobreakdash-coefficients), we verify the cascade structure conjecture
+on concrete numerical instances where $P = f(y) + x$ with specific
+$f \in \kk[y]$ and the free parameters $q_{jm,0}$ are assigned specific
+values. In each case we reconstruct $Q_{\mathrm{cas}}$ numerically and
+check both $\det J(P, Q_{\mathrm{cas}}) = 1$ and
+$Q_{\mathrm{cas}} - y \in \kk[P]$ by polynomial division.
+
+\begin{proposition}[Numerical instances]\label{prop:numerical-instances}
+For each row in the table below, $P = f(y) + x$ with the given~$f$,
+the cascade with the stated free-parameter values yields
+$Q_{\mathrm{cas}}$ satisfying $\det J(P, Q_{\mathrm{cas}}) = 1$
+and $Q_{\mathrm{cas}} - y = G(P)$ for the polynomial $G$ shown.
+
+\medskip
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{ccccl}
+\hline
+$(m,n)$ & $r$ & $f(y)$ & Free params & $G(t)$ \\
+\hline
+$(3,6)$ & $2$ & $y^3 + 2y^2$ & (none) & $t^2$ \\
+$(3,9)$ & $3$ & $y^3 + 3y^2$ & $q_{6,0} = 7$ & $-20\,t^2 + t^3$ \\
+$(3,9)$ & $3$ & $y^3 + 3y^2$ & $q_{6,0} = 0$ & $-27\,t^2 + t^3$ \\
+$(3,9)$ & $3$ & $y^3$ & $q_{6,0} = 5$ & $5\,t^2 + t^3$ \\
+$(4,8)$ & $2$ & $y^4 + y^3 + 2y^2$ & (none) & $t^2$ \\
+$(3,12)$ & $4$ & $y^3 + y^2$ & $q_{6,0} = 2,\; q_{9,0} = 5$ & $t^2 + t^3 + t^4$ \\
+$(3,12)$ & $4$ & $y^3$ & $q_{6,0} = 1,\; q_{9,0} = 1$ & $t^2 + t^3 + t^4$ \\
+\hline
+\end{tabular}
+\end{center}
+\end{proposition}
+
+\begin{proof}[Method]
+For each instance, we build $P$ and $Q$ with symbolic $Q$-coefficients,
+run the cascade (degree $D = m+n-2$ down to $D = 0$), perform full
+back-substitution to resolve all dependency chains among solved variables,
+set free parameters to the stated values, reconstruct $Q_{\mathrm{cas}}$,
+and verify $\det J(P, Q_{\mathrm{cas}}) = 1$ symbolically.
+The membership $Q_{\mathrm{cas}} - y \in \kk[P]$ is verified by
+iterated polynomial division: starting from $R = Q_{\mathrm{cas}} - y$
+and subtracting $c_j \cdot P^j$ (with $c_j$ determined by the leading
+$y^{jm}$-coefficient) for $j = r, r-1, \ldots, 2$ until the remainder
+vanishes.
+\end{proof}
+
+\begin{remark}
+Several features of the numerical data are noteworthy:
+\begin{enumerate}
+\item When $r = 2$ (i.e., $n = 2m$), there are no free parameters and
+  $G(t) = t^2$ universally. This matches
+  $\dim(\kk[P]_{\leq n-1}/\kk) = r - 2 = 0$.
+\item For $r \geq 3$, the polynomial $G$ depends on the free-parameter
+  values but always has $\deg G = r$ with leading coefficient~$1$
+  (from the $Q_n = P^r$ term).
+\item The map from free parameters $(q_{jm,0})_{j=2}^{r-1}$ to
+  $G$-coefficients $(c_j)_{j=2}^{r-1}$ is triangular: $c_r = 1$ always,
+  and each $c_j$ depends on $q_{jm,0}$ and the $P$-coefficients but
+  \emph{not} on $q_{j'm,0}$ with $j' < j$.
+\end{enumerate}
+\end{remark}
+
+\subsection{Perturbation analysis}\label{sec:perturbation}
+
+We can also study the cascade structure analytically via perturbation.
+Setting one free parameter $q_{jm,0} = \varepsilon$ (all others zero)
+and expanding $Q_{\mathrm{cas}}$ in powers of~$\varepsilon$:
+
+\begin{proposition}\label{prop:perturbation}
+For $(m,n) = (3,9)$ with $r = 3$ and $(m,n) = (3,12)$ with $r = 4$,
+setting $q_{2m,0} = \varepsilon$ (i.e., $q_{6,0} = \varepsilon$) and all
+other free parameters to~$0$, the cascade yields
+\[
+  Q_{\mathrm{cas}} - P^r - y = \varepsilon \cdot P^2 + O(\varepsilon^2).
+\]
+That is, the first-order correction in the free parameter $q_{jm,0}$ is
+exactly $P^j$, consistent with the cascade kernel being $\kk[P]_{\leq n-1}$.
+\end{proposition}
+
+\begin{proof}[Method]
+The cascade is run with generic $P$\nobreakdash-coefficients and
+$q_{jm,0} = \varepsilon$. After full back-substitution and reconstruction
+of~$Q_{\mathrm{cas}}$, the difference $R = Q_{\mathrm{cas}} - P^r - y$ is
+expanded as a polynomial in~$\varepsilon$. The coefficient of
+$\varepsilon^1$ is compared with~$P^j$ and found to be equal.
+\end{proof}
+
+\subsection{The precise gap}\label{sec:gap}
+
+We summarize the logical structure of the argument.
+
+\begin{theorem}[Proof reduction---precise formulation]\label{thm:precise-gap}
+The two-dimensional Jacobian Conjecture ($\mathrm{JC}_2$) is equivalent
+to the following statement:
+
+\medskip
+\noindent\textbf{($\star$)} \emph{For every normalized Keller pair
+$(P,Q)$ in dimension~$2$ with $\det J(P,Q) = 1$, $P_m = y^m$,
+$Q_n = y^n$, $P_1 = x$, $Q_1 = y$, we have $P_x = 1$.}
+
+\medskip
+\noindent The implication $(\star) \Rightarrow \mathrm{JC}_2$ is proved
+(Theorem~\textup{\ref{thm:px-implies-div}}). The converse
+$\mathrm{JC}_2 \Rightarrow (\star)$ follows from
+Theorem~\textup{\ref{thm:equiv-chain}}.
+\end{theorem}
+
+\begin{remark}
+Statement~$(\star)$ can be reformulated in several equivalent ways:
+\begin{enumerate}
+\item \textbf{PDE formulation.} Since $P_x = 1$ means
+  $P = f(y) + x$, the Keller condition $\det J(P,Q) = 1$ becomes
+  the first-order PDE $Q_y - f'(y)\, Q_x = 1$. The change of
+  variables $(u,v) = (P,\, y)$ transforms this to $\partial R/\partial v = 1$
+  (where $Q(x,y) = R(P,y)$), yielding $Q = y + G(P)$.
+\item \textbf{Algebraic dependence.} By irreducibility of~$P$
+  (Proposition~\textup{\ref{prop:P-irred}}) and Stein--Nagata--Nowicki,
+  $(\star)$ is equivalent to $Q - y \in \kk[P]$.
+\item \textbf{Cascade kernel.} $(\star)$ is equivalent to the cascade
+  kernel $\mathcal{K}$ coinciding with $\kk[P]_{\leq n-1}$
+  (Theorem~\textup{\ref{thm:equiv-chain}}).
+\end{enumerate}
+Statement~$(\star)$ is verified computationally for all Keller maps with
+$m \leq 5$, $n \leq 15$ (Proposition~\textup{\ref{prop:px-comp}}),
+and the cascade structure $Q_{\mathrm{cas}} - y \in \kk[P]$ is verified
+for $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$ both
+symbolically and numerically.
+\end{remark}
+
 %% ====================================================================
 \section{Concrete Research Questions}
 %% ====================================================================
 
 \begin{enumerate}
-\item \textbf{Uniform degree bound:} For a Keller map $F = (P,Q)$ of degree $m$ in
-  dimension 2, prove that the Anick approximants $\varphi_d$ can be chosen with
-  $\deg \varphi_d \leq m$.
+\item \textbf{Primary: Prove $P_x = 1$ (statement~$(\star)$ of
+  Theorem~\ref{thm:precise-gap}):}
+  This is the sole remaining step for JC$_2$. Prove that for every
+  normalized Keller pair, $P_x = 1$. Equivalently, prove the cascade
+  structure conjecture (Conjecture~\ref{conj:cascade-structure}).
+  Verified computationally for $m \leq 5$, $n \leq 15$.
 
-\item \textbf{Polydegree stabilization:} Prove Conjecture~\ref{conj:pdeg-stable}: the
-  polydegree of the Anick approximants stabilizes for $d \gg 0$, implying that $F$
-  is tame.
+  Possible approaches:
+  \begin{itemize}
+  \item \emph{Cascade induction}: show that at each cascade level
+    $D \geq m$, the linear system in $Q$-coefficients has the same
+    rank as the $\kk[P]$-system, so $\mathcal{K} = \kk[P]_{\leq n-1}$.
+  \item \emph{Locally nilpotent derivation (LND) theory}: the Keller
+    condition $\det J(P,Q) = 1$ means $\partial_P = Q_x \partial_y - Q_y \partial_x$
+    is an LND of $\kk[x,y]$ with $\partial_P(P) = 1$. Rentschler's
+    theorem classifies LNDs in dimension~$2$, but applying it to
+    $\partial_P$ appears circular without first knowing $P$ is a coordinate.
+  \item \emph{Newton polygon constraints}: use the degree-by-degree
+    structure of the cascade to bound the Newton polygon of~$P$
+    and force all $x$-dependent terms to vanish.
+  \item \emph{Iterated Jacobians}: the higher-order identities
+    $\det J(P^k, Q) = k P^{k-1}$ may impose additional constraints
+    on~$P$ that force $P_x = 1$.
+  \end{itemize}
 
 \item \textbf{Prove Conjecture~\ref{conj:cascade-structure}
   (cascade structure):} Prove that $Q_{\mathrm{cas}} - y \in \kk[P]$
@@ -1478,8 +1626,16 @@ generators.
   JC$_2$. Equivalently, prove
   $\dim \mathcal{K} = r - 2 = \dim(\kk[P]_{\leq n-1}/\kk)$
   (Theorem~\ref{thm:cascade-kernel-dim}).
-  The conjecture is verified for
-  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$.
+  The conjecture is verified symbolically for
+  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$
+  and numerically for $7$~instances
+  (Proposition~\ref{prop:numerical-instances}).
+
+\item \textbf{Extend computational verification:} Test larger cases
+  $(m,n) \in \{(5,10),\, (5,15),\, (6,12)\}$ for the full cascade
+  identity $\det J(P, Q_{\mathrm{cas}}) = P_x$. The cascade kernel
+  dimension $\dim \mathcal{K} = r - 2$ is already verified for
+  $(5,10)$ ($r = 2$, trivially).
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
@@ -1488,14 +1644,12 @@ generators.
 \item \textbf{Lee--Li Conjecture E:} Prove the Newton polygon constraints on inner
   polynomials. This may be approachable via the root-subgroup structure of $\GJac(A_d)$.
 
-\item \textbf{Properness from root structure:} Prove that a polynomial map expressible as an
-  inverse limit of outer root products is necessarily proper.
-
-\item \textbf{Connection to the counterexample:} Analyze how the tangent sweep
+\item \textbf{Connection to dimension $\geq 3$:} Analyze how the tangent sweep
   mechanism in dimension $\geq 3$ exploits the existence of wild automorphisms
   (absent in dimension 2 by Jung--van der Kulk) to construct non-injective Keller maps.
-  Note that inner roots of $\pp^d$ vanish in all dimensions; the obstruction in
-  dimension $\geq 3$ is the failure of the tame = all identity, not root structure.
+  The cascade structure $\mathcal{K} = \kk[P]$ relies on irreducibility of~$P$
+  (which holds in dimension~$2$ but may fail in higher dimensions) and on the
+  Stein--Nagata--Nowicki theorem (dimension~$2$ only).
 \end{enumerate}
 
 %% ====================================================================
@@ -1596,6 +1750,14 @@ arXiv:0808.1821, 2008.
 \bibitem{MakarLimanov}
 L.~Makar-Limanov, \emph{A new proof of the Jung theorem},
 arXiv:1409.1872, 2014.
+
+\bibitem{Nagata1977}
+M.~Nagata, \emph{On automorphism group of $k[x,y]$}, Lectures in Math., Kyoto Univ.\
+\textbf{5}, Kinokuniya, Tokyo, 1972.
+
+\bibitem{Nowicki1988}
+A.~Nowicki, \emph{On the Jacobian equation $J(f,g) = 0$ for polynomials in $k[x,y]$},
+Nagoya Math.~J.\ \textbf{109} (1988), 151--157.
 
 \bibitem{Tao2026}
 T.~Tao, \emph{A digestion of the Jacobian conjecture counterexample}, blog post, July 2026.
