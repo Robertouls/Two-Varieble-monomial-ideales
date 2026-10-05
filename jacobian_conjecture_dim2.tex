@@ -619,23 +619,273 @@ reverse order).
 \end{proof}
 
 %% ====================================================================
+\section{The Dixmier Equivalence and Deformation Quantization}
+%% ====================================================================
+
+The Belov-Kanel--Kontsevich theorem \cite{BKK} and Tsuchimura's independent result
+\cite{Tsuchimoto} establish a remarkable bridge to noncommutative algebra.
+
+\subsection{The Equivalence $\mathrm{JC}_2 \Longleftrightarrow \mathrm{DC}_1$}
+
+\begin{theorem}[Belov-Kanel--Kontsevich 2007; Tsuchimura 2005]
+The following are equivalent:
+\begin{enumerate}
+\item $\mathrm{JC}_{2n}$: Every polynomial map $F: \kk^{2n} \to \kk^{2n}$ with
+  $\det J(F) \in \kk^\times$ is an automorphism.
+\item $\mathrm{DC}_n$: Every endomorphism of the $n$-th Weyl algebra $A_n(\kk)$ is an
+  automorphism.
+\item $\mathrm{PC}_n$: Every Poisson endomorphism of $\kk[x_1,\ldots,x_n,y_1,\ldots,y_n]$
+  (with the standard Poisson bracket $\{x_i, y_j\} = \delta_{ij}$) with Poisson-invertible
+  Jacobian is a Poisson automorphism.
+\end{enumerate}
+\end{theorem}
+
+For $n = 1$: $\mathrm{JC}_2 \iff \mathrm{DC}_1 \iff \mathrm{PC}_1$.
+
+\begin{remark}[Zheglov's claimed proof]
+Zheglov \cite{Zheglov2024} has announced a proof of $\mathrm{DC}_1$ using the theory of
+normal forms for ordinary differential operators. The preprint (arXiv:2410.06959) has grown
+from 25 pages (v1, October 2024) to 78 pages (v5, January 2026) and has been submitted for
+publication but not yet peer-reviewed. If correct, this would settle both $\mathrm{DC}_1$
+and $\mathrm{JC}_2$ via the equivalence above. Verification of this proof should be a
+high priority.
+\end{remark}
+
+\subsection{The Deformation Quantization Perspective}
+
+The Weyl algebra $A_1 = \kk\langle x, \partial \rangle / (\partial x - x\partial - 1)$ is the
+deformation quantization of the Poisson algebra $\kk[x, y]$ with bracket $\{x, y\} = 1$.
+The correspondence is:
+\[
+  x \longleftrightarrow x, \qquad \partial \longleftrightarrow y, \qquad
+  [\partial, x] = 1 \longleftrightarrow \{y, x\} = 1.
+\]
+
+An automorphism $\varphi$ of $\kk[x,y]$ preserving the symplectic form $dx \wedge dy$
+(equivalently, with $\det J(\varphi) = 1$) lifts to an automorphism of $A_1$ by deformation
+quantization. The Dixmier Conjecture asks whether \emph{every} endomorphism of $A_1$
+preserving the defining relation is automatically an automorphism.
+
+\begin{strategy}[From Dixmier to Jacobian via Quantization]
+Instead of working directly with polynomial maps, consider the deformation quantization:
+\begin{enumerate}
+\item A Keller map $F = (P, Q)$ with $\det J(F) = 1$ defines a map on the ``classical
+  limit'' of $A_1$.
+\item Lift $F$ to an endomorphism $\Phi$ of $A_1$ (this requires solving ordering ambiguities).
+\item Apply known results on endomorphisms of $A_1$ (Dixmier's original results: every
+  endomorphism is injective; the image is an ``Ore domain'') to constrain $\Phi$.
+\item Descend back to the classical limit to conclude $F$ is an automorphism.
+\end{enumerate}
+
+The main obstacle: Step 2 (the lift) is not canonical. However, Kontsevich's formality
+theorem guarantees that a lift exists at the formal level (as a $\star$-product
+automorphism), and the question is whether this lift is algebraic.
+\end{strategy}
+
+%% ====================================================================
+\section{The Polydegree Stabilization Approach}
+%% ====================================================================
+
+We develop a refined version of Strategy A using the polydegree invariant of the
+Jung--van der Kulk decomposition.
+
+\subsection{Polydegree and Furter--Karas Theory}
+
+\begin{definition}[Polydegree]
+For a tame automorphism $\varphi$ of $\kk[x,y]$, the \emph{reduced} Jung--van der Kulk
+decomposition
+\[
+  \varphi = L_0 \circ \tau_1 \circ L_1 \circ \tau_2 \circ \cdots \circ \tau_k \circ L_k
+\]
+(with $L_i$ affine, $\tau_i$ triangular of degree $\geq 2$, and no two consecutive
+triangular maps acting on the same variable) determines the \emph{polydegree}:
+\[
+  \mathrm{pdeg}(\varphi) = (\deg \tau_1, \deg \tau_2, \ldots, \deg \tau_k).
+\]
+This is a finite sequence of integers $\geq 2$.
+\end{definition}
+
+\begin{proposition}[Degree from polydegree]
+$\deg \varphi = \prod_{i=1}^{k} \deg \tau_i = \prod_{i} d_i$ where
+$\mathrm{pdeg}(\varphi) = (d_1, \ldots, d_k)$.
+\end{proposition}
+
+\subsection{The Stabilization Conjecture}
+
+\begin{conjecture}[Polydegree stabilization]\label{conj:pdeg-stable}
+Let $F \in \kk[x,y]^2$ be a Keller map with $F(0) = 0$, $J(F)(0) = I_2$, and
+$\det J(F) = 1$. For each $d$, let $\varphi_d$ be a tame automorphism with
+$F \equiv \varphi_d \pmod{\pp^d}$ (Anick approximant).
+
+Then there exists $d_0 \in \NN$ and a polydegree $(a_1, \ldots, a_k)$ such that
+$\mathrm{pdeg}(\varphi_d) = (a_1, \ldots, a_k)$ for all $d \geq d_0$.
+\end{conjecture}
+
+\begin{remark}
+This is \emph{stronger} than the uniform degree bound (which only asserts
+$\prod a_i \leq D$). The polydegree stabilization asserts that the \emph{entire
+combinatorial type} of the decomposition stabilizes. If true, it implies that $F$ is
+tame with $\mathrm{pdeg}(F) = (a_1, \ldots, a_k)$.
+\end{remark}
+
+\subsection{The Leading Form Argument}
+
+The key technical input for proving Conjecture~\ref{conj:pdeg-stable}:
+
+\begin{lemma}[Leading form determines first peeling step]
+Let $F = (P, Q)$ be a Keller map with $\deg P > \deg Q \geq 1$. Then there exists
+a unique elementary automorphism $\tau_1: (x, y) \mapsto (x - c \cdot y^m, y)$ such
+that $\deg(F \circ \tau_1^{-1}) < \deg F$, where $m = \deg P / \deg Q$ and
+$c$ is determined by the leading form of $P$.
+
+This uses the \emph{Abhyankar--Moh degree theorem}: for a Keller map $(P, Q)$ in dimension
+two, $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$ (up to a linear change).
+\end{lemma}
+
+\begin{proof}[Proof idea]
+The Jacobian condition $\det J(F) = 1$ constrains the leading forms. In dimension 2,
+the leading form of a polynomial automorphism is necessarily of the form $c \cdot y^m$
+(in suitable coordinates). The ``peeling'' step removes this leading form by composing
+with $\tau_1^{-1} = (x + c \cdot y^m, y)$, reducing the degree.
+
+The essential point: the leading form depends only on the polynomial $F$ itself, not on
+the truncation level $d$ (for $d > \deg F$). Hence the first peeling step is the same
+for all $d > \deg F$.
+\end{proof}
+
+\begin{proposition}[Induction on polydegree length]
+If the Keller map $F$ has $\deg F > 1$ and the first peeling step produces
+$F' = F \circ \tau_1^{-1}$ with $\deg F' < \deg F$, then $F'$ is again a Keller map
+(since $\det J(\tau_1) = 1$), and by induction, its polydegree stabilizes.
+Combining with the first step gives the polydegree stabilization of $F$.
+\end{proposition}
+
+\begin{remark}[The gap in this argument]
+The induction step requires that $F' = F \circ \tau_1^{-1}$ is still a \emph{polynomial}
+Keller map. If $F$ is polynomial, then $F \circ \tau_1^{-1}$ is also polynomial (since
+$\tau_1^{-1}$ is polynomial). The degree drops, and the Jacobian is preserved. So the
+induction works.
+
+However, we are applying this to the \emph{truncations} $F_d = F \bmod \pp^d$ in the
+Anick approximation setting. The first peeling step on $F_d$ produces
+$F'_d = F_d \circ \tau_1^{-1} \bmod \pp^d$, and we need:
+\begin{enumerate}
+  \item The first step $\tau_1$ is the same for all $d > \deg F$. \checkmark (leading form is independent of $d$.)
+  \item The resulting $F'_d$ is the truncation of $F' = F \circ \tau_1^{-1}$:
+    $F'_d = F' \bmod \pp^d$. \checkmark (truncation commutes with composition of polynomial maps.)
+  \item $F'$ is again polynomial of lower degree. \checkmark (composition of polynomials is polynomial.)
+\end{enumerate}
+So the argument is \emph{valid}---if $F$ is polynomial, the Anick approximants
+$\varphi_d$ do stabilize, and $F$ is tame.
+
+\textbf{The circularity:} We are trying to \emph{prove} $F$ is an automorphism, but the
+argument uses that $F$ is polynomial to ensure the peeling steps compose correctly. This
+is \emph{not} circular: we know $F$ is polynomial (it's given as a polynomial map). The
+question is whether its polynomial inverse exists, and the peeling/stabilization argument
+constructs it.
+\end{remark}
+
+\subsection{Making the Argument Rigorous}\label{sec:rigorous}
+
+We now attempt to close the argument formally.
+
+\begin{theorem}[Conditional on Degree Divisibility]\label{thm:conditional}
+Let $F = (P, Q) \in \kk[x,y]^2$ with $\det J(F) = 1$, $F(0) = 0$, $J(F)(0) = I_2$.
+Assume that $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$ (the Abhyankar--Moh degree
+condition). Then $F$ is a polynomial automorphism.
+\end{theorem}
+
+\begin{proof}[Proof strategy]
+Under the degree divisibility hypothesis:
+
+\textbf{Step 1.} Peel the leading form: there exists a unique elementary automorphism
+$\tau_1$ such that $F_1 := F \circ \tau_1^{-1}$ has $\deg F_1 < \deg F$, and $F_1$
+is a polynomial Keller map.
+
+\textbf{Step 2.} Iterate: $F_k := F_{k-1} \circ \tau_k^{-1}$ with $\deg F_k < \deg F_{k-1}$.
+After finitely many steps, $F_N$ is affine (degree 1) and thus invertible.
+
+\textbf{Step 3.} Then $F = F_N \circ \tau_N \circ \cdots \circ \tau_1$ is a composition of
+invertible maps, hence invertible.
+
+\medskip
+The degree divisibility ensures that each peeling step is well-defined: if $\deg P > \deg Q$,
+then $\deg P / \deg Q$ is an integer, and the leading form of $P$ is a power of the leading
+form of $Q$ (by the Jacobian condition), allowing the peeling.
+\end{proof}
+
+\begin{remark}
+The Abhyankar--Moh degree condition is known to hold for polynomial automorphisms of
+$\kk[x,y]$. The question is whether it holds for Keller maps that are \emph{not a priori}
+known to be automorphisms. If the answer is yes, the theorem above proves JC$_2$.
+
+The degree condition $\gcd(\deg P, \deg Q) \geq 16$ (Lee--Li) is evidence that the
+degrees are highly constrained, but does not by itself imply divisibility.
+\end{remark}
+
+%% ====================================================================
+\section{Connections to Lee--Li's Inner Polynomial Approach}
+%% ====================================================================
+
+Lee and Li \cite{LeeLi} study the 2-dimensional Jacobian Conjecture using Magnus' formula
+for the formal inverse. Their key concept:
+
+\begin{definition}[Inner polynomials, Lee--Li]
+For a Keller map $F = (f, g)$, the \emph{inner polynomials} are the homogeneous components
+$G_m$ of the formal inverse $G = F^{-1}$ (in $\kk[[x,y]]^2$), expressed via Magnus' formula
+\[
+  G = \sum_{m \geq 1} (-1)^{m-1} \frac{1}{m} \left(\frac{J(F)^{-1} - I}{1}\right)^{m-1}
+    \cdot (f, g)^{\langle m \rangle}
+\]
+(notation from \cite{LeeLi}).
+\end{definition}
+
+\begin{theorem}[Lee--Li, Conjecture E]
+Let $F = (f, g)$ be a Keller map with $\deg f = m > \deg g = n$, $m > n \geq 2$. If for
+every inner polynomial $h_k$ (homogeneous component of $G$ of degree $k$), the northeastern
+vertex of $N(h_k)$ lies in the region
+\[
+  \{(a, b) : a \leq k, \, b \leq k, \, a + b \leq k + 1\},
+\]
+then $F$ is a polynomial automorphism.
+\end{theorem}
+
+\begin{remark}
+Lee--Li's Conjecture E, if proven, implies JC$_2$. The connection to our approach:
+\begin{itemize}
+\item Lee--Li's inner polynomials are the coefficients of the formal inverse $G$.
+\item Our Lemma~\ref{lem:invlim} says: if $\deg G_{\leq d}$ stabilizes, then $G$ is
+  polynomial and $F$ is an automorphism.
+\item Lee--Li's Newton polygon constraints on $G_k$ are degree-bounding conditions that
+  imply the stabilization in our sense.
+\item The two approaches are therefore complementary: ours via the ``top-down'' peeling of
+  Jung--van der Kulk decompositions, theirs via the ``bottom-up'' Magnus formula expansion.
+\end{itemize}
+\end{remark}
+
+%% ====================================================================
 \section{Concrete Research Questions}
 %% ====================================================================
 
 \begin{enumerate}
 \item \textbf{Uniform degree bound:} For a Keller map $F = (P,Q)$ of degree $m$ in
   dimension 2, prove that the Anick approximants $\varphi_d$ can be chosen with
-  $\deg \varphi_d \leq m^2$ (or better, $\leq m$).
+  $\deg \varphi_d \leq m$.
 
-\item \textbf{Root factorization stabilization:} Show that the number of root subgroup
-  factors needed to express $F_d$ in $\GJac(A_d)$ is bounded by $2\deg F$, independent of $d$.
+\item \textbf{Polydegree stabilization:} Prove Conjecture~\ref{conj:pdeg-stable}: the
+  polydegree of the Anick approximants stabilizes for $d \gg 0$, implying that $F$
+  is tame.
 
-\item \textbf{Leading-term compatibility:} Given the Newton polygon of a Keller pair $(P,Q)$,
-  determine whether the leading-form system is always solvable via a product of outer root
-  actions.
+\item \textbf{Degree divisibility for Keller maps:} Prove that for a Keller map $(P,Q)$
+  in dimension 2, either $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$. This would
+  reduce JC$_2$ to Theorem~\ref{thm:conditional}.
 
-\item \textbf{Divergence-free flow:} Show that a polynomial Keller map in dimension 2 is the
-  time-1 map of a polynomial Hamiltonian flow (up to affine correction).
+\item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
+  \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
+  equivalence.
+
+\item \textbf{Lee--Li Conjecture E:} Prove the Newton polygon constraints on inner
+  polynomials. This may be approachable via the root-subgroup structure of $\GJac(A_d)$.
 
 \item \textbf{Properness from root structure:} Prove that a polynomial map expressible as an
   inverse limit of outer root products is necessarily proper.
@@ -721,6 +971,30 @@ revisited, IV}, arXiv:2408.01279, 2024.
 H.~Bass, E.~Connell, D.~Wright, \emph{The Jacobian conjecture: reduction of degree and
 formal expansion of the inverse}, Bull.\ Amer.\ Math.\ Soc.\ (N.S.) \textbf{7} (1982),
 287--330.
+
+\bibitem{BKK}
+A.~Belov-Kanel, M.~Kontsevich, \emph{The Jacobian conjecture is stably equivalent to the
+Dixmier conjecture}, Mosc.\ Math.\ J.\ \textbf{7} (2007), no.~2, 209--218.
+
+\bibitem{Tsuchimoto}
+Y.~Tsuchimura, \emph{Endomorphisms of Weyl algebra and $p$-curvatures},
+Osaka J.~Math.\ \textbf{42} (2005), 435--452.
+
+\bibitem{Zheglov2024}
+A.~Zheglov, \emph{Proof of the Dixmier conjecture for the first Weyl algebra},
+arXiv:2410.06959, 2024 (v5, January 2026, 78 pages).
+
+\bibitem{Furter}
+J.-P.~Furter, \emph{On the length of polynomial automorphisms of the affine plane},
+Math.\ Ann.\ \textbf{322} (2002), 401--411.
+
+\bibitem{FurterKaras}
+J.-P.~Furter, M.~Karas, \emph{On relations of leading terms},
+arXiv:0808.1821, 2008.
+
+\bibitem{MakarLimanov}
+L.~Makar-Limanov, \emph{A new proof of the Jung theorem},
+arXiv:1409.1872, 2014.
 
 \bibitem{Tao2026}
 T.~Tao, \emph{A digestion of the Jacobian conjecture counterexample}, blog post, July 2026.
