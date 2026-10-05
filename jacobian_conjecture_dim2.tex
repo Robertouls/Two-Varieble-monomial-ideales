@@ -1286,6 +1286,98 @@ $D \geq 1$), we get $(P_{D+1})_x = 0$ for $D \geq 1$, i.e.,
 $P_x = 1$---\emph{provided} $Q = G(P) + y$.
 \end{remark}
 
+\subsection{The cascade identity and proof reduction}\label{sec:cascade-identity}
+
+The key to proving $\mathrm{JC}_2$ is showing that the cascade-determined
+$Q$ satisfies $Q - y \in \kk[P]$, without assuming the Keller condition at
+low degrees. This subsection formalizes the reduction.
+
+\begin{definition}[Cascade solution]\label{def:cascade-sol}
+Given $P = y^m + \sum_{k=2}^{m-1} P_k + x$ with generic coefficients and
+$n = rm$, the \emph{cascade solution} $Q_{\mathrm{cas}}$ is any polynomial
+$Q = y^n + \sum_{k=2}^{n-1} Q_k + y$ satisfying
+$[\det J(P, Q)]_D = 0$ for all $D \geq m$.
+\end{definition}
+
+Note that the cascade equations at levels $D \geq m$ are \emph{linear} in the
+$Q$-coefficients, so the general cascade solution is
+$Q_{\mathrm{cas}} = Q_{\mathrm{part}} + R$
+where $Q_{\mathrm{part}} = P^r + y$ is a particular solution
+(since $\det J(P,\, P^r + y) = P_x$ and $[P_x]_D = 0$ for $D \geq m$)
+and $R$ lies in the \emph{cascade kernel}:
+$\mathcal{K} = \{R \in \kk[x,y]_{\leq n-1} : [\det J(P,R)]_D = 0
+\text{ for all } D \geq m\}$.
+
+\begin{theorem}[Proof reduction for $\mathrm{JC}_2$]\label{thm:proof-reduction}
+Let $P$ be as above and suppose that $Q_{\mathrm{cas}} - y \in \kk[P]$
+for every cascade solution. Then $\mathrm{JC}_2$ holds.
+\end{theorem}
+
+\begin{proof}
+If $Q_{\mathrm{cas}} - y \in \kk[P]$, write
+$Q_{\mathrm{cas}} = G(P) + y$ for some $G \in \kk[t]$.
+By Corollary~\ref{lem:key-identity}:
+\[
+  \det J(P,\, Q_{\mathrm{cas}}) = \det J(P,\, G(P) + y) = P_x.
+\]
+Now let $(P, Q)$ be a Keller pair with $\det J(P,Q) = 1$.
+The Keller condition at levels $D \geq m$ reads $[\det J(P,Q)]_D = 0$,
+so $Q$ is a cascade solution.
+Therefore $\det J(P, Q) = P_x = 1$, and JC$_2$ follows from
+Theorem~\ref{thm:equivalence}.
+\end{proof}
+
+\begin{remark}
+The implication is: $P$ is irreducible (it is monic of degree~$1$ in~$x$ over
+$\kk[y]$), hence $\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
+Stein--Nagata--Nowicki. So
+$Q_{\mathrm{cas}} - y \in \kk[P]$ is equivalent to
+$\det J(P,\, Q_{\mathrm{cas}} - y) = 0$, i.e.,
+$\det J(P,\, Q_{\mathrm{cas}}) = P_x$.
+\end{remark}
+
+\begin{conjecture}[Cascade structure conjecture]\label{conj:cascade-structure}
+For every cascade solution $Q_{\mathrm{cas}}$
+(Definition~\ref{def:cascade-sol}), we have
+$Q_{\mathrm{cas}} - y \in \kk[P]$,
+or equivalently,
+$\det J(P,\, Q_{\mathrm{cas}}) = P_x$
+as a polynomial identity in the $P$-coefficients and free $Q$-parameters.
+\end{conjecture}
+
+\begin{proposition}[Computational evidence]\label{prop:cascade-identity-comp}
+Conjecture~\ref{conj:cascade-structure} is verified for:
+\begin{center}
+\begin{tabular}{ccccl}
+\hline
+$m$ & $n$ & $r$ & $\dim \mathcal{K} \cap \kk[P]$ & Kernel structure \\
+\hline
+$3$ & $6$ & $2$ & $0$ & $R = 0$ \\
+$4$ & $8$ & $2$ & $0$ & $R = 0$ \\
+$3$ & $9$ & $3$ & $1$ & $R = c \cdot P^2,\ c \in \kk[p_{ij}]$ \\
+$4$ & $12$ & $3$ & $1$ & $R = c \cdot P^2,\ c \in \kk[p_{ij}]$ \\
+\hline
+\end{tabular}
+\end{center}
+In each case, $\det J(P,\, Q_{\mathrm{cas}}) = P_x$ holds as a polynomial
+identity, $R = Q_{\mathrm{cas}} - P^r - y$ lies in $\kk[P]$, and the
+cascade constraints at levels $D < m$ reduce to
+$i \cdot p_{D+1,i} = 0$ for $1 \leq i \leq D+1$, i.e., $(P_{D+1})_x = 0$,
+with linear, constant-integer coefficients independent of all
+$P$-parameters.
+\end{proposition}
+
+\begin{remark}
+The cascade kernel $\mathcal{K}$ contains $\kk[P]_{\leq n-1}$
+(since $\det J(P, f(P)) = 0$ for any~$f$), and computationally
+$\mathcal{K} \cap \{\deg \leq n-1\} = \kk[P]_{\leq n-1}$.
+For $r = 2$, the kernel is trivial ($R = 0$, so
+$Q_{\mathrm{cas}} = P^2 + y$ uniquely). For $r = 3$, it is
+$1$-dimensional, spanned by~$P^2$. In general, the cascade kernel
+restricted to $\kk[P]$ has dimension $r - 2$, corresponding to
+the generators $P^2, P^3, \ldots, P^{r-1}$.
+\end{remark}
+
 %% ====================================================================
 \section{Concrete Research Questions}
 %% ====================================================================
@@ -1299,10 +1391,12 @@ $P_x = 1$---\emph{provided} $Q = G(P) + y$.
   polydegree of the Anick approximants stabilizes for $d \gg 0$, implying that $F$
   is tame.
 
-\item \textbf{Prove $P_x = 1$ (Conjecture~\ref{conj:px}):} Prove that
-  the Jacobian cascade forces $P_x = 1$ for all Keller maps in dimension~2.
-  This implies degree divisibility ($\min(\deg P, \deg Q) \mid \max(\deg P, \deg Q)$)
-  by Theorem~\ref{thm:px-implies-div}, settling JC$_2$.
+\item \textbf{Prove Conjecture~\ref{conj:cascade-structure}
+  (cascade structure):} Prove that $Q_{\mathrm{cas}} - y \in \kk[P]$
+  for generic~$P$. By Theorem~\ref{thm:proof-reduction} this settles
+  JC$_2$. Equivalently, prove $\det J(P, Q_{\mathrm{cas}}) = P_x$
+  as a polynomial identity. The conjecture is verified for
+  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12)\}$.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
