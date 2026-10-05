@@ -449,10 +449,11 @@ these triangular automorphisms. More precisely:
 \]
 the amalgamated free product.
 
-\subsection{Key Structural Observation: No Inner Roots in Dimension Two}
+\subsection{Key Structural Observation: No Inner Roots for Maximal Power Ideals}
 
-\begin{proposition}[Absence of inner roots]
-For $A_d = \kk[x,y]/\pp^d$ (two variables), the set of inner Demazure roots is empty:
+\begin{proposition}[Absence of inner roots for $\pp^d$]
+For $A_d = \kk[x_1,\ldots,x_n]/\pp^d$ in \emph{any} number of variables $n \geq 2$,
+the set of inner Demazure roots is empty:
 $R_{\mathrm{inn}}(\pp^d) = \emptyset$.
 \end{proposition}
 
@@ -481,10 +482,24 @@ automorphisms of $\kk[x,y]$ are tame (compositions of affine and elementary), we
 where $\pi_d: \kk[x,y] \twoheadrightarrow A_d$ is the projection.
 \end{corollary}
 
-This is a striking feature specific to dimension two: \emph{the entire constant-Jacobian
+This is a striking feature of dimension two: \emph{the entire constant-Jacobian
 group at each truncation level is the image of the polynomial automorphism group.}
-In dimension $n \geq 3$, inner roots exist and contribute non-tame elements to
-$\GJac(A_d)$, which is part of what allows the tangent sweep counterexample.
+
+\begin{remark}[Inner roots vanish for $\pp^d$ in all dimensions]
+The vanishing $R_{\mathrm{inn}}(\pp^d) = \emptyset$ holds for all $n \geq 2$,
+not just $n = 2$. The structural difference between dimension two and
+dimension $\geq 3$ does \emph{not} come from inner roots of $\pp^d$. Rather, it
+comes from the Jung--van der Kulk theorem: in dimension two,
+$\mathrm{Tame}_\kk(\kk[x,y]) = \Aut_\kk(\kk[x,y])$, so the surjection
+$\pi_d(\mathrm{Tame}) \twoheadrightarrow \GJac(A_d)$ means every element of
+$\GJac(A_d)$ lifts to a \emph{genuine} automorphism. In dimension $\geq 3$,
+wild automorphisms exist (Shestakov--Umirbaev), and while inner roots of $\pp^d$
+still vanish, the lifting problem becomes nontrivial.
+
+Note that for \emph{general} monomial ideals $I$ (e.g., $I = (x^3, y^2)$),
+inner roots $R_{\mathrm{inn}}(I) \neq \emptyset$ can appear even in dimension two.
+The vanishing is specific to the maximal power ideals $\pp^d$.
+\end{remark}
 
 \subsection{Connecting the Structures}
 
@@ -625,9 +640,11 @@ reverse order).
 \item \textbf{Properness from root structure:} Prove that a polynomial map expressible as an
   inverse limit of outer root products is necessarily proper.
 
-\item \textbf{Connection to the counterexample:} Analyze why the tangent sweep
-  mechanism produces \emph{inner} (not just outer) root actions in dimension 3, and why
-  the two-dimensional root structure prevents this.
+\item \textbf{Connection to the counterexample:} Analyze how the tangent sweep
+  mechanism in dimension $\geq 3$ exploits the existence of wild automorphisms
+  (absent in dimension 2 by Jung--van der Kulk) to construct non-injective Keller maps.
+  Note that inner roots of $\pp^d$ vanish in all dimensions; the obstruction in
+  dimension $\geq 3$ is the failure of the tame = all identity, not root structure.
 \end{enumerate}
 
 %% ====================================================================

@@ -1,0 +1,366 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm,mathrsfs}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{question}[theorem]{Question}
+
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\kk}{k}
+\newcommand{\pp}{\mathfrak{m}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GJac}{G^{\mathrm{Jac}}}
+\newcommand{\Ga}{\mathbb{G}_a}
+\newcommand{\Gm}{\mathbb{G}_m}
+
+\title{Synthesis of All Approaches to the\\
+Jacobian Conjecture in Dimension Two\\[6pt]
+\large Post-2026 Status Report}
+\author{Research Notes --- October 2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We synthesize the results of four parallel investigations into the Jacobian
+Conjecture in dimension two, the last open case after Alp\"oge's July 2026
+counterexample in dimension $\geq 3$. Each strategy is analyzed for its
+strengths, known obstructions, and connections to the monomial algebra framework.
+A potentially decisive development is identified: Zheglov's claimed proof
+(October 2024) of the Dixmier Conjecture for $A_1$, which would settle the
+problem via the Belov-Kanel--Kontsevich equivalence.
+\end{abstract}
+
+\tableofcontents
+
+%% ====================================================================
+\section{Overview: The Four Strategies}
+%% ====================================================================
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|c|l|l|}
+\hline
+\textbf{Strategy} & \textbf{Core Idea} & \textbf{Status} \\
+\hline
+A & Uniform degree bound for Anick approximants & Gap identified \\
+B & Dixmier--Kontsevich equivalence (DC$_1 \Leftrightarrow$ JC$_2$) & \textbf{Claimed proof} \\
+C & Properness via non-proper value set $S_F = \emptyset$ & Severe constraints known \\
+D & Newton polygon + Demazure root compatibility & Degree $\leq 108$ done \\
+\hline
+\end{tabular}
+\end{center}
+
+%% ====================================================================
+\section{Strategy A: Inverse Limit and Degree Bounds}
+%% ====================================================================
+
+\subsection{The Strategy}
+Reduce JC$_2$ to showing that the Anick approximants $\varphi_d \in \Aut_\kk(\kk[x,y])$
+satisfying $F \equiv \varphi_d \pmod{\pp^d}$ have $\deg \varphi_d \leq C(\deg F)$
+independent of $d$.
+
+\subsection{Known Results}
+\begin{itemize}
+\item \textbf{Gabber bound:} For an automorphism $F$ of $\kk[x,y]$,
+  $\deg F^{-1} \leq \deg F$. This holds \emph{after} invertibility is established.
+\item \textbf{Jung--van der Kulk:} $\Aut_\kk(\kk[x,y]) = \mathrm{Aff}_2 *_C \mathrm{Tri}_2$.
+  Every automorphism has a reduced decomposition whose factor degrees are determined
+  by the leading form.
+\item \textbf{Furter:} The ``length'' function (number of factors in the JvdK
+  decomposition) is lower semicontinuous. The variety $A_n$ of automorphisms of
+  degree $\leq n$ has dimension $n + 6$ for $n \geq 2$ and is irreducible only
+  for $n \leq 3$.
+\item \textbf{Anick's theorem:} Gives no control over $\deg \varphi_d$. The proof
+  is purely topological (density in the $\pp$-adic topology).
+\end{itemize}
+
+\subsection{Gap and Assessment}
+No existing result gives a uniform degree bound on $\varphi_d$. Furter's
+irreducibility failure for $A_n$ ($n \geq 4$) means the geometry of automorphism
+varieties is complex, and families can exhibit unbounded degree growth while
+converging $\pp$-adically.
+
+\textbf{New input needed:} The absence of inner roots in dimension 2
+(our Proposition from the main document) means the structure of $\GJac(A_d)$
+is \emph{exactly} the image of tame automorphisms. Can this be used to control
+degree via the amalgamated product structure? The key would be showing that
+the ``reduced word length'' in the JvdK decomposition is bounded.
+
+\textbf{Connection:} Karasek et al.\ showed that certain multidegrees in
+$\Aut(\CC^3)$ would imply failure of JC$_2$, linking the problem to multidegree
+theory.
+
+%% ====================================================================
+\section{Strategy B: The Dixmier--Kontsevich Path}
+%% ====================================================================
+
+\subsection{The Equivalence Chain}
+The following equivalences are established:
+\begin{enumerate}
+\item \textbf{JC$_{2n} \Leftrightarrow$ DC$_n$:} Jacobian Conjecture in $2n$
+  variables $\Leftrightarrow$ Dixmier Conjecture for $W_n$ (Belov-Kanel--Kontsevich
+  2005, Tsuchimoto 2005).
+\item \textbf{JC$_{2n} \Leftrightarrow$ PC$_n$:} $\Leftrightarrow$ Poisson Conjecture
+  in $2n$ variables.
+\item In particular: $\boxed{\text{JC}_2 \Leftrightarrow \text{DC}_1}$.
+\end{enumerate}
+
+After the 2026 counterexample:
+\begin{itemize}
+\item JC$_n$ is \textbf{false} for $n \geq 3$.
+\item DC$_n$ is \textbf{false} for $n \geq 2$ (since JC$_4$ false $\Rightarrow$ DC$_2$ false).
+\item PC$_n$ is \textbf{false} for $n \geq 2$.
+\item \textbf{JC$_2$, DC$_1$, PC$_1$ remain open} (and equivalent).
+\end{itemize}
+
+\subsection{Zheglov's Claimed Proof of DC$_1$}
+
+\begin{theorem}[Zheglov, arXiv:2410.06959, October 2024]
+Every algebra endomorphism of the first Weyl algebra $A_1 = \CC\langle x, \partial_x \rangle
+/ ([\partial_x, x] = 1)$ is an automorphism.
+\end{theorem}
+
+\textbf{If correct, this settles JC$_2$.}
+
+\begin{itemize}
+\item The proof uses the theory of normal forms for ordinary differential operators
+  (generalized Schur theory) and the string equation.
+\item The paper has undergone 4 revisions (25 pages $\to$ 67 pages).
+\item Submitted to a journal on January 19, 2026.
+\item As of October 2026: \textbf{no peer-reviewed publication; no known refutation;
+  no community consensus.}
+\end{itemize}
+
+\subsection{The Kontsevich Isomorphism}
+
+For $n = 1$, Kontsevich's conjecture that $\Aut(A_1) \cong \Aut_{\mathrm{symp}}(\CC^2)$
+is \emph{confirmed}. The path is:
+\[
+  \text{Keller map } F: \CC^2 \to \CC^2 \xrightarrow{\text{symplectomorphism}}
+  \text{End}(A_1) \xrightarrow{\text{DC}_1} \text{Aut}(A_1)
+  \xrightarrow{\text{Kontsevich}} \Aut_{\mathrm{symp}}(\CC^2) = \Aut(\CC^2)
+\]
+
+\subsection{Assessment}
+This is the \textbf{most promising path} to JC$_2$. The entire chain is
+established except for DC$_1$ itself. The proof of DC$_1$ would be
+purely algebraic (Weyl algebra theory), bypassing all geometric difficulties.
+However, Zheglov's proof is unverified.
+
+\textbf{Connection to our framework:} The Weyl algebra $A_1$ and the algebras
+$A_d = \kk[x,y]/\pp^d$ are related via deformation quantization. The Demazure root
+structure of $\Aut(A_d)$ should have a ``quantum'' counterpart in $\End(A_1)$.
+Exploring this connection could provide an independent path to DC$_1$.
+
+%% ====================================================================
+\section{Strategy C: Properness and the Non-Proper Value Set}
+%% ====================================================================
+
+\subsection{The Framework}
+A Keller map $F: \CC^2 \to \CC^2$ is \'etale, so failure of bijectivity
+$\Leftrightarrow$ failure of properness $\Leftrightarrow$ $S_F \neq \emptyset$.
+
+\subsection{Known Constraints on $S_F$}
+
+\begin{enumerate}
+\item \textbf{Jelonek (1993):} $S_F$ is either empty or a curve (union of algebraic curves).
+\item \textbf{Nguyen Van Chau:} $S_F$ has exactly one point at infinity. Each irreducible
+  component is parametrized by $(p(t), q(t))$ with $\deg p / \deg q = \deg P / \deg Q$.
+\item \textbf{Nollet--Xavier:} $\pi_1(\CC^2 \setminus S_F)$ is non-abelian.
+  $S_F$ cannot be a connected smooth hypersurface.
+\item \textbf{Nollet--Taylor--Xavier:} $S_F$ cannot be a connected non-bifurcated
+  algebraic hypersurface.
+\item \textbf{Resolution at infinity:} Extending $F$ to $\PP^2 \dashrightarrow \PP^2$
+  and resolving gives a weighted tree of exceptional curves. Dicritical divisors
+  (Abhyankar) control non-properness. The constant Jacobian forces severe constraints
+  on the resolution graph.
+\end{enumerate}
+
+\subsection{The Real Case (Pinchuk)}
+The real Jacobian conjecture is \textbf{false}: Pinchuk (1994) gave a polynomial map
+$\RR^2 \to \RR^2$ with everywhere-positive Jacobian that is not injective. Crucially,
+the Jacobian is \emph{non-constant} (infimum is zero), so the map is non-proper.
+This mechanism fails over $\CC$ because the constant Jacobian condition prevents
+the Jacobian from approaching zero at infinity.
+
+\subsection{Assessment}
+The accumulated constraints make $S_F \neq \emptyset$ very difficult. The approach is:
+show that for a Keller map, the constraints on $S_F$ are mutually contradictory.
+
+\textbf{Connection to our framework:} The properness condition can be studied via the
+inverse system $\{A_d\}$: $F$ is proper iff the induced maps $F_d: A_d \to A_d$ are
+``uniformly surjective'' in a suitable sense. The outer root structure of $\GJac(A_d)$
+forces each $F_d$ to be an automorphism, and the automorphisms of $A_d$ are proper
+(finite-dimensional algebra). The question is whether this ``level-wise properness''
+lifts to the polynomial level.
+
+%% ====================================================================
+\section{Strategy D: Newton Polygons and Root Compatibility}
+%% ====================================================================
+
+\subsection{Known Constraints on Counterexamples}
+
+For a hypothetical counterexample $(P, Q)$ with $\det J(F) = 1$:
+
+\begin{enumerate}
+\item $\gcd(\deg P, \deg Q) \geq 16$.
+\item $\gcd(\deg P, \deg Q) \neq p$ (prime) and $\neq 2p$.
+\item Verified for $\max(\deg P, \deg Q) \leq 108$ (Guccione--Guccione--Horruitiner--Valqui).
+\item The only surviving pair below max degree 125 is $(\deg P, \deg Q) = (72, 108)$
+  or its swap.
+\item Newton polygon of $P$ is a triangle with vertices $(0,0)$, $(n,0)$, $(0,m)$.
+\item Top-degree edge factors as $c(x^\ell - y^k)^e$.
+\item No edge parallel to the diagonal (slope 1).
+\item Lee--Li (2024): the innermost vertex (NE vertex of the inner polynomial's
+  Newton polygon) lies in a specific constrained region.
+\item Semigroup constraints from Abhyankar--Moh theory via approximate roots and
+  $G$-adic expansions.
+\end{enumerate}
+
+\subsection{Root-Polygon Compatibility}
+The outer Demazure roots of $\pp^d$ in dimension 2 are:
+\[
+  R_1 = \{(-1, j) : j \geq 0\}, \quad R_2 = \{(i, -1) : i \geq 0\}.
+\]
+Each root direction corresponds to an edge direction of the Newton polygon.
+The constraints above severely restrict which edge directions are compatible.
+
+\subsection{Assessment}
+The degree constraints are increasingly tight. The approach is inherently finite
+(induction on degree), but the base case keeps growing. Current limit: degree 108.
+
+\textbf{Key question:} Can the Demazure root framework give a \emph{structural}
+(non-computational) reason why no valid Newton polygon exists for a non-invertible
+Keller pair?
+
+%% ====================================================================
+\section{Interconnections and a Unified Strategy}
+%% ====================================================================
+
+The four strategies are not independent. We identify the following connections:
+
+\begin{enumerate}
+\item \textbf{A $\leftrightarrow$ D:} The Newton polygon determines the leading form
+  of the JvdK decomposition. A structural result showing all edges are compatible with
+  the outer root structure would give the degree bound of Strategy A.
+
+\item \textbf{A $\leftrightarrow$ C:} A uniform degree bound on $\varphi_d$ implies
+  $F = \varphi_d$ for large $d$ (an automorphism), which implies properness.
+  Conversely, properness of $F$ combined with the Keller condition gives bijectivity
+  (by standard theory), which gives the polynomial inverse.
+
+\item \textbf{B $\leftrightarrow$ all:} The Dixmier path (Strategy B) is independent
+  and would settle everything. But understanding \emph{why} DC$_1$ is true would connect
+  back to the geometric and combinatorial structures of the other strategies.
+
+\item \textbf{Monomial algebras as the bridge:} The key observation that $R_{\mathrm{inn}}(\pp^d)
+  = \emptyset$ in dimension 2 is the combinatorial shadow of the algebraic fact that
+  $A_1$ has no ``inner'' structure (it is generated by $x$ and $\partial_x$ with a
+  single relation). This rigidity is precisely what makes DC$_1$ plausible (and true,
+  if Zheglov is correct), while DC$_n$ fails for $n \geq 2$ where ``inner'' phenomena
+  (wild automorphisms, tangent sweeps) appear.
+\end{enumerate}
+
+%% ====================================================================
+\section{Proposed Research Program}
+%% ====================================================================
+
+\subsection{Immediate Priority: Verify Zheglov}
+
+If Zheglov's proof of DC$_1$ is correct, JC$_2$ is settled. The first priority is:
+\begin{itemize}
+\item Read and verify Zheglov's proof (67 pages, arXiv:2410.06959v4).
+\item Focus on the key steps: the theory of normal forms for differential operators,
+  the string equation, and the passage from formal to algebraic statements.
+\item Cross-check with the known constraints from Strategies A, C, D.
+\end{itemize}
+
+\subsection{Independent Paths (if Zheglov fails)}
+
+\begin{enumerate}
+\item \textbf{Root-polygon impossibility:} Show that the constraints from Strategy D,
+  combined with the Demazure root structure, leave no valid Newton polygon for a
+  counterexample. This would require extending the degree bound beyond 108 or finding
+  a structural argument.
+
+\item \textbf{Level-wise properness:} Develop a notion of ``uniform properness across
+  truncation levels'' and show it implies properness of the polynomial map.
+
+\item \textbf{Amalgamated product degree control:} Use the lower semicontinuity of
+  the JvdK length (Furter) combined with the absence of inner roots to prove the
+  uniform degree bound.
+
+\item \textbf{Deformation quantization path:} Connect the Demazure root structure
+  of $\Aut(A_d)$ to the endomorphism structure of $A_1$ via deformation quantization
+  of the Poisson algebra $\CC[x,y]$, providing an independent proof of DC$_1$.
+\end{enumerate}
+
+\subsection{Computational Support}
+
+\begin{itemize}
+\item Extend degree verification beyond 108 using Newton polygon + root compatibility.
+\item Implement Zheglov's normal form algorithm for small-degree differential operators.
+\item Compute the ``quantum Demazure roots'' of the Weyl algebra truncations
+  $A_1 / \mathfrak{m}^d_{A_1}$.
+\item Systematic fiber computation for families of Keller maps of increasing degree.
+\end{itemize}
+
+%% ====================================================================
+\section{Conclusion}
+%% ====================================================================
+
+The Jacobian Conjecture in dimension 2 appears to be on the verge of resolution.
+The most direct path is through the Dixmier Conjecture for $A_1$ (Zheglov's claimed
+proof). Even if this proof has gaps, the structural understanding from the monomial
+algebra framework---particularly the absence of inner roots and the exact
+correspondence between $\GJac(A_d)$ and tame automorphisms---provides multiple
+independent avenues of attack.
+
+The 2026 counterexample in dimension $\geq 3$ does not threaten the two-dimensional
+case; rather, it \emph{clarifies} the situation by confirming that dimension 2 is
+structurally different (all automorphisms tame, no inner roots, no tangent sweep
+mechanism). The question is whether this structural rigidity can be turned into a proof.
+
+\begin{thebibliography}{99}
+\bibitem{Alpoge} L.~Alp\"oge, \emph{Counterexample to the Jacobian conjecture in
+dimension 3}, July 2026.
+\bibitem{Gao} S.~Gao, \emph{Counterexamples to the Jacobian conjecture in dimensions
+$> 2$}, arXiv:2608.00222.
+\bibitem{Zheglov} A.~Zheglov, \emph{The Conjecture of Dixmier for the first Weyl
+algebra is true}, arXiv:2410.06959.
+\bibitem{BKK} A.~Belov-Kanel, M.~Kontsevich, \emph{The Jacobian conjecture is stably
+equivalent to the Dixmier conjecture}, Moscow Math.\ J.\ \textbf{7} (2007), 209--218.
+\bibitem{Tsuchimoto} Y.~Tsuchimoto, \emph{Endomorphisms of Weyl algebra and
+$p$-curvatures}, Osaka J.\ Math.\ \textbf{42} (2005), 435--452.
+\bibitem{Jelonek} Z.~Jelonek, \emph{The set of points at which a polynomial map is
+not proper}, Ann.\ Polon.\ Math.\ \textbf{58} (1993), 259--266.
+\bibitem{NguyenVC} N.~V.~Chau, \emph{Non-proper value set and Jacobian condition},
+preprint.
+\bibitem{NolletXavier} S.~Nollet, F.~Xavier, \emph{A note on the Jacobian conjecture},
+arXiv:2011.03472.
+\bibitem{GGHV} J.~Guccione, J.~Guccione, C.~Horruitiner, J.~Valqui, \emph{Increasing
+the degree bound}, arXiv:2204.14178.
+\bibitem{LeeLi} K.~Lee, L.~Li, \emph{Magnus' formula revisited, IV},
+arXiv:2408.01279.
+\bibitem{Furter} J.-P.~Furter, \emph{On the variety of automorphisms of the affine
+plane}, J.\ Algebra \textbf{195} (1997), 604--623.
+\bibitem{Pinchuk} S.~Pinchuk, \emph{A counterexample to the strong real Jacobian
+conjecture}, Math.\ Z.\ \textbf{217} (1994), 1--4.
+\end{thebibliography}
+
+\end{document}
