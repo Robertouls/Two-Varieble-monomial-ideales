@@ -897,23 +897,58 @@ component of degree $d$ in $\det J(P,Q) - 1$ must vanish. For degree $d = m+n-2$
 evaluated at that degree, and progressively more variables appear at lower degrees.
 The resulting system is the \emph{Jacobian cascade}.
 
-\subsection{Key identity}
+\subsection{Key identities}
 
-\begin{lemma}\label{lem:key-identity}
-For any polynomial $P \in \kk[x,y]$ and any polynomial $g \in \kk[t]$,
+\begin{lemma}[Jacobian cancellation]\label{lem:jac-cancel}
+For any $P \in \kk[x,y]$, $d(y) \in \kk[y]$, and integer $k \geq 0$,
 \[
-  \det J\bigl(P,\; g(P) + y\bigr) \;=\; P_x.
+  \det J\bigl(P,\; d(y) \cdot P^k\bigr) \;=\; P_x \cdot d'(y) \cdot P^k.
 \]
 \end{lemma}
 
 \begin{proof}
-Compute $\frac{\partial}{\partial x}[g(P) + y] = g'(P)\,P_x$ and
-$\frac{\partial}{\partial y}[g(P) + y] = g'(P)\,P_y + 1$. Then
+For $k = 0$: $\det J(P, d(y)) = P_x \cdot d'(y)$ since $d$ depends only on~$y$.
+For $k \geq 1$: the partial derivatives of $d(y) P^k$ are
+\[
+  \frac{\partial}{\partial x}[d(y) P^k] = d(y)\, k\, P^{k-1} P_x, \qquad
+  \frac{\partial}{\partial y}[d(y) P^k] = d'(y)\, P^k + d(y)\, k\, P^{k-1} P_y.
+\]
+Therefore
 \begin{align*}
-  \det J(P, g(P)+y) &= P_x\bigl(g'(P)\,P_y + 1\bigr) - P_y \cdot g'(P)\,P_x \\
-    &= g'(P)\,P_x\,P_y + P_x - g'(P)\,P_y\,P_x \\
-    &= P_x. \qedhere
+  \det J(P,\, d(y)P^k) &= P_x\bigl[d'(y)\,P^k + d(y)\,k\,P^{k-1}P_y\bigr]
+    - P_y\bigl[d(y)\,k\,P^{k-1}P_x\bigr] \\
+  &= P_x \cdot d'(y) \cdot P^k. \qedhere
 \end{align*}
+\end{proof}
+
+\begin{corollary}\label{lem:key-identity}
+For any $P \in \kk[x,y]$ and $g \in \kk[t]$,
+$\det J\bigl(P,\; g(P) + y\bigr) = P_x$.
+\end{corollary}
+
+\begin{proof}
+Write $g(t) = \sum_{k \geq 1} c_k t^k$. Then $g(P) + y = y + \sum c_k P^k$
+with $d_0(y) = y$ and $d_k = c_k$ (constant) for $k \geq 1$.
+By linearity of the Jacobian in the second argument and
+Lemma~\ref{lem:jac-cancel},
+$\det J(P, g(P)+y) = P_x \cdot 1 + \sum_{k \geq 1} P_x \cdot 0 \cdot P^k = P_x$.
+\end{proof}
+
+\subsection{Primitivity}
+
+\begin{lemma}\label{lem:primitive}
+Let $(P,Q)$ be a Keller map with $\det J(P,Q) = 1$. Then $P$ is indecomposable:
+there is no factorization $P = f(h)$ with $f \in \kk[t]$, $\deg f \geq 2$,
+and $h \in \kk[x,y]$.
+\end{lemma}
+
+\begin{proof}
+If $P = f(h)$, then $P_x = f'(h)\,h_x$ and $P_y = f'(h)\,h_y$, so
+$\det J(P,Q) = f'(h) \cdot \det J(h,Q)$.
+Since $\det J(P,Q) = 1$ and $\det J(h,Q) \in \kk[x,y]$, we need
+$f'(h) \in \kk^\times$.
+But $\deg(f' \circ h) = (\deg f - 1)\,\deg h \geq 1$ when
+$\deg f \geq 2$ and $\deg h \geq 1$, a contradiction.
 \end{proof}
 
 \subsection{Consequence of \texorpdfstring{$P_x = 1$}{Px = 1}}
@@ -931,19 +966,22 @@ then:
 \end{theorem}
 
 \begin{proof}
-\textbf{(1)} Since $P_x = 1$, Lemma~\ref{lem:key-identity} shows that for any
-$g \in \kk[t]$, the map $(P, g(P)+y)$ is a Keller map. The PDE
-$Q_y - P_y \cdot Q_x = 1$ (obtained from $\det J(P,Q) = 1$ using $P_x = 1$)
-has general solution $Q = g(P) + y$ for a polynomial $g$.
+\textbf{(1)} Since $P_x = 1$, we have $P = f(y) + x$ for some $f \in \kk[y]$
+with $\deg f = m$. The map $\sigma \colon (x,y) \mapsto (P,\, y)$ is an
+automorphism with inverse $\sigma^{-1} \colon (u,v) \mapsto (u - f(v),\, v)$
+and $\det J(\sigma) = P_x = 1$. Define $G = F \circ \sigma^{-1} = (u,\, \tilde{Q}(u,v))$.
+The chain rule gives $\det J(G) = \det J(F) \cdot \det J(\sigma^{-1}) = 1$, so
+$\partial \tilde{Q}/\partial v = 1$, whence $\tilde{Q} = v + g(u)$ for some
+$g \in \kk[u]$. Composing back: $Q = \tilde{Q}(P, y) = y + g(P)$.
 
 \textbf{(2)} $\deg Q = \deg(g(P) + y) = (\deg g)(\deg P) = (\deg g) \cdot m$,
 so $n = (\deg g) \cdot m$, whence $m \mid n$.
 
-\textbf{(3)} Peeling: the leading form of $Q$ is $y^n = (y^m)^{n/m} = P_m^{n/m}$,
-so $Q - c \cdot P^{n/m}$ has degree $< n$. After finitely many such peeling
-steps, both components reach degree~$\leq 1$. This produces a Jung--van der Kulk
-decomposition $F = L \circ T_1 \circ \cdots \circ T_k$, so $F$ is a polynomial
-automorphism.
+\textbf{(3)} Peeling: $F = G \circ \sigma$ where $G = (\mathrm{id},\, y + g(P))$
+and $\sigma = (f(y) + x,\, y)$ are both triangular automorphisms, so $F$ is
+a composition of elementary automorphisms. Equivalently, the leading form of $Q$
+is $y^n = P_m^{n/m}$, so iterative peeling $Q \mapsto Q - c \cdot P^{n/m}$
+produces a Jung--van der Kulk decomposition.
 \end{proof}
 
 \subsection{Computational verification}
@@ -1001,6 +1039,65 @@ $m$ & $n$ & $m \mid n$? & Solutions \\
 \end{center}
 \end{remark}
 
+\subsection{Algebraic mechanism of the cascade}
+
+The computational verification reveals a striking pattern in \emph{how} the
+cascade forces $P_x = 1$. We describe the mechanism for two representative cases.
+
+\subsubsection*{The case $(m,n) = (3,6)$}
+
+Write $P_2 = p_0 y^2 + p_1 xy + p_2 x^2$ and solve the cascade top-down for the
+$Q$-coefficients, carrying $p_0, p_1, p_2$ as parameters. At degree~4, the cascade
+produces the equation
+\[
+  \tfrac{20}{3}\, p_2^2\, (q_{5,0} - 2p_0) = 0,
+\]
+which gives either $p_2 = 0$ or $q_{5,0} = 2p_0$. If $q_{5,0} = 2p_0$ with $p_2 \neq 0$,
+the remaining system has no solution (contradiction). If $p_2 = 0$, the degree-3
+equations yield
+\[
+  \tfrac{5}{9}\, p_1^3\, (2p_0 - q_{5,0}) = 0,
+\]
+forcing $p_1 = 0$ or $q_{5,0} = 2p_0$. In the latter subcase ($p_2 = 0$,
+$q_{5,0} = 2p_0$), the remaining equations still force $p_1 = 0$. Every branch
+terminates at $p_1 = p_2 = 0$, hence $P_x = 1$.
+
+\subsubsection*{The case $(m,n) = (4,8)$}
+
+Write $P_3 = a_{30}y^3 + a_{31}xy^2 + a_{32}x^2y + a_{33}x^3$ and
+$P_2 = b_{20}y^2 + b_{21}xy + b_{22}x^2$, with 7~free $P$-coefficients.
+The cascade solves for $Q$-coefficients at degrees $9, 8, \ldots, 3$. At
+degree~2, only 3~equations remain but \emph{no} $Q$-variables: these are pure
+constraints on the $P$-coefficients:
+\[
+  a_{31} = 0, \qquad 2\,a_{32} = 0, \qquad 3\,a_{33} = 0,
+\]
+i.e., $(P_3)_x = 0$. At degree~1, the same phenomenon repeats:
+\[
+  b_{21} = 0, \qquad 2\,b_{22} = 0,
+\]
+i.e., $(P_2)_x = 0$. The cascade eliminates $x$-dependent $P$-coefficients
+\emph{level by level}, from the lowest intermediate layer upward.
+
+\subsubsection*{General pattern}
+
+In all computed cases, the cascade exhibits the following structure:
+\begin{enumerate}
+\item At degrees $n-1, n-2, \ldots, m$, the $Q$-coefficients are uniquely
+  determined (as rational functions of the $P$-coefficients and previously
+  determined $Q$-coefficients), with one free parameter per degree (the
+  pure-$y$ coefficient $q_{k,0}$).
+\item At degrees $m-1, \ldots, 2$, the system becomes overdetermined in the
+  $Q$-variables. The excess equations are pure constraints on the $P$-coefficients,
+  and these constraints force $(P_k)_x = 0$ for each intermediate layer.
+\item At degree~1, the final constraint forces $(P_2)_x = 0$, completing
+  $P_x = 1$.
+\end{enumerate}
+The nonlinearity that drives this mechanism is the cross-term $J(P_k, Q_l)$
+in the cascade: these are \emph{quadratic} in the original coefficients (products
+of $P$- and $Q$-coefficients), and the $Q$-coefficients themselves depend
+polynomially on the $P$-coefficients from higher cascade levels.
+
 \begin{conjecture}\label{conj:px}
 For every Keller map $F = (P,Q) \colon \kk^2 \to \kk^2$ with $\det J(P,Q) = 1$,
 normalized so that $P_m = y^m$, $Q_n = y^n$, $P_1 = x$, $Q_1 = y$, and
@@ -1010,11 +1107,18 @@ $m = \deg P \leq n = \deg Q$, we have $P_x = 1$.
 \begin{remark}
 If Conjecture~\ref{conj:px} holds, then by Theorem~\ref{thm:px-implies-div},
 every Keller map in dimension~2 is a polynomial automorphism, settling JC$_2$.
-The algebraic mechanism behind $P_x = 1$ is that the cascade equations at each
-degree level create an overdetermined nonlinear system: the cross-terms
-$J(P_k, Q_l)$ in the cascade introduce products of $P$-coefficients and
-$Q$-coefficients that are incompatible with $P_x \neq 1$. A general proof
-would need to show this incompatibility persists for all $m$ and $n$.
+The chain of implications is:
+\[
+  P_x = 1 \;\xRightarrow{\text{Thm~\ref{thm:px-implies-div}(1)}}\;
+  Q = g(P) + y \;\Longrightarrow\;
+  m \mid n \;\xRightarrow{\text{peeling}}\;
+  F \in \Aut(\kk^2).
+\]
+By Lemma~\ref{lem:primitive}, $P$ is indecomposable, and by
+Lemma~\ref{lem:jac-cancel}, the structure of $\det J$ relative to the
+$\kk[y]$-module $\kk[P, y]$ is tightly constrained. A general proof of
+Conjecture~\ref{conj:px} would need to show that the overdetermined cascade
+structure described above persists for all $m$ and~$n$.
 \end{remark}
 
 %% ====================================================================
