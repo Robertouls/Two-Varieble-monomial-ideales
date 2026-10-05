@@ -751,25 +751,37 @@ tame with $\mathrm{pdeg}(F) = (a_1, \ldots, a_k)$.
 The key technical input for proving Conjecture~\ref{conj:pdeg-stable}:
 
 \begin{lemma}[Leading form determines first peeling step]
-Let $F = (P, Q)$ be a Keller map with $\deg P > \deg Q \geq 1$. Then there exists
+Let $F = (P, Q)$ be a Keller map with $\deg P > \deg Q \geq 1$, and
+\emph{assume} $\deg Q \mid \deg P$ and that the leading form of~$Q$ is
+a power of a linear form. Then there exists
 a unique elementary automorphism $\tau_1: (x, y) \mapsto (x - c \cdot y^m, y)$ such
 that $\deg(F \circ \tau_1^{-1}) < \deg F$, where $m = \deg P / \deg Q$ and
 $c$ is determined by the leading form of $P$.
-
-This uses the \emph{Abhyankar--Moh degree theorem}: for a Keller map $(P, Q)$ in dimension
-two, $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$ (up to a linear change).
 \end{lemma}
 
 \begin{proof}[Proof idea]
-The Jacobian condition $\det J(F) = 1$ constrains the leading forms. In dimension 2,
-the leading form of a polynomial automorphism is necessarily of the form $c \cdot y^m$
-(in suitable coordinates). The ``peeling'' step removes this leading form by composing
+Under the hypotheses, $Q_{\deg Q} = c' \ell^{\deg Q}$ for a linear form~$\ell$,
+and Lemma~\ref{lem:leading-forms} gives $P_{\deg P} = c\,\ell^{\deg P}$;
+take $y = \ell$. The ``peeling'' step removes this leading form by composing
 with $\tau_1^{-1} = (x + c \cdot y^m, y)$, reducing the degree.
 
 The essential point: the leading form depends only on the polynomial $F$ itself, not on
 the truncation level $d$ (for $d > \deg F$). Hence the first peeling step is the same
 for all $d > \deg F$.
 \end{proof}
+
+\begin{remark}[Warning: divisibility is not a theorem]\label{rem:div-not-thm}
+The degree divisibility $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$
+for Keller pairs is \textbf{not} a known theorem; an earlier version of
+these notes wrongly attributed it to Abhyankar--Moh. The Abhyankar--Moh
+theorem concerns embeddings of the line $\CC \hookrightarrow \CC^2$
+(i.e., pairs $(f(t), g(t))$ with $\CC[f,g] = \CC[t]$), not Keller pairs.
+For Keller pairs, divisibility of degrees is \emph{equivalent} to JC$_2$:
+if $\deg P \mid \deg Q$ then $Q' = Q - cP^{n/m}$ has smaller degree and
+$(P, Q')$ is again a Keller pair, so a \emph{minimal} counterexample
+must have $\deg P \nmid \deg Q$ and $\deg Q \nmid \deg P$.
+See Section~\ref{sec:scope} for the consequences.
+\end{remark}
 
 \begin{proposition}[Induction on polydegree length]
 If the Keller map $F$ has $\deg F > 1$ and the first peeling step produces
@@ -892,18 +904,34 @@ Lee--Li's Conjecture E, if proven, implies JC$_2$. The connection to our approac
 \section{The Jacobian Cascade and \texorpdfstring{$P_x = 1$}{Px = 1}}\label{sec:cascade-evidence}
 %% ====================================================================
 
-We present computational evidence and an algebraic argument that, for any
-Keller map $F = (P,Q)$ in dimension~2, the Jacobian condition forces $P$ to
-depend on~$x$ only through the linear term.
+We present computational evidence and an algebraic argument that, for a
+Keller map $F = (P,Q)$ in dimension~2 \emph{whose leading forms are powers
+of a linear form}, the Jacobian condition generically forces $P$ to
+depend on~$x$ only through the linear term. The scope of this hypothesis
+is discussed in Section~\ref{sec:scope}: it places us inside the case
+already settled by Abhyankar, so the material of this section should be
+read as a structural study of that case, not as an attack on the open
+part of JC$_2$.
 
 \subsection{Setup and normalization}
 
 Let $F = (P,Q) \colon \kk^2 \to \kk^2$ be a polynomial Keller map with
 $\det J(P,Q) = 1$, $F(0) = 0$, $J(F)(0) = I_2$. Set $m = \deg P \leq n = \deg Q$.
-After an affine change of coordinates, the leading forms and linear parts satisfy
+Since $\det J(P,Q) = 1$ has degree~$0$, the top-degree part
+$\det J(P_m, Q_n)$ vanishes, so $P_m$ and $Q_n$ are algebraically
+dependent forms and
+\[
+  P_m = a\,h^{m/d}, \qquad Q_n = b\,h^{n/d}, \qquad d = \gcd(m,n),
+\]
+for some form~$h$ of degree~$d$ (Lemma~\ref{lem:leading-forms}).
+\textbf{Throughout this section we assume} that $h$ is a power of a
+linear form and that $m \mid n$; after an affine change of coordinates
+the leading forms and linear parts then satisfy
 \[
   P_m = y^m, \quad Q_n = y^n, \quad P_1 = x, \quad Q_1 = y.
 \]
+This is a genuine restriction (Remark~\ref{rem:div-not-thm},
+Section~\ref{sec:scope}).
 Write $P = y^m + P_{m-1} + \cdots + P_2 + x$ and $Q = y^n + Q_{n-1} + \cdots + Q_2 + y$,
 where each $P_k$, $Q_k$ is homogeneous of degree~$k$ with symbolic coefficients.
 
@@ -1875,7 +1903,7 @@ mate~$Q$.
 \end{remark}
 
 \subsection{The Cascade Identity and the proof structure for $\mathrm{JC}_2$}%
-\label{sec:cascade-identity}
+\label{sec:cascade-identity-conj}
 
 The computational evidence from
 Sections~\ref{sec:cascade-evidence}--\ref{sec:n-independence}
@@ -1983,61 +2011,85 @@ to $P_x$.
 \end{enumerate}
 \end{proposition}
 
-We now state the main conditional result.
+We now state precisely what the Cascade Identity does and does not
+give. The key object is the \emph{normalized cascade kernel}
+\[
+  \mathcal{K}(P) \;=\; \Bigl\{ R \in \textstyle\bigoplus_{k=2}^{n-1} \kk[x,y]_k
+  \;:\; \deg \det J(P, R) \leq m-1 \Bigr\},
+\]
+which depends on the specific polynomial~$P$ and always contains
+$\operatorname{span}(P^2, \ldots, P^{r-1})$.
 
-\begin{theorem}[Conditional proof of $\mathrm{JC}_2$]%
-\label{thm:conditional-JC2}
-If the Cascade Identity
-\textup{(Conjecture~\ref{conj:cascade-identity})}
-holds for all~$m$, then $\mathrm{JC}_2$ is true.
+\begin{theorem}[Cascade-generic $P$]\label{thm:generic-kernel}
+Let $(P,Q)$ be a normalized Keller pair with $P_m = y^m$, $n = rm$.
+If $\mathcal{K}(P) = \operatorname{span}(P^2, \ldots, P^{r-1})$,
+then $P_x = 1$, $Q = y + G(P)$ for some $G \in \kk[t]$, and
+$(P,Q)$ is a tame automorphism.
 \end{theorem}
 
 \begin{proof}
-Let $(P, Q)$ be a normalized Keller pair with $\det J(P,Q) = 1$,
-$P_m = y^m$, $Q_n = y^n$, $P_1 = x$, $Q_1 = y$, $n = rm$.
-
-\medskip\noindent
-\textbf{Step 1} (Cascade structure).
-The condition $\det J(P,Q) = 1$ gives
-$[\det J(P,Q)]_D = 0$ for all $D \geq 1$.
-At levels $D \geq m$, these equations determine the $x$-dependent
-$Q$-coefficients; the pure-$y$ parameters $q_{jm,0}$
-($j = 2, \ldots, r-1$) remain free.
-By the proved inclusion $\kk[P]_{\leq n-1} \subseteq \mathcal{K}$
-(Theorem~\ref{thm:cascade-kernel-dim}),
-$Q$ decomposes as $Q = Q_{\mathrm{cas}} + R$ with
-$R \in \kk[P]_{\leq n-1}$,
-where $Q_{\mathrm{cas}}$ is the particular cascade solution
-matching $Q$'s free-parameter values.
-Since $R \in \kk[P]$, $\det J(P, R) = 0$.
-
-\medskip\noindent
-\textbf{Step 2} (Low-degree constraints).
-At levels $D = 1, \ldots, m-2$, the Keller condition gives
-$[\det J(P,Q)]_D = 0$. Since
-$[\det J(P, R)]_D = 0$ (as $R \in \kk[P]$), this forces
-\[
-  [\det J(P,\, Q_{\mathrm{cas}})]_D = 0
-  \quad \text{for } D = 1, \ldots, m-2.
-\]
-
-\medskip\noindent
-\textbf{Step 3} (Cascade Identity).
-By Conjecture~\ref{conj:cascade-identity},
-$\det J(P,\, Q_{\mathrm{cas}}) = P_x$, so
-$[P_x]_D = 0$ for $D = 1, \ldots, m-2$.
-Since $[P_x]_D = [(P_{D+1})_x]$ for $D \leq m-2$
-and $(P_m)_x = (y^m)_x = 0$, this gives
-$(P_k)_x = 0$ for $k = 2, \ldots, m-1$, hence $P_x = 1$.
-
-\medskip\noindent
-\textbf{Step 4} (Automorphism).
-$P_x = 1$ gives $P = f(y) + x$.
-The shear $\sigma \colon (x,y) \mapsto (x - f(y),\, y)$
-satisfies $\sigma(P) = x$, so $P$ is a coordinate.
-By Jung--van der Kulk~\cite{JungVdK},
-$(P,Q)$ is a (tame) automorphism.
+Put $Q_0 = P^r + y$. By Corollary~\ref{lem:key-identity},
+$\det J(P, Q_0) = P_x$, which has degree $\leq m-2$; hence
+$Q_0$ satisfies the cascade equations at all levels $D \geq m$.
+So does~$Q$, since $\det J(P,Q) = 1$. Both $Q - Q_0$ and $Q$ have
+linear part~$y$ and no constant term, so
+$Q - Q_0 \in \mathcal{K}(P) = \operatorname{span}(P^2, \ldots, P^{r-1})$,
+say $Q - Q_0 = g(P)$. Then
+$1 = \det J(P,Q) = \det J(P, Q_0) + \det J(P, g(P)) = P_x$.
+The rest follows from Theorem~\ref{thm:px-implies-div}.
 \end{proof}
+
+\begin{proposition}[Why the Cascade Identity cannot be the engine]%
+\label{prop:cascade-identity-demystified}
+\leavevmode
+\begin{enumerate}
+\item[\textup{(a)}] For every normalized~$P$, the polynomial
+  $Q_0 = P^r + y$ is a cascade solution with
+  $\det J(P, Q_0) = P_x$. Hence the Cascade Identity
+  \textup{(Conjecture~\ref{conj:cascade-identity})} for a given~$P$
+  is \emph{equivalent} to the statement that the generic cascade solution
+  lies in $Q_0 + \kk[P]$, i.e., to
+  $\mathcal{K}(P) = \operatorname{span}(P^2, \ldots, P^{r-1})$.
+\item[\textup{(b)}] The equality in \textup{(a)} is \textbf{false}
+  for some normalized~$P$ admitting Keller mates.
+  For the $m = 4$ pair of Proposition~\ref{prop:px-neq-1-auto},
+  $R := Q - P^2 - y \in \mathcal{K}(P)$ satisfies
+  $\det J(P, R) = 1 - P_x \neq 0$, so $R \notin \kk[P]$ and
+  $\dim \mathcal{K}(P) > r - 2$.
+\item[\textup{(c)}] Consequently, the computational verifications of
+  Proposition~\ref{prop:cascade-conj-verified} establish the identity
+  only for \emph{generic} $P$-coefficients (a Zariski-open condition on
+  the $a_{k,j}$); they say nothing on the proper closed locus where the
+  linear system of the cascade drops rank. Every Keller pair with
+  $P_x \neq 1$ lives on that locus.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(a) $\deg \det J(P, Q_0) = \deg P_x \leq m - 2$, so $Q_0$ solves all
+levels $D \geq m$; any two cascade solutions differ by an element of
+$\mathcal{K}(P)$, and $\det J(P, Q_0 + R) = P_x + \det J(P, R)$ equals
+$P_x$ iff $\det J(P,R) = 0$ iff $R \in \kk[P]$ (Stein--Nagata--Nowicki,
+$P$ being indecomposable by Lemma~\ref{lem:primitive} when a Keller mate
+exists). (b) is a direct computation with the explicit pair.
+(c) The cascade solves a linear system whose coefficients are polynomials
+in the $a_{k,j}$; its solution set is constant on a Zariski-open set and
+jumps in dimension on the complement.
+\end{proof}
+
+\begin{remark}[Retraction]\label{rem:retraction}
+An earlier version of this subsection stated a ``conditional proof of
+JC$_2$'' from the Cascade Identity. Its first step silently used
+$\mathcal{K}(P) = \kk[P]$-span for \emph{all}~$P$ (the inclusion
+proved in Theorem~\ref{thm:cascade-kernel-dim} goes the other way),
+and its conclusion---$P_x = 1$ for every normalized Keller
+pair---is exactly the statement $(\star)$ that
+Theorem~\ref{thm:precise-gap} shows to be false for $m = 4$.
+The correct statement is Theorem~\ref{thm:generic-kernel}: the
+$P_x = 1$ route works precisely on the cascade-generic locus, and the
+difficulty of JC$_2$ (within this framework) is concentrated on the
+rank-jump loci, i.e., on the branches of Section~\ref{sec:spurious}.
+\end{remark}
 
 \begin{remark}[The algebraic mechanism]\label{rem:diag-matrix}
 The Cascade Identity has its roots in the diagonal structure of the
@@ -2056,10 +2108,110 @@ so each level uniquely determines its $x$-dependent $Q$-coefficients
 (with the pure-$y$ parameter $q_{k,0}$ propagating to lower levels).
 The integer diagonal structure propagates through the cascade and
 ultimately produces the integer coefficients~$j$ in the excess equations.
-An algebraic proof of the Cascade Identity for general~$m$ would amount
+An algebraic proof of the Cascade Identity for generic~$P$ would amount
 to showing that this propagation preserves the identity
 $\sum_D [\det J(P, Q_{\mathrm{cas}})]_D = P_x$
-through all $m + n - 3$ cascade levels.
+through all $m + n - 3$ cascade levels; by
+Proposition~\ref{prop:cascade-identity-demystified} this is the same as
+proving $\mathcal{K}(P) = \operatorname{span}(P^2,\ldots,P^{r-1})$
+for generic~$P$, and says nothing about the rank-jump loci.
+\end{remark}
+
+\subsection{Scope of the framework: what the cascade can and cannot prove}%
+\label{sec:scope}
+
+We now record, with references, why the cascade framework as developed
+above cannot by itself prove JC$_2$, and where the open part of the
+problem actually lives.
+
+\begin{lemma}[Leading forms of a Keller pair]\label{lem:leading-forms}
+Let $(P,Q)$ be a Keller pair with $m = \deg P$, $n = \deg Q$,
+$m + n > 2$, and $d = \gcd(m,n)$. Then there is a form $h$ of degree~$d$
+and constants $a, b \in \kk^\times$ with
+$P_m = a\,h^{m/d}$ and $Q_n = b\,h^{n/d}$.
+\end{lemma}
+
+\begin{proof}
+The degree-$(m+n-2)$ part of $\det J(P,Q) = 1$ is $\det J(P_m, Q_n)$,
+which must vanish. Two homogeneous forms with vanishing Jacobian are
+algebraically dependent, and for forms this means $P_m^{n} = c\,Q_n^{m}$;
+by unique factorization in $\kk[x,y]$ both are powers of a common form
+of degree~$d$.
+\end{proof}
+
+The normalization $P_m = y^m$ of Section~\ref{sec:cascade-evidence} is
+therefore the assumption that $h$ is (a power of) a linear form, i.e.,
+that the projective closure of every fibre $P = c$ meets the line at
+infinity in a \emph{single point}. This is the classical
+\emph{one point at infinity} condition, and it is not innocuous:
+
+\begin{theorem}[Abhyankar; see \cite{Abhyankar1977, vdEssen}]%
+\label{thm:abhyankar-one-point}
+Let $(P,Q)$ be a Keller pair over $\CC$. If $P$ has only one point at
+infinity, then $(P,Q)$ is a polynomial automorphism.
+Equivalently, JC$_2$ is true if and only if every Keller polynomial has
+only one point at infinity.
+\end{theorem}
+
+\begin{theorem}[Shape of a minimal counterexample;
+Heitmann~\cite{Heitmann1990}, Guccione--Guccione--Valqui~\cite{GGV,GGV2014}]%
+\label{thm:min-counterexample}
+If $(P,Q)$ is a counterexample to JC$_2$ of minimal total degree, then
+\begin{enumerate}
+\item[\textup{(a)}] $m \nmid n$ and $n \nmid m$
+  \textup{(}otherwise $Q - cP^{n/m}$ gives a smaller counterexample\textup{)};
+\item[\textup{(b)}] the common form $h$ of Lemma~\ref{lem:leading-forms}
+  has at least two distinct linear factors
+  \textup{(}Theorem~\ref{thm:abhyankar-one-point}\textup{)};
+\item[\textup{(c)}] $d = \gcd(m,n) \geq 16$ and $d \neq 2p$ for every
+  prime~$p$;
+\item[\textup{(d)}] $\max(m,n) > 100$ \textup{(Moh~\cite{Moh})}; the
+  smallest degree pairs not excluded by the Newton-polygon constraints
+  are $(64,48)$, $(50,75)$, $(56,84)$, $(66,99)$, and these four are
+  excluded by hand in~\cite{GGV2014}.
+\end{enumerate}
+\end{theorem}
+
+\begin{corollary}[Scope]\label{cor:scope}
+\leavevmode
+\begin{enumerate}
+\item[\textup{(i)}] Every Keller pair treated in
+  Sections~\ref{sec:cascade-evidence}--\ref{sec:cascade-identity-conj}
+  \textup{(}$P_m = y^m$, $m \mid n$\textup{)} is already known to be a tame
+  automorphism by Theorem~\ref{thm:abhyankar-one-point}. In particular
+  Conjecture~\ref{conj:px}, Conjecture~\ref{conj:cascade-structure} and
+  the branch enumeration of Section~\ref{sec:spurious} are statements
+  \emph{inside} the settled case, and no result about them, however
+  complete, bears on the truth of JC$_2$.
+\item[\textup{(ii)}] A proof of JC$_2$ along cascade lines would have to
+  start from $P_m = h^{m/d}$ with $h$ having at least two distinct linear
+  factors, $m \nmid n$, $n \nmid m$, $d \geq 16$, $\max(m,n) > 100$.
+  At such degrees the fully symbolic cascade of
+  Section~\ref{sec:cascade-evidence} is computationally out of reach;
+  only its first few levels, treated theoretically, are accessible, and
+  these are precisely the Newton-polygon constraints of
+  Heitmann and Guccione--Guccione--Valqui.
+\item[\textup{(iii)}] Within the settled case, the content of the
+  cascade is Theorem~\ref{thm:generic-kernel} together with
+  Proposition~\ref{prop:cascade-identity-demystified}: the $P_x = 1$
+  mechanism is exactly the cascade-generic locus, and the Keller pairs
+  with $P_x \neq 1$ are exactly the rank-jump loci of the cascade's
+  linear system.
+\end{enumerate}
+\end{corollary}
+
+\begin{remark}[What survives]
+The honest residue of the program is structural rather than
+probative: (1) a clean description of the generic case
+(Theorem~\ref{thm:generic-kernel}); (2) the observation that the
+degenerate loci are governed by hidden lower-degree coordinates
+$g$ with $P \in \kk[g, y]$ (Proposition~\ref{prop:px-neq-1-auto}(b)),
+suggesting an inductive structure on the one-point-at-infinity case that
+is in effect a re-derivation of Abhyankar's theorem; and (3) the
+$n$-independence phenomenon (Proposition~\ref{prop:n-indep}), which is a
+statement about the first $m-1$ cascade levels only and may admit a
+generalization to arbitrary leading form~$h$. Item~(3) is the only part
+with a possible bearing on the open case.
 \end{remark}
 
 %% ====================================================================
@@ -2368,40 +2520,35 @@ the coprime case).
 %% ====================================================================
 
 \begin{enumerate}
-\item \textbf{PRIORITY: Prove the Cascade Identity
-  (Conjecture~\ref{conj:cascade-identity}).}
-  The identity $\det J(P, Q_{\mathrm{cas}}) = P_x$ is verified
-  computationally for $m \leq 5$ with full back-substitution, and
-  the equivalent universal excess pattern is verified for $m \leq 7$
-  (Proposition~\ref{prop:cascade-conj-verified}).
-  By Theorem~\ref{thm:conditional-JC2}, an algebraic proof
-  for all~$m$ would settle JC$_2$ completely.
-
-  Possible approaches:
+\item \textbf{PRIORITY: Leave the one-point-at-infinity world.}
+  By Section~\ref{sec:scope}, every pair treated by the cascade
+  framework ($P_m = y^m$) is already known to be an automorphism
+  (Abhyankar), and a minimal counterexample has
+  $P_m = a\,h^{m/d}$, $Q_n = b\,h^{n/d}$ with $h$ having at least
+  two distinct linear factors, $m \nmid n$, $n \nmid m$,
+  $d = \gcd(m,n) \geq 16$. The cascade must be
+  re-derived in this setting:
   \begin{itemize}
-  \item \emph{Diagonal coefficient matrix induction}:
-    the $\operatorname{diag}(-m, -2m, \ldots)$ structure
-    at each cascade level (Remark~\ref{rem:diag-matrix})
-    determines the $x$-dependent $Q$-unknowns uniquely.
-    Prove by induction on~$D$ that the partial Jacobian
-    $\sum_{D' \geq D} [\det J(P, Q_{\mathrm{cas}})]_{D'}$
-    telescopes to $[P_x]_{\geq D}$ at each cascade step.
-  \item \emph{Kernel characterization}:
-    prove $\mathcal{K} = \kk[P]_{\leq n-1}$ directly
-    (the proved inclusion is $\kk[P]_{\leq n-1} \subseteq \mathcal{K}$;
-    equality is verified for $m \leq 7$).
-    Combined with Corollary~\ref{lem:key-identity}
-    ($\det J(P, g(P)+y) = P_x$) and the decomposition
-    $Q_{\mathrm{cas}} = P^r + R + y$ with $R \in \mathcal{K}$,
-    this would give
-    $\det J(P, Q_{\mathrm{cas}}) = \det J(P, P^r + y) = P_x$.
-  \item \emph{Differential algebra}:
-    the operator $\det J(P, \cdot)$ is a derivation of $\kk[x,y]$.
-    The cascade can be viewed as inverting this derivation at
-    homogeneous degrees~$\geq m$.  The Cascade Identity states
-    that the image under this inversion of ``$0$ at all degrees~$\geq 1$''
-    is exactly~$P_x$.
+  \item \emph{Top-level operator}: with $P_m = h^{a}$ the leading
+    cascade operator is $J(h^a, \cdot) = a\,h^{a-1} J(h, \cdot)$,
+    whose kernel on forms of degree~$k$ is $\kk\,h^{k/d}$
+    (nonzero only for $d \mid k$) and whose image is divisible
+    by~$h^{a-1}$. Work out the first few cascade levels symbolically
+    for small~$d$ and compare with the Newton-polygon constraints of
+    Heitmann~\cite{Heitmann1990} and
+    Guccione--Guccione--Valqui~\cite{GGV,GGV2014}.
+  \item \emph{Rank-jump loci}: in the divisible case, every Keller pair
+    with $P_x \neq 1$ sits where the cascade's linear system drops rank
+    (Proposition~\ref{prop:cascade-identity-demystified}). Characterize
+    the rank-jump locus for $m = 4, 5$ and test whether it is always
+    contained in ``$P$ is a polynomial in a lower-degree coordinate~$g$
+    and~$y$'' (as in Proposition~\ref{prop:px-neq-1-auto}(b)).
   \end{itemize}
+  The identity $\det J(P, Q_{\mathrm{cas}}) = P_x$
+  (Conjecture~\ref{conj:cascade-identity}) is equivalent to
+  $\mathcal{K}(P) = \operatorname{span}(P^2,\ldots,P^{r-1})$ and is
+  therefore a statement about generic~$P$ only; it is no longer a
+  priority.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof.}
   A detailed analysis of the proof structure appears in
@@ -2554,6 +2701,23 @@ J.~Dixmier, \emph{Sur les alg\`ebres de Weyl}, Bull.\ Soc.\ Math.\ France
 \bibitem{GGV}
 J.~Guccione, J.~Guccione, C.~Valqui, \emph{On the shape of possible counterexamples to
 the Jacobian conjecture}, arXiv:1111.6100, 2011.
+
+\bibitem{GGV2014}
+J.~A.~Guccione, J.~J.~Guccione, C.~Valqui, \emph{On the shape of possible
+counterexamples to the Jacobian Conjecture}, J.~Algebra \textbf{471} (2017),
+13--74; arXiv:1401.1784.
+
+\bibitem{Heitmann1990}
+R.~Heitmann, \emph{On the Jacobian conjecture}, J.~Pure Appl.\ Algebra
+\textbf{64} (1990), 35--72.
+
+\bibitem{Abhyankar1977}
+S.~S.~Abhyankar, \emph{Expansion techniques in algebraic geometry},
+Tata Inst.\ Fund.\ Res.\ Lectures on Math.\ and Phys.\ \textbf{57}, Bombay, 1977.
+
+\bibitem{vdEssen}
+A.~van den Essen, \emph{Polynomial Automorphisms and the Jacobian Conjecture},
+Progress in Mathematics \textbf{190}, Birkh\"auser, 2000 (Chapter~10).
 
 \bibitem{GuoZheglov1}
 J.~Guo, A.~Zheglov, \emph{Normal forms for ordinary differential operators, I},
