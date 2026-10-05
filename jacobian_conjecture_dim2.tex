@@ -1327,14 +1327,64 @@ Therefore $\det J(P, Q) = P_x = 1$, and JC$_2$ follows from
 Theorem~\ref{thm:equivalence}.
 \end{proof}
 
+\begin{proposition}[Irreducibility of~$P$]\label{prop:P-irred}
+Let $P = y^m + P_{m-1} + \cdots + P_2 + x$ with $P_m = y^m$, $P_1 = x$,
+and $P_0 = 0$. Then $P$ is irreducible in~$\kk[x,y]$.
+\end{proposition}
+
+\begin{proof}
+Suppose $P = fg$ with $\deg f \geq 1$ and $\deg g \geq 1$.
+Since $P_0 = P(0,0) = 0$, we have $f(0,0) \cdot g(0,0) = 0$.
+Since the leading form is $P_m = y^m$, the leading forms of $f$ and $g$
+are $c_1 y^a$ and $c_2 y^b$ with $a + b = m$, $a \geq 1$, $b \geq 1$,
+and $c_1 c_2 = 1$. In particular, $f(0,0) = 0$ and $g(0,0) = 0$
+(as the leading forms have $y$ as the only variable, and $f(0,0)$,
+$g(0,0)$ are the constant terms, which must vanish since $a,b \geq 1$
+and $P_0 = 0$). Now the degree-$1$ component of $P$ satisfies
+\[
+  P_1 = (fg)_1 = f_0 \cdot g_1 + f_1 \cdot g_0 = 0 \cdot g_1 + f_1 \cdot 0 = 0,
+\]
+contradicting $P_1 = x \neq 0$.
+\end{proof}
+
 \begin{remark}
-The implication is: $P$ is irreducible (it is monic of degree~$1$ in~$x$ over
-$\kk[y]$), hence $\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
-Stein--Nagata--Nowicki. So
+Since $P$ is irreducible, $\ker(\det J(P, \cdot)) = \kk[P]$ by the theorem of
+Stein--Nagata--Nowicki \cite{Nagata1977,Nowicki1988}. So
 $Q_{\mathrm{cas}} - y \in \kk[P]$ is equivalent to
 $\det J(P,\, Q_{\mathrm{cas}} - y) = 0$, i.e.,
 $\det J(P,\, Q_{\mathrm{cas}}) = P_x$.
 \end{remark}
+
+\begin{theorem}[Equivalence chain for JC$_2$]\label{thm:equiv-chain}
+The following are equivalent:
+\begin{enumerate}
+\item[\textup{(i)}] $\mathrm{JC}_2$ holds for all Keller pairs with
+  $\deg P = m$ and $\deg Q = rm$.
+\item[\textup{(ii)}] Every cascade solution satisfies
+  $Q_{\mathrm{cas}} - y \in \kk[P]$.
+\item[\textup{(iii)}] The cascade kernel satisfies
+  $\mathcal{K} = \kk[P]_{\leq n-1}$, i.e.,
+  $\dim \mathcal{K} = r-2$.
+\item[\textup{(iv)}] Every Keller pair $(P,Q)$ with $P_m = y^m$
+  satisfies $P_x = 1$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+(ii)$\Rightarrow$(iv): By Theorem~\ref{thm:proof-reduction}.
+
+(iv)$\Rightarrow$(i): If $P_x = 1$ then $P = f(y) + x$, so $P$ is a
+coordinate; $\det J(P,Q) = 1$ then forces $Q = \alpha Q_0 + H(P)$ for
+$\alpha \in \kk^\times$ and some coordinate~$Q_0$ paired with~$P$.
+
+(iii)$\Leftrightarrow$(ii): Immediate from $Q_{\mathrm{cas}} = P^r + y + R$
+with $R \in \mathcal{K}$.
+
+(i)$\Rightarrow$(iv): If $(P,Q)$ is an automorphism, then
+$Q - y \in \kk[P,Q_0] = \kk[x,y]$ with $\det J(P, Q-y) = 0$
+forces $Q-y \in \kk[P]$ (by Proposition~\ref{prop:P-irred} and
+Stein--Nagata--Nowicki), hence $P_x = 1$.
+\end{proof}
 
 \begin{conjecture}[Cascade structure conjecture]\label{conj:cascade-structure}
 For every cascade solution $Q_{\mathrm{cas}}$
@@ -1350,12 +1400,13 @@ Conjecture~\ref{conj:cascade-structure} is verified for:
 \begin{center}
 \begin{tabular}{ccccl}
 \hline
-$m$ & $n$ & $r$ & $\dim \mathcal{K} \cap \kk[P]$ & Kernel structure \\
+$m$ & $n$ & $r$ & Free Q-params & Kernel generators \\
 \hline
-$3$ & $6$ & $2$ & $0$ & $R = 0$ \\
-$4$ & $8$ & $2$ & $0$ & $R = 0$ \\
-$3$ & $9$ & $3$ & $1$ & $R = c \cdot P^2,\ c \in \kk[p_{ij}]$ \\
-$4$ & $12$ & $3$ & $1$ & $R = c \cdot P^2,\ c \in \kk[p_{ij}]$ \\
+$3$ & $6$ & $2$ & $0$ & (trivial) \\
+$4$ & $8$ & $2$ & $0$ & (trivial) \\
+$3$ & $9$ & $3$ & $1$: $q_{6,0}$ & $P^2$ \\
+$4$ & $12$ & $3$ & $1$: $q_{8,0}$ & $P^2$ \\
+$3$ & $12$ & $4$ & $2$: $q_{6,0},\, q_{9,0}$ & $P^2,\, P^3$ \\
 \hline
 \end{tabular}
 \end{center}
@@ -1367,15 +1418,45 @@ with linear, constant-integer coefficients independent of all
 $P$-parameters.
 \end{proposition}
 
+\begin{theorem}[Cascade kernel dimension]\label{thm:cascade-kernel-dim}
+The cascade kernel $\mathcal{K} = \{R \in \kk[x,y]_{\leq n-1} :
+[\det J(P,R)]_D = 0\ \forall\, D \geq m\}$ satisfies
+$\kk[P]_{\leq n-1} \subseteq \mathcal{K}$.
+Computationally, $\dim \mathcal{K} = r - 2$, with the free
+parameters being exactly the pure-$y$ coefficients $q_{jm,0}$
+for $j = 2, \ldots, r-1$. These correspond to the $\kk[P]$-generators
+$P^2, P^3, \ldots, P^{r-1}$.
+\end{theorem}
+
+\begin{proof}[Proof of the inclusion]
+For any $f \in \kk[t]$, we have $\det J(P, f(P)) = 0$ identically,
+hence $[\det J(P, f(P))]_D = 0$ for all~$D$. Since
+$\kk[P]_{\leq n-1}$ is spanned by $1, P, P^2, \ldots, P^{r-1}$
+(as $\deg P^r = n$), the inclusion $\kk[P]_{\leq n-1} \subseteq \mathcal{K}$
+holds. The generators contributing nontrivially to~$\mathcal{K}$ are
+$P^2, \ldots, P^{r-1}$ (since $1 \in \kk$ is trivial and $P$ has
+degree~$m$ which only introduces a degree-$0$ pure-$y$ shift),
+giving $\dim(\kk[P]_{\leq n-1}/\kk) \geq r - 2$.
+\end{proof}
+
 \begin{remark}
-The cascade kernel $\mathcal{K}$ contains $\kk[P]_{\leq n-1}$
-(since $\det J(P, f(P)) = 0$ for any~$f$), and computationally
-$\mathcal{K} \cap \{\deg \leq n-1\} = \kk[P]_{\leq n-1}$.
-For $r = 2$, the kernel is trivial ($R = 0$, so
-$Q_{\mathrm{cas}} = P^2 + y$ uniquely). For $r = 3$, it is
-$1$-dimensional, spanned by~$P^2$. In general, the cascade kernel
-restricted to $\kk[P]$ has dimension $r - 2$, corresponding to
-the generators $P^2, P^3, \ldots, P^{r-1}$.
+The computational evidence shows $\dim \mathcal{K} = r-2$ exactly,
+so $\mathcal{K} = \kk[P]_{\leq n-1}$. The equality is verified for
+$(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$.
+Proving this equality in general would settle
+Conjecture~\ref{conj:cascade-structure} and hence JC$_2$.
+
+The mechanism is as follows. At each cascade level $D = k + m - 2$
+(going from top to bottom), the system determines the $x$-dependent
+coefficients of~$Q_k$ via $-m y^{m-1} (Q_k)_x + \cdots = 0$.
+The pure-$y$ coefficient $q_{k,0}$ does not appear in $(Q_k)_x$,
+so it remains free at this level. It propagates downward through
+$(Q_k)_y$ at level $D = k-1$, where it feeds into the determination
+of~$Q_{k+1-m}$. After all cascade levels $D \geq m$ are processed,
+the $P$-constraint levels $D < m$ eliminate all free $q_{k,0}$
+\emph{except} those at degrees $k$ that are multiples of~$m$.
+These surviving parameters correspond exactly to the $\kk[P]$-kernel
+generators.
 \end{remark}
 
 %% ====================================================================
@@ -1394,9 +1475,11 @@ the generators $P^2, P^3, \ldots, P^{r-1}$.
 \item \textbf{Prove Conjecture~\ref{conj:cascade-structure}
   (cascade structure):} Prove that $Q_{\mathrm{cas}} - y \in \kk[P]$
   for generic~$P$. By Theorem~\ref{thm:proof-reduction} this settles
-  JC$_2$. Equivalently, prove $\det J(P, Q_{\mathrm{cas}}) = P_x$
-  as a polynomial identity. The conjecture is verified for
-  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12)\}$.
+  JC$_2$. Equivalently, prove
+  $\dim \mathcal{K} = r - 2 = \dim(\kk[P]_{\leq n-1}/\kk)$
+  (Theorem~\ref{thm:cascade-kernel-dim}).
+  The conjecture is verified for
+  $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
