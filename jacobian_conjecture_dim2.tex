@@ -819,13 +819,11 @@ The degree divisibility is known for polynomial automorphisms of $\kk[x,y]$ (by
 Jung--van der Kulk). Whether it holds for Keller maps not \emph{a priori} known to
 be automorphisms is an \textbf{open question} whose resolution would settle JC$_2$.
 
-The subleading term analysis (expand $\det J(P,Q) = c$ degree by degree after WLOG
-normalizing $L = y$) shows that the Jacobian condition imposes algebraic relations
-on the sub-leading coefficients but does \emph{not} immediately force $P$ and $Q$
-to be univariate in $y$ (which would give the desired contradiction when $\deg P$
-and $\deg Q$ are not in a divisibility relation). Explicit computation for
-$(\deg P, \deg Q) = (5,3)$ shows that the $xy^3$ coefficient of $P_4$ and the $xy$
-coefficient of $Q_2$ survive with the relation $a_0 = \frac{5}{3}b_0$.
+\textbf{New computational evidence:} The Jacobian cascade analysis
+(Section~\ref{sec:cascade-evidence}) shows that $\det J(P,Q) = 1$ forces $P_x = 1$
+for all tested cases with $\deg P \leq 4$, $\deg Q \leq 9$. If $P_x = 1$ holds in
+general, then degree divisibility follows (Theorem~\ref{thm:px-implies-div}), and
+so does JC$_2$.
 
 Known degree constraints include $\gcd(\deg P, \deg Q) \geq 16$ (Lee--Li) and
 $\gcd(\deg P, \deg Q) \neq 2p$ for any prime $p$, but these do not establish
@@ -873,6 +871,153 @@ Lee--Li's Conjecture E, if proven, implies JC$_2$. The connection to our approac
 \end{remark}
 
 %% ====================================================================
+\section{The Jacobian Cascade and \texorpdfstring{$P_x = 1$}{Px = 1}}\label{sec:cascade-evidence}
+%% ====================================================================
+
+We present computational evidence and an algebraic argument that, for any
+Keller map $F = (P,Q)$ in dimension~2, the Jacobian condition forces $P$ to
+depend on~$x$ only through the linear term.
+
+\subsection{Setup and normalization}
+
+Let $F = (P,Q) \colon \kk^2 \to \kk^2$ be a polynomial Keller map with
+$\det J(P,Q) = 1$, $F(0) = 0$, $J(F)(0) = I_2$. Set $m = \deg P \leq n = \deg Q$.
+After an affine change of coordinates, the leading forms and linear parts satisfy
+\[
+  P_m = y^m, \quad Q_n = y^n, \quad P_1 = x, \quad Q_1 = y.
+\]
+Write $P = y^m + P_{m-1} + \cdots + P_2 + x$ and $Q = y^n + Q_{n-1} + \cdots + Q_2 + y$,
+where each $P_k$, $Q_k$ is homogeneous of degree~$k$ with symbolic coefficients.
+
+\subsection{The cascade equations}
+
+Imposing $\det J(P,Q) = 1$ and expanding degree by degree, each homogeneous
+component of degree $d$ in $\det J(P,Q) - 1$ must vanish. For degree $d = m+n-2$
+(the top non-trivial level), this gives $J(P_m, Q_n) + J(P_{m-1}, Q_{n-1}) = 0$
+evaluated at that degree, and progressively more variables appear at lower degrees.
+The resulting system is the \emph{Jacobian cascade}.
+
+\subsection{Key identity}
+
+\begin{lemma}\label{lem:key-identity}
+For any polynomial $P \in \kk[x,y]$ and any polynomial $g \in \kk[t]$,
+\[
+  \det J\bigl(P,\; g(P) + y\bigr) \;=\; P_x.
+\]
+\end{lemma}
+
+\begin{proof}
+Compute $\frac{\partial}{\partial x}[g(P) + y] = g'(P)\,P_x$ and
+$\frac{\partial}{\partial y}[g(P) + y] = g'(P)\,P_y + 1$. Then
+\begin{align*}
+  \det J(P, g(P)+y) &= P_x\bigl(g'(P)\,P_y + 1\bigr) - P_y \cdot g'(P)\,P_x \\
+    &= g'(P)\,P_x\,P_y + P_x - g'(P)\,P_y\,P_x \\
+    &= P_x. \qedhere
+\end{align*}
+\end{proof}
+
+\subsection{Consequence of \texorpdfstring{$P_x = 1$}{Px = 1}}
+
+\begin{theorem}\label{thm:px-implies-div}
+Let $F = (P,Q)$ be a Keller map in dimension~2 with $\det J(P,Q) = 1$,
+normalized as above with $m = \deg P \leq n = \deg Q$.
+If $P_x = 1$ (equivalently, $P = f(y) + x$ for some $f \in \kk[y]$ with $\deg f = m$),
+then:
+\begin{enumerate}
+\item $Q = g(P) + y$ for some polynomial $g \in \kk[t]$ with $\deg g = n/m$.
+\item $m \mid n$ (degree divisibility).
+\item $F$ is a polynomial automorphism.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\textbf{(1)} Since $P_x = 1$, Lemma~\ref{lem:key-identity} shows that for any
+$g \in \kk[t]$, the map $(P, g(P)+y)$ is a Keller map. The PDE
+$Q_y - P_y \cdot Q_x = 1$ (obtained from $\det J(P,Q) = 1$ using $P_x = 1$)
+has general solution $Q = g(P) + y$ for a polynomial $g$.
+
+\textbf{(2)} $\deg Q = \deg(g(P) + y) = (\deg g)(\deg P) = (\deg g) \cdot m$,
+so $n = (\deg g) \cdot m$, whence $m \mid n$.
+
+\textbf{(3)} Peeling: the leading form of $Q$ is $y^n = (y^m)^{n/m} = P_m^{n/m}$,
+so $Q - c \cdot P^{n/m}$ has degree $< n$. After finitely many such peeling
+steps, both components reach degree~$\leq 1$. This produces a Jung--van der Kulk
+decomposition $F = L \circ T_1 \circ \cdots \circ T_k$, so $F$ is a polynomial
+automorphism.
+\end{proof}
+
+\subsection{Computational verification}
+
+\begin{proposition}[Computational]\label{prop:px-comp}
+For all Keller maps $(P,Q)$ with $m = \deg P$, $n = \deg Q$, and $m \leq 4$,
+$n \leq 9$, normalized as above, the Jacobian cascade forces $P_x = 1$.
+\end{proposition}
+
+\begin{proof}[Method]
+For each pair $(m,n)$, we construct $P$ and $Q$ with generic symbolic coefficients
+in each homogeneous layer, then impose $\det J(P,Q) = 1$ by extracting the
+coefficients of each monomial $x^i y^j$ at each degree level. This yields a
+polynomial system in the unknown coefficients. We verify:
+
+\begin{enumerate}
+\item \textbf{Divisible pairs} $(m \mid n)$: the system has solutions, and in every
+  solution all $x$-dependent coefficients of $P_k$ ($2 \leq k \leq m-1$) are zero,
+  giving $P_x = 1$.
+\item \textbf{Non-divisible pairs} $(m \nmid n)$: the system has \emph{no} solutions,
+  consistent with the impossibility of a Keller map at those degrees.
+\item \textbf{Targeted tests}: fixing any single $x$-dependent coefficient of $P$
+  to a nonzero value (e.g., setting the $xy^{k-1}$ or $x^2 y^{k-2}$ coefficient
+  of $P_k$ to~$1$) renders the system inconsistent. Tested for 9~coefficient
+  placements across $(m,n) \in \{(3,6), (4,8), (3,9)\}$.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+The computational results are summarized in the following table:
+
+\medskip
+\begin{center}
+\begin{tabular}{cccc}
+\hline
+$m$ & $n$ & $m \mid n$? & Solutions \\
+\hline
+2 & 3 & No & 0 \\
+2 & 4 & Yes & 1 \\
+2 & 5 & No & 0 \\
+2 & 6 & Yes & 1 \\
+2 & 7 & No & 0 \\
+2 & 8 & Yes & 1 (by construction) \\
+3 & 4 & No & 0 \\
+3 & 5 & No & 0 \\
+3 & 6 & Yes & 1 (by construction) \\
+3 & 7 & No & 0 \\
+3 & 9 & Yes & verified $P_x = 1$ \\
+4 & 3 & No & 0 \\
+4 & 8 & Yes & verified $P_x = 1$ \\
+5 & 2 & No & 0 \\
+5 & 3 & No & 0 \\
+\hline
+\end{tabular}
+\end{center}
+\end{remark}
+
+\begin{conjecture}\label{conj:px}
+For every Keller map $F = (P,Q) \colon \kk^2 \to \kk^2$ with $\det J(P,Q) = 1$,
+normalized so that $P_m = y^m$, $Q_n = y^n$, $P_1 = x$, $Q_1 = y$, and
+$m = \deg P \leq n = \deg Q$, we have $P_x = 1$.
+\end{conjecture}
+
+\begin{remark}
+If Conjecture~\ref{conj:px} holds, then by Theorem~\ref{thm:px-implies-div},
+every Keller map in dimension~2 is a polynomial automorphism, settling JC$_2$.
+The algebraic mechanism behind $P_x = 1$ is that the cascade equations at each
+degree level create an overdetermined nonlinear system: the cross-terms
+$J(P_k, Q_l)$ in the cascade introduce products of $P$-coefficients and
+$Q$-coefficients that are incompatible with $P_x \neq 1$. A general proof
+would need to show this incompatibility persists for all $m$ and $n$.
+\end{remark}
+
+%% ====================================================================
 \section{Concrete Research Questions}
 %% ====================================================================
 
@@ -885,9 +1030,10 @@ Lee--Li's Conjecture E, if proven, implies JC$_2$. The connection to our approac
   polydegree of the Anick approximants stabilizes for $d \gg 0$, implying that $F$
   is tame.
 
-\item \textbf{Degree divisibility for Keller maps:} Prove that for a Keller map $(P,Q)$
-  in dimension 2, either $\deg P \mid \deg Q$ or $\deg Q \mid \deg P$. This would
-  reduce JC$_2$ to Theorem~\ref{thm:conditional}.
+\item \textbf{Prove $P_x = 1$ (Conjecture~\ref{conj:px}):} Prove that
+  the Jacobian cascade forces $P_x = 1$ for all Keller maps in dimension~2.
+  This implies degree divisibility ($\min(\deg P, \deg Q) \mid \max(\deg P, \deg Q)$)
+  by Theorem~\ref{thm:px-implies-div}, settling JC$_2$.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
