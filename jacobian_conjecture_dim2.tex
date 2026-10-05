@@ -1400,13 +1400,16 @@ Conjecture~\ref{conj:cascade-structure} is verified for:
 \begin{center}
 \begin{tabular}{ccccl}
 \hline
-$m$ & $n$ & $r$ & Free Q-params & Kernel generators \\
+$m$ & $n$ & $r$ & $\dim \mathcal{K}$ & Kernel generators \\
 \hline
 $3$ & $6$ & $2$ & $0$ & (trivial) \\
 $4$ & $8$ & $2$ & $0$ & (trivial) \\
-$3$ & $9$ & $3$ & $1$: $q_{6,0}$ & $P^2$ \\
-$4$ & $12$ & $3$ & $1$: $q_{8,0}$ & $P^2$ \\
-$3$ & $12$ & $4$ & $2$: $q_{6,0},\, q_{9,0}$ & $P^2,\, P^3$ \\
+$5$ & $10$ & $2$ & $0$ & (trivial) \\
+$6$ & $12$ & $2$ & $0$ & (trivial) \\
+$3$ & $9$ & $3$ & $1$ & $P^2$ \\
+$4$ & $12$ & $3$ & $1$ & $P^2$ \\
+$5$ & $15$ & $3$ & $1$ & $P^2$ \\
+$3$ & $12$ & $4$ & $2$ & $P^2,\, P^3$ \\
 \hline
 \end{tabular}
 \end{center}
@@ -1442,7 +1445,8 @@ giving $\dim(\kk[P]_{\leq n-1}/\kk) \geq r - 2$.
 \begin{remark}
 The computational evidence shows $\dim \mathcal{K} = r-2$ exactly,
 so $\mathcal{K} = \kk[P]_{\leq n-1}$. The equality is verified for
-$(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$.
+$(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\, (3,9),\, (4,12),\,
+(5,15),\, (3,12)\}$.
 Proving this equality in general would settle
 Conjecture~\ref{conj:cascade-structure} and hence JC$_2$.
 
@@ -1487,6 +1491,11 @@ $(3,9)$ & $3$ & $y^3 + 3y^2$ & $q_{6,0} = 7$ & $-20\,t^2 + t^3$ \\
 $(3,9)$ & $3$ & $y^3 + 3y^2$ & $q_{6,0} = 0$ & $-27\,t^2 + t^3$ \\
 $(3,9)$ & $3$ & $y^3$ & $q_{6,0} = 5$ & $5\,t^2 + t^3$ \\
 $(4,8)$ & $2$ & $y^4 + y^3 + 2y^2$ & (none) & $t^2$ \\
+$(4,12)$ & $3$ & $y^4$ & $q_{8,0} = 3$ & $3\,t^2 + t^3$ \\
+$(4,12)$ & $3$ & $y^4 + 2y^3 + y^2$ & $q_{8,0} = 1$ & $-14\,t^2 + t^3$ \\
+$(5,10)$ & $2$ & $y^5 + y^4 + y^3 + y^2$ & (none) & $t^2$ \\
+$(5,15)$ & $3$ & $y^5 + y^4 + y^3 + y^2$ & (1 param) & $-5\,t^2 + t^3$ \\
+$(6,12)$ & $2$ & $y^6 + y^5 + y^4 + y^3 + y^2$ & (none) & $t^2$ \\
 $(3,12)$ & $4$ & $y^3 + y^2$ & $q_{6,0} = 2,\; q_{9,0} = 5$ & $t^2 + t^3 + t^4$ \\
 $(3,12)$ & $4$ & $y^3$ & $q_{6,0} = 1,\; q_{9,0} = 1$ & $t^2 + t^3 + t^4$ \\
 \hline
@@ -1586,8 +1595,8 @@ Statement~$(\star)$ can be reformulated in several equivalent ways:
 Statement~$(\star)$ is verified computationally for all Keller maps with
 $m \leq 5$, $n \leq 15$ (Proposition~\textup{\ref{prop:px-comp}}),
 and the cascade structure $Q_{\mathrm{cas}} - y \in \kk[P]$ is verified
-for $(m,n) \in \{(3,6),\, (4,8),\, (3,9),\, (4,12),\, (3,12)\}$ both
-symbolically and numerically.
+for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\, (3,9),\, (4,12),\,
+(5,15),\, (3,12)\}$ both symbolically and numerically.
 \end{remark}
 
 %% ====================================================================
@@ -1631,11 +1640,12 @@ symbolically and numerically.
   and numerically for $7$~instances
   (Proposition~\ref{prop:numerical-instances}).
 
-\item \textbf{Extend computational verification:} Test larger cases
-  $(m,n) \in \{(5,10),\, (5,15),\, (6,12)\}$ for the full cascade
-  identity $\det J(P, Q_{\mathrm{cas}}) = P_x$. The cascade kernel
-  dimension $\dim \mathcal{K} = r - 2$ is already verified for
-  $(5,10)$ ($r = 2$, trivially).
+\item \textbf{Extend computational verification:} Test larger cases,
+  e.g., $(m,n) \in \{(4,16),\, (5,20),\, (6,18)\}$, for the full cascade
+  identity. Currently verified for $8$~pairs up to $m = 6$, $n = 15$.
+  The case $(5,15)$ reveals that the specific free parameter location
+  in the cascade depends on the $P$-coefficients (not always at
+  $q_{jm,0}$), though the kernel dimension $r-2$ is invariant.
 
 \item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
   \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
