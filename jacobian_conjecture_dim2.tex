@@ -642,13 +642,27 @@ The following are equivalent:
 
 For $n = 1$: $\mathrm{JC}_2 \iff \mathrm{DC}_1 \iff \mathrm{PC}_1$.
 
-\begin{remark}[Zheglov's claimed proof]
+\begin{remark}[Zheglov's claimed proof---highest priority]\label{rem:zheglov}
 Zheglov \cite{Zheglov2024} has announced a proof of $\mathrm{DC}_1$ using the theory of
 normal forms for ordinary differential operators. The preprint (arXiv:2410.06959) has grown
 from 25 pages (v1, October 2024) to 78 pages (v5, January 2026) and has been submitted for
 publication but not yet peer-reviewed. If correct, this would settle both $\mathrm{DC}_1$
-and $\mathrm{JC}_2$ via the equivalence above. Verification of this proof should be a
-high priority.
+and $\mathrm{JC}_2$ via the equivalence $\mathrm{DC}_1 \iff \mathrm{JC}_2$.
+
+\textbf{This is the single most important open verification task in the
+area.} The equivalence $\mathrm{DC}_1 \iff \mathrm{JC}_2$ (established
+independently by Tsuchimoto~\cite{Tsuchimoto} and
+Belov-Kanel--Kontsevich~\cite{BKK}) means that a correct
+proof of $\mathrm{DC}_1$ would immediately resolve JC$_2$---rendering
+the cascade analysis of this paper (which gives partial results:
+complete for $m \leq 4$) a consequence of a more general theorem.
+
+Note that the counterexamples to JC in dimension~$\geq 3$
+(Alpoge~\cite{Alpoge2026}, Gallagher~\cite{Gallagher2026}) do
+\emph{not} contradict DC$_1$ or JC$_2$: the equivalence
+$\mathrm{DC}_n \iff \mathrm{JC}_{2n}$ is \emph{dimension-specific},
+so JC$_3$ failing implies DC$_2$ fails (and higher), but says nothing
+about DC$_1$ or JC$_2$.
 \end{remark}
 
 \subsection{The Deformation Quantization Perspective}
@@ -1860,7 +1874,34 @@ mate~$Q$.
 %% ====================================================================
 
 \begin{enumerate}
-\item \textbf{Primary: Prove all branches produce automorphisms.}
+\item \textbf{PRIORITY: Verify Zheglov's DC$_1$ proof.}
+  Zheglov~\cite{Zheglov2024} claims a proof of DC$_1$ (arXiv:2410.06959,
+  78~pages in v5). By the equivalence $\mathrm{DC}_1 \iff \mathrm{JC}_2$
+  (Remark~\ref{rem:zheglov}), a correct proof settles JC$_2$
+  \emph{completely}---for all~$m$, all branches, in one stroke.
+
+  The proof uses normal forms for ordinary differential operators
+  on curves and does not rely on the cascade or $P_x = 1$. Key steps
+  to verify:
+  \begin{itemize}
+  \item The reduction to normal forms for elements of the first Weyl
+    algebra~$A_1$.
+  \item The surjectivity argument: that every endomorphism $\varphi$
+    of~$A_1$ with $\varphi([\partial, x]) = [\partial, x]$ is
+    automatically surjective.
+  \item The role of $p$-curvatures in positive characteristic
+    (connection to the Tsuchimoto/Belov-Kanel--Kontsevich methods).
+  \end{itemize}
+  The preprint has undergone five revisions (October~2024 to
+  January~2026), growing from 25 to 78~pages, suggesting the
+  argument has been substantially refined. It is not yet peer-reviewed.
+
+  \textbf{Note:} Alpoge's counterexample to JC$_3$~\cite{Alpoge2026}
+  does \emph{not} affect this: $\mathrm{DC}_n \iff \mathrm{JC}_{2n}$
+  is dimension-specific, so JC$_3$ failing says nothing about
+  DC$_1$ or JC$_2$.
+
+\item \textbf{Prove all cascade branches produce automorphisms.}
   For each~$m$, the $D < m$ cascade constraints have finitely many
   solution branches ($n$-independent by
   Proposition~\ref{prop:n-indep}). For $m = 3$: one branch ($P_x = 1$),
@@ -1868,6 +1909,9 @@ mate~$Q$.
   automorphisms (Propositions~\ref{prop:spurious}
   and~\ref{prop:px-neq-1-auto}). The question is whether \emph{every}
   branch, for every~$m$, produces an automorphism.
+
+  This is an independent route to JC$_2$ that does not depend on
+  Zheglov's proof.
 
   Possible approaches:
   \begin{itemize}
@@ -1887,12 +1931,6 @@ mate~$Q$.
     each decomposition type yields a branch of the cascade constraints.
   \end{itemize}
 
-\item \textbf{Prove the restricted cascade structure conjecture
-  (Conjecture~\ref{conj:cascade-structure}):}
-  For the $P_x = 1$ branch, prove that $Q_{\mathrm{cas}} - y \in \kk[P]$.
-  This is verified for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\,
-  (3,9),\, (4,12),\, (5,15),\, (3,12)\}$.
-
 \item \textbf{Structure of $P_x \neq 1$ automorphisms:}
   For the $m = 4$ Branch~(2), the automorphism structure involves a
   coordinate change $g$ such that $P = g^2 + (\text{affine in } g, y)$
@@ -1900,14 +1938,16 @@ mate~$Q$.
   pattern for higher~$m$? Is the coordinate change $g$ always
   constructible from the $P$-coefficients?
 
+\item \textbf{Prove the restricted cascade structure conjecture
+  (Conjecture~\ref{conj:cascade-structure}):}
+  For the $P_x = 1$ branch, prove that $Q_{\mathrm{cas}} - y \in \kk[P]$.
+  This is verified for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\,
+  (3,9),\, (4,12),\, (5,15),\, (3,12)\}$.
+
 \item \textbf{Extend computational verification:} Test $m = 5$
   (both branch enumeration and Keller mate construction).
   Test larger cases $(m,n) \in \{(4,16),\, (5,20),\, (6,18)\}$
   for the cascade structure on the $P_x = 1$ branch.
-
-\item \textbf{Verify Zheglov's DC$_1$ proof:} Carefully verify the proof of DC$_1$ in
-  \cite{Zheglov2024}. If correct, this settles JC$_2$ via the Belov-Kanel--Kontsevich
-  equivalence.
 
 \item \textbf{Connection to dimension $\geq 3$:} Analyze how the
   counterexamples of Alpoge~\cite{Alpoge2026} and
@@ -2001,7 +2041,7 @@ Y.~Tsuchimura, \emph{Endomorphisms of Weyl algebra and $p$-curvatures},
 Osaka J.~Math.\ \textbf{42} (2005), 435--452.
 
 \bibitem{Zheglov2024}
-A.~Zheglov, \emph{Proof of the Dixmier conjecture for the first Weyl algebra},
+A.~Zheglov, \emph{The Conjecture of Dixmier for the first Weyl algebra is true},
 arXiv:2410.06959, 2024 (v5, January 2026, 78 pages).
 
 \bibitem{Furter}
