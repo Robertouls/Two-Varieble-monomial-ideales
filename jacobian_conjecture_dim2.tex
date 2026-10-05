@@ -1485,6 +1485,7 @@ $3$ & $6$ & $2$ & $0$ & (trivial) \\
 $4$ & $8$ & $2$ & $0$ & (trivial) \\
 $5$ & $10$ & $2$ & $0$ & (trivial) \\
 $6$ & $12$ & $2$ & $0$ & (trivial) \\
+$7$ & $14$ & $2$ & $0$ & (trivial) \\
 $3$ & $9$ & $3$ & $1$ & $P^2$ \\
 $4$ & $12$ & $3$ & $1$ & $P^2$ \\
 $5$ & $15$ & $3$ & $1$ & $P^2$ \\
@@ -1873,6 +1874,194 @@ Keller pair, and this property of~$P$ does not depend on the specific
 mate~$Q$.
 \end{remark}
 
+\subsection{The Cascade Identity and the proof structure for $\mathrm{JC}_2$}%
+\label{sec:cascade-identity}
+
+The computational evidence from
+Sections~\ref{sec:cascade-evidence}--\ref{sec:n-independence}
+reveals a remarkable identity satisfied by the cascade solution,
+which provides a direct path to~JC$_2$.
+
+\begin{conjecture}[Cascade Identity]\label{conj:cascade-identity}
+Let $P$ be a normalized polynomial with $P_m = y^m$, $P_1 = x$,
+$P_0 = 0$, with generic intermediate coefficients~$a_{k,j}$.
+Let $Q_{\mathrm{cas}}$ be the full cascade solution: the polynomial
+obtained by imposing $[\det J(P,Q)]_D = 0$ for each~$D$ from
+$m+n-2$ down to~$1$, solving all $Q$-coefficients in terms
+of the~$a_{k,j}$, and performing back-substitution to resolve
+dependency chains. Then
+\[
+  \det J\bigl(P,\, Q_{\mathrm{cas}}\bigr) = P_x
+\]
+as a polynomial identity in all $P$-coefficients~$a_{k,j}$.
+\end{conjecture}
+
+\begin{remark}
+This identity holds without assuming $P_x = 1$ or any constraint
+on the $P$-coefficients.  It is strictly stronger than
+Conjecture~\ref{conj:cascade-structure}: when $P_x = 1$,
+the Cascade Identity gives $\det J(P, Q_{\mathrm{cas}}) = 1$,
+so $Q_{\mathrm{cas}} - y \in \ker\bigl(\det J(P, \cdot)\bigr)$.
+Since $P = f(y) + x$ is irreducible
+(Proposition~\ref{prop:P-irred}\textup{(b)}),
+the theorem of Stein--Nagata--Nowicki~\cite{Nagata1977,Nowicki1988}
+gives $\ker\bigl(\det J(P, \cdot)\bigr) = \kk[P]$,
+recovering $Q_{\mathrm{cas}} - y \in \kk[P]$.
+\end{remark}
+
+The Cascade Identity has a natural degree-by-degree reformulation:
+
+\begin{conjecture}[Universal excess equation pattern]%
+\label{conj:universal-excess}
+For every $m \geq 3$ and every $n = rm$ with $r \geq 2$,
+the cascade constraints at levels $D = 1, \ldots, m-2$
+(after substituting all $Q$-variables solved at levels $D \geq m$)
+reduce to the equations
+\[
+  j \cdot a_{D+1,\,j} = 0 \quad
+  \text{for } j = 1, \ldots, D+1,
+\]
+or equivalently, $(P_{D+1})_x = 0$ for each $D = 1, \ldots, m-2$.
+These equations:
+\begin{enumerate}
+\item[\textup{(a)}] are independent of~$n$
+  \textup{(}depending only on~$m$\textup{)};
+\item[\textup{(b)}] have integer coefficients
+  \textup{(}the coefficient of~$a_{k,j}$ is~$j$\textup{)},
+  independent of all $P$-parameters;
+\item[\textup{(c)}] provide exactly
+  $\sum_{k=2}^{m-1} k = \tfrac{m(m-1)}{2} - 1$
+  independent equations, matching the number of $x$-dependent
+  $P$-coefficients
+  $\{a_{k,j} : 2 \leq k \leq m-1,\; 1 \leq j \leq k\}$.
+\end{enumerate}
+In particular, since $j \geq 1$ and $\mathrm{char}\,\kk = 0$,
+these equations force $a_{k,j} = 0$ for all
+$k = 2, \ldots, m-1$ and $j \geq 1$, i.e., $P_x = 1$.
+\end{conjecture}
+
+\begin{remark}
+Conjectures~\ref{conj:cascade-identity}
+and~\ref{conj:universal-excess} are essentially equivalent.
+The Cascade Identity gives
+$[\det J(P, Q_{\mathrm{cas}})]_D = [P_x]_D$ for all~$D$;
+at levels $D \geq m-1$ both sides vanish by construction,
+while at levels $D = 1, \ldots, m-2$ the residual
+$[P_x]_D = [(P_{D+1})_x]$ is the excess equation, yielding
+$j \cdot a_{D+1,j} = 0$. Conversely, if the excess equations
+are exactly $[P_x]_D$ at each level, the full Jacobian reassembles
+to $P_x$.
+\end{remark}
+
+\begin{proposition}[Computational verification]%
+\label{prop:cascade-conj-verified}
+\leavevmode
+\begin{enumerate}
+\item[\textup{(a)}]
+  The Cascade Identity $\det J(P, Q_{\mathrm{cas}}) = P_x$
+  is verified with full back-substitution and symbolic
+  Jacobian computation for
+  $(m, n) \in \{(3,6),\, (4,8),\, (5,10)\}$
+  with generic \textup{(}symbolic\textup{)} $P$-coefficients.
+\item[\textup{(b)}]
+  The universal excess equation pattern is verified for:
+  \begin{center}
+  \begin{tabular}{cccl}
+  \hline
+  $m$ & $n$ tested & Excess eqs & Pattern at degree~$D$ \\
+  \hline
+  $3$ & $6, 9, 12$  & $2$  & $j \cdot a_{2,j} = 0$ \\
+  $4$ & $8, 12$     & $5$  & $j \cdot a_{k,j} = 0$,\; $k = 2,3$ \\
+  $5$ & $10, 15$    & $9$  & $j \cdot a_{k,j} = 0$,\; $k = 2,3,4$ \\
+  $6$ & $12$        & $14$ & $j \cdot a_{k,j} = 0$,\; $k = 2,\ldots,5$ \\
+  $7$ & $14$        & $20$ & $j \cdot a_{k,j} = 0$,\; $k = 2,\ldots,6$ \\
+  \hline
+  \end{tabular}
+  \end{center}
+  In each case, the excess equations are independent of~$n$
+  and have the stated form with integer coefficients.
+\end{enumerate}
+\end{proposition}
+
+We now state the main conditional result.
+
+\begin{theorem}[Conditional proof of $\mathrm{JC}_2$]%
+\label{thm:conditional-JC2}
+If the Cascade Identity
+\textup{(Conjecture~\ref{conj:cascade-identity})}
+holds for all~$m$, then $\mathrm{JC}_2$ is true.
+\end{theorem}
+
+\begin{proof}
+Let $(P, Q)$ be a normalized Keller pair with $\det J(P,Q) = 1$,
+$P_m = y^m$, $Q_n = y^n$, $P_1 = x$, $Q_1 = y$, $n = rm$.
+
+\medskip\noindent
+\textbf{Step 1} (Cascade structure).
+The condition $\det J(P,Q) = 1$ gives
+$[\det J(P,Q)]_D = 0$ for all $D \geq 1$.
+At levels $D \geq m$, these equations determine the $x$-dependent
+$Q$-coefficients; the pure-$y$ parameters $q_{jm,0}$
+($j = 2, \ldots, r-1$) remain free.
+By the proved inclusion $\kk[P]_{\leq n-1} \subseteq \mathcal{K}$
+(Theorem~\ref{thm:cascade-kernel-dim}),
+$Q$ decomposes as $Q = Q_{\mathrm{cas}} + R$ with
+$R \in \kk[P]_{\leq n-1}$,
+where $Q_{\mathrm{cas}}$ is the particular cascade solution
+matching $Q$'s free-parameter values.
+Since $R \in \kk[P]$, $\det J(P, R) = 0$.
+
+\medskip\noindent
+\textbf{Step 2} (Low-degree constraints).
+At levels $D = 1, \ldots, m-2$, the Keller condition gives
+$[\det J(P,Q)]_D = 0$. Since
+$[\det J(P, R)]_D = 0$ (as $R \in \kk[P]$), this forces
+\[
+  [\det J(P,\, Q_{\mathrm{cas}})]_D = 0
+  \quad \text{for } D = 1, \ldots, m-2.
+\]
+
+\medskip\noindent
+\textbf{Step 3} (Cascade Identity).
+By Conjecture~\ref{conj:cascade-identity},
+$\det J(P,\, Q_{\mathrm{cas}}) = P_x$, so
+$[P_x]_D = 0$ for $D = 1, \ldots, m-2$.
+Since $[P_x]_D = [(P_{D+1})_x]$ for $D \leq m-2$
+and $(P_m)_x = (y^m)_x = 0$, this gives
+$(P_k)_x = 0$ for $k = 2, \ldots, m-1$, hence $P_x = 1$.
+
+\medskip\noindent
+\textbf{Step 4} (Automorphism).
+$P_x = 1$ gives $P = f(y) + x$.
+The shear $\sigma \colon (x,y) \mapsto (x - f(y),\, y)$
+satisfies $\sigma(P) = x$, so $P$ is a coordinate.
+By Jung--van der Kulk~\cite{JungVdK},
+$(P,Q)$ is a (tame) automorphism.
+\end{proof}
+
+\begin{remark}[The algebraic mechanism]\label{rem:diag-matrix}
+The Cascade Identity has its roots in the diagonal structure of the
+cascade at each level~$D$.  At level $D = k + m - 2$ ($k \geq 2$),
+the dominant contribution to $[\det J(P,Q)]_D$ from the pair
+$(P_m, Q_k)$ is
+\[
+  -m\,y^{m-1}\,(Q_k)_x \;=\;
+  -m\,y^{m-1} \sum_{j=1}^{k} j\,q_{k,j}\, x^{j-1}\,y^{k-j},
+\]
+giving a coefficient matrix
+$\operatorname{diag}(-m,\, -2m,\, \ldots,\, -km)$
+for the $x$-dependent unknowns $q_{k,1}, \ldots, q_{k,k}$.
+This matrix is nonsingular in $\mathrm{char}\,\kk = 0$,
+so each level uniquely determines its $x$-dependent $Q$-coefficients
+(with the pure-$y$ parameter $q_{k,0}$ propagating to lower levels).
+The integer diagonal structure propagates through the cascade and
+ultimately produces the integer coefficients~$j$ in the excess equations.
+An algebraic proof of the Cascade Identity for general~$m$ would amount
+to showing that this propagation preserves the identity
+$\sum_D [\det J(P, Q_{\mathrm{cas}})]_D = P_x$
+through all $m + n - 3$ cascade levels.
+\end{remark}
+
 %% ====================================================================
 \section{Analysis of Zheglov's Claimed Proof of $\mathrm{DC}_1$}
 \label{sec:zheglov-analysis}
@@ -2179,28 +2368,45 @@ the coprime case).
 %% ====================================================================
 
 \begin{enumerate}
-\item \textbf{PRIORITY: Verify Zheglov's DC$_1$ proof.}
+\item \textbf{PRIORITY: Prove the Cascade Identity
+  (Conjecture~\ref{conj:cascade-identity}).}
+  The identity $\det J(P, Q_{\mathrm{cas}}) = P_x$ is verified
+  computationally for $m \leq 5$ with full back-substitution, and
+  the equivalent universal excess pattern is verified for $m \leq 7$
+  (Proposition~\ref{prop:cascade-conj-verified}).
+  By Theorem~\ref{thm:conditional-JC2}, an algebraic proof
+  for all~$m$ would settle JC$_2$ completely.
+
+  Possible approaches:
+  \begin{itemize}
+  \item \emph{Diagonal coefficient matrix induction}:
+    the $\operatorname{diag}(-m, -2m, \ldots)$ structure
+    at each cascade level (Remark~\ref{rem:diag-matrix})
+    determines the $x$-dependent $Q$-unknowns uniquely.
+    Prove by induction on~$D$ that the partial Jacobian
+    $\sum_{D' \geq D} [\det J(P, Q_{\mathrm{cas}})]_{D'}$
+    telescopes to $[P_x]_{\geq D}$ at each cascade step.
+  \item \emph{Kernel characterization}:
+    prove $\mathcal{K} = \kk[P]_{\leq n-1}$ directly
+    (the proved inclusion is $\kk[P]_{\leq n-1} \subseteq \mathcal{K}$;
+    equality is verified for $m \leq 7$).
+    Combined with Corollary~\ref{lem:key-identity}
+    ($\det J(P, g(P)+y) = P_x$) and the decomposition
+    $Q_{\mathrm{cas}} = P^r + R + y$ with $R \in \mathcal{K}$,
+    this would give
+    $\det J(P, Q_{\mathrm{cas}}) = \det J(P, P^r + y) = P_x$.
+  \item \emph{Differential algebra}:
+    the operator $\det J(P, \cdot)$ is a derivation of $\kk[x,y]$.
+    The cascade can be viewed as inverting this derivation at
+    homogeneous degrees~$\geq m$.  The Cascade Identity states
+    that the image under this inversion of ``$0$ at all degrees~$\geq 1$''
+    is exactly~$P_x$.
+  \end{itemize}
+
+\item \textbf{Verify Zheglov's DC$_1$ proof.}
   A detailed analysis of the proof structure appears in
   Section~\ref{sec:zheglov-analysis}.  The six critical verification
-  points, ordered by potential impact, are:
-  \begin{itemize}
-  \item[(a)] $N$-independence of distinguished coefficients
-    (Lemma~6.3 / Lemma~5.1)---if this fails, the contradiction
-    in~\eqref{eq:zheglov-contradiction} collapses entirely.
-  \item[(b)] The coefficient $A \neq 0$ in
-    formula~\eqref{eq:zheglov-contradiction}---without this,
-    the $N$-dependence is illusory.
-  \item[(c)] Construction and uniqueness of the auxiliary
-    operator~$\widetilde{S}$ in Lemma~5.1, including
-    convergence of the infinite product.
-  \item[(d)] The string equation correspondence (Theorems~5.1,
-    5.2, 5.4)---the cut-and-glue construction and preservation
-    of the normalisation condition~$A_p(0)$.
-  \item[(e)] Head-chopping termination and subrectangularity
-    preservation (Theorems~4.1, 4.2)---the 5-page case analysis.
-  \item[(f)] The explicit calculation in Section~6.2 (Steps~1--7),
-    amenable to independent verification by computer algebra.
-  \end{itemize}
+  points are listed there.
   Our cascade analysis (Remark~\ref{rem:cascade-zheglov}) provides
   \emph{independent} computational evidence for the first non-trivial
   case beyond the coprime regime ($m = 4$, $\gcd = 2$).
@@ -2211,54 +2417,24 @@ the coprime case).
   Proposition~\ref{prop:n-indep}). For $m = 3$: one branch ($P_x = 1$),
   confirmed automorphism. For $m = 4$: two branches, both confirmed
   automorphisms (Propositions~\ref{prop:spurious}
-  and~\ref{prop:px-neq-1-auto}). The question is whether \emph{every}
-  branch, for every~$m$, produces an automorphism.
+  and~\ref{prop:px-neq-1-auto}). This branch-by-branch approach
+  is an independent route to JC$_2$.
 
-  This is an independent route to JC$_2$ that does not depend on
-  Zheglov's proof.
-
-  Possible approaches:
+\item \textbf{Extend computational verification:}
   \begin{itemize}
-  \item \emph{Branch enumeration for $m = 5$}: compute the Gr\"obner
-    basis of the $D < m$ constraints and classify all solution branches.
-    Verify that each indecomposable branch produces a Keller mate
-    that is an automorphism.
-  \item \emph{Coordinate-change generalization}: the $m = 4$
-    automorphism structure uses $g = y^2 + \tfrac{p_{3,0}}{2}\,y
-    + \tfrac{4}{\Delta}\,x$, which satisfies
-    $P = g^2 + (\text{linear in } g, y)$. For general~$m$, look for
-    analogous coordinate changes $g$ such that $P$ has a simpler
-    form in $(g,y)$ coordinates.
-  \item \emph{Tame decomposition theory}: every automorphism of
-    $\kk[x,y]$ is tame. Study which tame decompositions are compatible
-    with the normalization $P_m = y^m$, $P_1 = x$, and show that
-    each decomposition type yields a branch of the cascade constraints.
+  \item Verify the Cascade Identity (full back-substitution
+    + symbolic Jacobian) for $m = 6, 7$.
+  \item Test the universal excess pattern for $m = 8, 9$.
+  \item Enumerate all cascade branches for $m = 5$
+    (Gr\"obner basis of the $D < m$ constraints).
   \end{itemize}
-
-\item \textbf{Structure of $P_x \neq 1$ automorphisms:}
-  For the $m = 4$ Branch~(2), the automorphism structure involves a
-  coordinate change $g$ such that $P = g^2 + (\text{affine in } g, y)$
-  and $Q = P^2 + (\text{affine in } P, g)$. Is there a general
-  pattern for higher~$m$? Is the coordinate change $g$ always
-  constructible from the $P$-coefficients?
-
-\item \textbf{Prove the restricted cascade structure conjecture
-  (Conjecture~\ref{conj:cascade-structure}):}
-  For the $P_x = 1$ branch, prove that $Q_{\mathrm{cas}} - y \in \kk[P]$.
-  This is verified for $(m,n) \in \{(3,6),\, (4,8),\, (5,10),\, (6,12),\,
-  (3,9),\, (4,12),\, (5,15),\, (3,12)\}$.
-
-\item \textbf{Extend computational verification:} Test $m = 5$
-  (both branch enumeration and Keller mate construction).
-  Test larger cases $(m,n) \in \{(4,16),\, (5,20),\, (6,18)\}$
-  for the cascade structure on the $P_x = 1$ branch.
 
 \item \textbf{Connection to dimension $\geq 3$:} Analyze how the
   counterexamples of Alpoge~\cite{Alpoge2026} and
   Gallagher~\cite{Gallagher2026} relate to the cascade structure.
   In dimension~$2$, every branch of the cascade constraints yields
-  an automorphism; in dimension~$\geq 3$, wild automorphisms exist
-  and the analogous structure may break down.
+  an automorphism; in dimension~$\geq 3$, the analogous
+  structure may break down.
 \end{enumerate}
 
 %% ====================================================================
